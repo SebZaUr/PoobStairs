@@ -29,6 +29,7 @@ public class ConfigMaquina extends JDialog {
     private String modoMaquina,tipo,tipoCasilla;
 
     public ConfigMaquina(){
+    	setIconImage(Estilos.icono.getImage());
     	setTitle(Estilos.TITULO);
         setSize(width,heigth);
         prepareElements();

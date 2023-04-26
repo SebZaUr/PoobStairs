@@ -2,7 +2,6 @@ package presentation;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -28,6 +27,7 @@ public class TableGUI extends JDialog{
      * Let create the poobStairsGUI.
      */
     public TableGUI(String nombre1, String nombre2) {
+    	setIconImage(Estilos.icono.getImage());
         setTitle("POOBSTAIRS");
         setSize(width, height);
         prepareElements();

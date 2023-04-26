@@ -7,8 +7,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.io.File;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Clase de la pantalla de inicio del juego PoobStaairs
@@ -26,7 +27,7 @@ import javax.swing.JOptionPane;
  * @author Johann Amaya
  * @version 1.0
  */
-public class PoobStairsGUI extends JDialog {
+public class prueba extends JDialog {
 
     private JButton play;
     private JButton cargar;
@@ -39,9 +40,7 @@ public class PoobStairsGUI extends JDialog {
     /**
      * Let create the poobStairsGUI.
      */
-    public PoobStairsGUI() {
-        
-        setIconImage(Estilos.icono.getImage());
+    public prueba() {
         setTitle(Estilos.TITULO);
         setSize(width, height);
         prepareElements();
@@ -65,7 +64,6 @@ public class PoobStairsGUI extends JDialog {
         JLabel laders = new JLabel("LADDERS");
         chuters.setForeground(Estilos.COLOR_LETRAS);
         chuters.setFont(Estilos.FUENTE_TITULO);
-        
         chuters.setBounds(width / 2 - 100, (int) (height / 4.5) - 60, 200, 50);
         and.setForeground(Estilos.COLOR_LETRAS);
         and.setFont(Estilos.FUENTE_TITULO);
@@ -86,10 +84,6 @@ public class PoobStairsGUI extends JDialog {
         cargar.setFont(Estilos.FUENTE_LETRA);
         salir.setFont(Estilos.FUENTE_LETRA);
 
-        play.setBackground(Color.WHITE);
-        cargar.setBackground(Color.WHITE);
-        salir.setBackground(Color.WHITE);
-
         PantallaInicial.add(chuters);
         PantallaInicial.add(and);
         PantallaInicial.add(laders);
@@ -103,7 +97,28 @@ public class PoobStairsGUI extends JDialog {
         imagen.setFont(new Font("Dialog", Font.BOLD, 20));
         imagen.setBounds(-161, 119, 649, 180);
         PantallaInicial.add(imagen);
-        add(PantallaInicial);
+        getContentPane().add(PantallaInicial);
+        
+        JButton btnNewButton = new JButton("1");
+        btnNewButton.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnNewButton.setBackground(Color.WHITE);
+        btnNewButton.setForeground(new Color(0, 0, 0));
+        getContentPane().add(btnNewButton, BorderLayout.WEST);
+        
+        JPanel panel = new JPanel();
+        getContentPane().add(panel, BorderLayout.EAST);
+        
+        JLabel lblNewLabel_1 = new JLabel("1");
+        lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\johann.amaya\\Downloads\\PoobStairs\\resourses\\personas.png"));
+        panel.add(lblNewLabel_1);
+        
+        JLabel lblNewLabel = new JLabel("1");
+        lblNewLabel.setIcon(new ImageIcon("C:\\Users\\johann.amaya\\Downloads\\PoobStairs\\resourses\\personas.png"));
+        panel.add(lblNewLabel);
     }
 
     public void prepareActions() {

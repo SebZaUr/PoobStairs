@@ -1,9 +1,10 @@
 package presentation;
 
 import javax.swing.JDialog;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
@@ -23,6 +24,7 @@ public class ConfigurationGUI extends JDialog {
     }
 
     public void prepareElements() {
+    	setIconImage(Estilos.icono.getImage());
     	setTitle(Estilos.TITULO);
         setSize(width, height);
         setLocationRelativeTo(null);
@@ -36,10 +38,23 @@ public class ConfigurationGUI extends JDialog {
 
         jugador.setBounds(width/2 - 105,height/8,100,100);
         maquina.setBounds(width/2 + 5,height/8,100,100);
-        ImageIcon vsJugador = new ImageIcon("./resourses/personas.png");
-        ImageIcon vsMaquina = new ImageIcon("./resourses/robot.png");
-        jugador.setIcon(vsJugador);
-        maquina.setIcon(vsMaquina);
+        jugador.setBackground(Color.WHITE);
+        maquina.setBackground(Color.WHITE);
+        
+        ImageIcon vsJugadorIcon = new ImageIcon("./resourses/amistads.gif");
+        ImageIcon vsMaquina = new ImageIcon("./resourses/cyborg.gif");
+
+        Image vsJugadorImage = vsJugadorIcon.getImage();
+        Image vsMaquinaImage = vsMaquina.getImage();
+        
+        Image resizedImage = vsJugadorImage.getScaledInstance(90, 90, Image.SCALE_DEFAULT);
+        Image resizedRImage = vsMaquinaImage.getScaledInstance(90, 90, Image.SCALE_DEFAULT);
+        
+        ImageIcon vsJugadorResizedIcon = new ImageIcon(resizedImage);
+        ImageIcon vsJugadorResizedIconR = new ImageIcon(resizedRImage);
+        
+        jugador.setIcon(vsJugadorResizedIcon);
+        maquina.setIcon(vsJugadorResizedIconR);
         
         panel.add(jugador);
         panel.add(maquina);

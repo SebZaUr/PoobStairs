@@ -33,8 +33,9 @@ public class ConfigJugador extends JDialog {
      * Constructor de la pantalla de configuracion.
      */
     public ConfigJugador() {
+    	setIconImage(Estilos.icono.getImage());
     	setTitle(Estilos.TITULO);
-        setSize(width, height);
+        setSize(width, heigth);
         prepareElements();
         prepareActions();
         setLocationRelativeTo(null);
