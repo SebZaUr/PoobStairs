@@ -21,8 +21,8 @@ public class ConfigMaquina extends JDialog {
     private final JRadioButton quicktime = new JRadioButton("Quicktime");
     private final JRadioButton relampago = new JRadioButton("Relampago");
     private final JRadioButton permanente = new JRadioButton("Permanente");
-    private final int width = Estilos.dimensiones.width/4;
-    private final int heigth = Estilos.dimensiones.height/2; 
+    private final int width = Estilos.dimensions.width/4;
+    private final int heigth = Estilos.dimensions.height/2; 
 
     private final JButton jugar = new JButton("Empezar a Jugar");
     private JTextField nombreJugador1,porcentaje;
