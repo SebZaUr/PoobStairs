@@ -11,6 +11,8 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -84,6 +86,13 @@ public class PoobStairsGUI extends JDialog {
         PantallaInicial.add(play);
         PantallaInicial.add(cargar);
         PantallaInicial.add(salir);
+        
+        JLabel imagen = new JLabel("");
+        imagen.setIcon(new ImageIcon("resourses\\Snake.png"));
+        imagen.setForeground(Color.WHITE);
+        imagen.setFont(new Font("Dialog", Font.BOLD, 20));
+        imagen.setBounds(-161, 119, 649, 180);
+        PantallaInicial.add(imagen);
         add(PantallaInicial);
     }
 
