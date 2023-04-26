@@ -21,11 +21,13 @@ public class TableGUI extends JDialog{
     private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
     private static final int width = dimensions.width ;
     private static final int height = dimensions.height ;
+    private static String nombre1 = "";
+    private static String nombre2 = "";
 
     /**
      * Let create the poobStairsGUI.
      */
-    public TableGUI() {
+    public TableGUI(String nombre1, String nombre2) {
         setTitle("POOBSTAIRS");
         setSize(width, height);
         prepareElements();
@@ -33,6 +35,8 @@ public class TableGUI extends JDialog{
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+        this.nombre1 = nombre1;
+        this.nombre2 = nombre2;
     }
 
     /**
@@ -105,21 +109,5 @@ public class TableGUI extends JDialog{
     }
     public void prepareActions() {
         
-    }
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                	TableGUI window = new TableGUI();
-                    window.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 }

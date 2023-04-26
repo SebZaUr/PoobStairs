@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import domain.PoobStairsExceptions;
+
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -12,20 +15,23 @@ import java.awt.event.WindowListener;
 //import Domain.*;
 
 public class ConfigMaquina extends JDialog {
+    private static final Dimension dimensiones = Toolkit.getDefaultToolkit().getScreenSize();
     private final JRadioButton principiante = new JRadioButton("Principiante");
     private final JRadioButton aprendiz = new JRadioButton("Aprendiz");
     private final JRadioButton normal = new JRadioButton("Normal");
     private final JRadioButton quicktime = new JRadioButton("Quicktime");
     private final JRadioButton relampago = new JRadioButton("Relampago");
     private final JRadioButton permanente = new JRadioButton("Permanente");
+    private final int width = dimensiones.width/4;
+    private final int heigth = dimensiones.height/2; 
 
     private final JButton jugar = new JButton("Empezar a Jugar");
     private JTextField nombreJugador1,porcentaje;
     private String modoMaquina,tipo,tipoCasilla;
 
     public ConfigMaquina(){
-    	setTitle("DaPOO");
-        setSize(370,480);
+    	setTitle("PoobStairs");
+        setSize(width,heigth);
         prepareElements();
         prepareActions();
         setLocationRelativeTo(null);
@@ -45,10 +51,11 @@ public class ConfigMaquina extends JDialog {
                 .setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("Configure la maquina")));
 
         JLabel jugador = new JLabel("Ingrese Su Nombre:");
-        jugador.setBounds(20, 40, 200, 50);
+        jugador.setBounds(width/2-110, 40, 200, 50);
         nombreJugador1 = new JTextField();
-        nombreJugador1.setBounds(150, 50, 180, 30);
-        JLabel dificultadMaquina = new JLabel("Nivel de Dificultad de la Maquina:");
+        nombreJugador1.setBounds(width/2+10, 50, 180, 30);
+        jugar.setBounds(width/2-100, heigth-100, 200, 50);
+        /*JLabel dificultadMaquina = new JLabel("Nivel de Dificultad de la Maquina:");
         dificultadMaquina.setBounds(20, 100, 200, 20);
         principiante.setBounds(50, 140, 100, 20);
         aprendiz.setBounds(200, 140, 100, 20);
@@ -64,13 +71,12 @@ public class ConfigMaquina extends JDialog {
         pregunta.setBounds(20,340,300,20);
         porcentaje = new JTextField();
         porcentaje.setBounds(300,340,40,20);
-        jugar.setBounds(75, 370, 200, 50);
+        
 
 
 
         panelFichas.setLayout(null);
-        panelFichas.add(jugador);
-        panelFichas.add(nombreJugador1);
+        
         panelFichas.add(jugar);
         panelFichas.add(modos);
         panelFichas.add(principiante);
@@ -93,8 +99,12 @@ public class ConfigMaquina extends JDialog {
         ButtonGroup modosJuego = new ButtonGroup();
         modosJuego.add(normal);
         modosJuego.add(quicktime);
-        
+        */
 
+        panelFichas.setLayout(null);
+        panelFichas.add(jugador);
+        panelFichas.add(nombreJugador1);
+        panelFichas.add(jugar);
         pantallaCarga.setLayout(new GridLayout(1, 1));
         pantallaCarga.add(panelFichas);
 
@@ -106,13 +116,13 @@ public class ConfigMaquina extends JDialog {
         WindowListener Cerrar = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
         };
-        this.addWindowListener(Cerrar);
+        this.addWindowListener(Cerrar);/* 
         principiante.addActionListener(e -> checkBox());
         aprendiz.addActionListener(e -> checkBox());
         normal.addActionListener(e -> checkBox());
         quicktime.addActionListener(e -> checkBox());
         permanente.addActionListener(e -> checkBox());
-        relampago.addActionListener(e -> checkBox());
+        relampago.addActionListener(e -> checkBox());*/
         jugar.addActionListener(e -> {
             try {
                 empezarJuego();
@@ -143,20 +153,19 @@ public class ConfigMaquina extends JDialog {
         }
     }
 
-    private void empezarJuego() {
-        if ( modoMaquina != null && tipo != null && tipoCasilla != null && !porcentaje.getText().isEmpty() && !nombreJugador1.getText().isEmpty()){
+    private void empezarJuego() throws PoobStairsExceptions {
+        if (!nombreJugador1.getText().isEmpty()){
             try{
-                int number =Integer.parseInt(porcentaje.getText());
                 String nombre = nombreJugador1.getText();
                 String maquina = "DaPooInteligancia01";
-                //TableGUI tablero = new TableGUI(nombre,maquina,number,null,tipo);
-                //tablero.setVisible(true);
+                TableGUI tablero = new TableGUI(nombre,maquina);
+                tablero.setVisible(true);
                 this.dispose();
             }catch(NumberFormatException e){
                 //hrow new DamasException(DamasException.BAD_PERCENTAGE);
             }
-        }else if ( modoMaquina == null || tipo == null || tipoCasilla == null|| nombreJugador1.getText().isEmpty() || porcentaje.getText().isEmpty() ) {
-            //throw new DamasException(DamasException.IS_EMPTY);
+        }else if ( nombreJugador1.getText().isEmpty()) {
+            throw new PoobStairsExceptions(PoobStairsExceptions.IS_EMPTY);
         }
     }
 }
