@@ -27,8 +27,8 @@ public class ConfigJugador extends JDialog {
     private final JButton jugar = new JButton("Empezar a Jugar");
     private JTextField nombreJugador1, nombreJugador2,porcentaje;
     private String tipo,tipoCasilla;
-    private final int width = Estilos.dimensiones.width/4;
-    private final int heigth = Estilos.dimensiones.height/2; 
+    private final int width = Estilos.dimensions.width/4;
+    private final int heigth = Estilos.dimensions.height/2; 
     /**
      * Constructor de la pantalla de configuracion.
      */
