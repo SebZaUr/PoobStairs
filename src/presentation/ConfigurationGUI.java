@@ -11,9 +11,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 public class ConfigurationGUI extends JDialog {
-    private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
-    private static final int width = dimensions.width / 4;
-    private static final int height = dimensions.height / 4;
+    
+    private static final int width = Estilos.dimensions.width / 4;
+    private static final int height = Estilos.dimensions.height / 4;
     private JButton jugador;
     private JButton maquina;
 
@@ -23,12 +23,12 @@ public class ConfigurationGUI extends JDialog {
     }
 
     public void prepareElements() {
-        setTitle("POOBSTAIRS");
+    	setTitle(Estilos.TITULO);
         setSize(width, height);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        JPanel panel = new GradientPanel();
+        JPanel panel = Estilos.GradientPanel();
         panel.setOpaque(false);
         panel.setLayout(null);
         jugador = new JButton();
@@ -36,8 +36,8 @@ public class ConfigurationGUI extends JDialog {
 
         jugador.setBounds(width/2 - 105,height/8,100,100);
         maquina.setBounds(width/2 + 5,height/8,100,100);
-        ImageIcon vsJugador = new ImageIcon("./resourses/2.png");
-        ImageIcon vsMaquina = new ImageIcon("./resourses/maquina.png");
+        ImageIcon vsJugador = new ImageIcon("./resourses/personas.png");
+        ImageIcon vsMaquina = new ImageIcon("./resourses/robot.png");
         jugador.setIcon(vsJugador);
         maquina.setIcon(vsMaquina);
         

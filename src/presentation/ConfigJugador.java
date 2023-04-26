@@ -19,7 +19,7 @@ import java.awt.event.WindowListener;
  */
 public class ConfigJugador extends JDialog {
 
-    private static final Dimension dimensiones = Toolkit.getDefaultToolkit().getScreenSize();
+    
     private final JRadioButton normal = new JRadioButton("Normal");
     private final JRadioButton quicktime = new JRadioButton("Quicktime");
     private final JRadioButton relampago = new JRadioButton("Relampago");
@@ -27,14 +27,14 @@ public class ConfigJugador extends JDialog {
     private final JButton jugar = new JButton("Empezar a Jugar");
     private JTextField nombreJugador1, nombreJugador2,porcentaje;
     private String tipo,tipoCasilla;
-    private final int width = dimensiones.width/4;
-    private final int heigth = dimensiones.height/2; 
+    private final int width = Estilos.dimensiones.width/4;
+    private final int heigth = Estilos.dimensiones.height/2; 
     /**
      * Constructor de la pantalla de configuracion.
      */
     public ConfigJugador() {
-    	setTitle("PoobStairs");
-        setSize(width,heigth);
+    	setTitle(Estilos.TITULO);
+        setSize(width, height);
         prepareElements();
         prepareActions();
         setLocationRelativeTo(null);

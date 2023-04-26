@@ -15,22 +15,21 @@ import java.awt.event.WindowListener;
 //import Domain.*;
 
 public class ConfigMaquina extends JDialog {
-    private static final Dimension dimensiones = Toolkit.getDefaultToolkit().getScreenSize();
     private final JRadioButton principiante = new JRadioButton("Principiante");
     private final JRadioButton aprendiz = new JRadioButton("Aprendiz");
     private final JRadioButton normal = new JRadioButton("Normal");
     private final JRadioButton quicktime = new JRadioButton("Quicktime");
     private final JRadioButton relampago = new JRadioButton("Relampago");
     private final JRadioButton permanente = new JRadioButton("Permanente");
-    private final int width = dimensiones.width/4;
-    private final int heigth = dimensiones.height/2; 
+    private final int width = Estilos.dimensiones.width/4;
+    private final int heigth = Estilos.dimensiones.height/2; 
 
     private final JButton jugar = new JButton("Empezar a Jugar");
     private JTextField nombreJugador1,porcentaje;
     private String modoMaquina,tipo,tipoCasilla;
 
     public ConfigMaquina(){
-    	setTitle("PoobStairs");
+    	setTitle(Estilos.TITULO);
         setSize(width,heigth);
         prepareElements();
         prepareActions();

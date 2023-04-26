@@ -4,12 +4,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 
 import javax.swing.ImageIcon;
@@ -33,16 +29,16 @@ public class PoobStairsGUI extends JDialog {
     private JButton play;
     private JButton cargar;
     private JButton salir;
-    private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
-    private static final int width = dimensions.width / 4;
-    private static final int height = dimensions.height / 2;
+
+    private static final int width = Estilos.dimensions.width / 4;
+    private static final int height = Estilos.dimensions.height / 2;
     private JFileChooser selecArchivo;
 
     /**
      * Let create the poobStairsGUI.
      */
     public PoobStairsGUI() {
-        setTitle("POOBSTAIRS");
+        setTitle(Estilos.TITULO);
         setSize(width, height);
         prepareElements();
         prepareActions();
@@ -56,29 +52,34 @@ public class PoobStairsGUI extends JDialog {
      */
     public void prepareElements() {
 
-        JPanel PantallaInicial = new GradientPanel();
+        JPanel PantallaInicial = Estilos.GradientPanel();
         PantallaInicial.setOpaque(false);
         PantallaInicial.setLayout(null);
 
         JLabel chuters = new JLabel("CHUTERS");
         JLabel and = new JLabel("AND");
         JLabel laders = new JLabel("LADDERS");
-        chuters.setForeground(new Color(255, 255, 255));
-        chuters.setFont(new Font("Madison Street", Font.BOLD, 20));
+        chuters.setForeground(Estilos.COLOR_LETRAS);
+        chuters.setFont(Estilos.FUENTE_TITULO);
         chuters.setBounds(width / 2 - 100, (int) (height / 4.5) - 60, 200, 50);
-        and.setForeground(new Color(255, 255, 255));
-        and.setFont(new Font("Madison Street", Font.BOLD, 20));
+        and.setForeground(Estilos.COLOR_LETRAS);
+        and.setFont(Estilos.FUENTE_TITULO);
         and.setBounds(width / 2 - 50, (int) (height / 4.5) - 35, 200, 50);
-        laders.setForeground(new Color(255, 255, 255));
-        laders.setFont(new Font("Madison Street", Font.BOLD, 20));
+        laders.setForeground(Estilos.COLOR_LETRAS);
+        laders.setFont(Estilos.FUENTE_TITULO);
         laders.setBounds(width / 2 - 100, (int) (height / 4.5) - 10, 200, 50);
 
         play = new JButton("Jugar");
-        cargar = new JButton("Cargar Partida");
+        cargar = new JButton("Cargar");
         salir = new JButton("Salir");
+
         play.setBounds(width / 2 - 100, (int) (height / 1.5) - 150, 200, 50);
         cargar.setBounds(width / 2 - 100, (int) (height / 1.5) - 100, 200, 50);
         salir.setBounds(width / 2 - 100, (int) (height / 1.5) - 50, 200, 50);
+
+        play.setFont(Estilos.FUENTE_LETRA);
+        cargar.setFont(Estilos.FUENTE_LETRA);
+        salir.setFont(Estilos.FUENTE_LETRA);
 
         PantallaInicial.add(chuters);
         PantallaInicial.add(and);
@@ -86,7 +87,7 @@ public class PoobStairsGUI extends JDialog {
         PantallaInicial.add(play);
         PantallaInicial.add(cargar);
         PantallaInicial.add(salir);
-        
+
         JLabel imagen = new JLabel("");
         imagen.setIcon(new ImageIcon("resourses\\Snake.png"));
         imagen.setForeground(Color.WHITE);
@@ -104,6 +105,7 @@ public class PoobStairsGUI extends JDialog {
             }
         };
         this.addWindowListener(Cerrar);
+
         play.addActionListener(e -> optionPane());
         cargar.addActionListener(e -> searchFile());
         salir.addActionListener(e -> exit());

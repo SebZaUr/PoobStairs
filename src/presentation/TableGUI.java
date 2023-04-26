@@ -43,7 +43,7 @@ public class TableGUI extends JDialog{
      * 
      */
     public void prepareElements() {
-        JPanel PantallaInicial = new GradientPanel();
+        JPanel PantallaInicial = Estilos.GradientPanel();
         getContentPane().add(PantallaInicial);
         PantallaInicial.setLayout(new GridLayout(1, 0, 0, 0));
         
