@@ -1,5 +1,3 @@
-Claro, aquí te lo dejo:
-
 # POOBstairs
 
 POOBstairs es un emocionante juego de mesa modernizado por Johann Amaya y Sebastian Zamora. Este juego combina la diversión de escaleras y serpientes con nuevas ideas de los autores. Los jugadores pueden disfrutar de la competencia contra amigos o desafiar a la máquina.
