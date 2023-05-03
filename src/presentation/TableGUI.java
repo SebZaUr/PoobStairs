@@ -1,12 +1,12 @@
 package presentation;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,12 +16,15 @@ import javax.swing.ImageIcon;
 
 public class TableGUI extends JDialog{
 
-    private JButton[][] botones;
+    private JPanel[][] botones;
+    private JPanel juego;
     private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
-    private static final int width = dimensions.width ;
-    private static final int height = dimensions.height ;
-    private static String nombre1 = "";
-    private static String nombre2 = "";
+    private final int width = dimensions.width ;
+    private final int height = dimensions.height ;
+    private static String nombre1 ;
+    private static String nombre2 ;
+    public static final String[] typesCasillas = {"Normal","Mortal","Saltarinas","SaltarinaInversa","Escalera","Serpiente"};
+    public static final String[] typesModificadores = {"Nulo","Bonificacion","Penalizacion","CambioPosicion","Pregunta"};
 
     /**
      * Let create the poobStairsGUI.
@@ -52,30 +55,38 @@ public class TableGUI extends JDialog{
         PantallaInicial.add(panel_iz);
         
         // Nuevo JPanel para contener los botones del tablero
-        JPanel panel_tablero = new JPanel(new GridLayout(10, 10));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(10, 10, 10, 10); // Margen para separar el panel del borde del panel_iz
-        panel_iz.add(panel_tablero, gbc);
-        
-        // Cree los botones y agréguelos al panel del tablero
-        botones = new JButton[10][10];
-        for (int i = 9; i >= 0; i--) {
-            for (int j = 0; j < 10; j++) {
-                botones[i][j] = new JButton();
-                botones[i][j].setPreferredSize(new Dimension(50, 50)); // Tamaño cuadrado
-                botones[i][j].setText("(" + i + ", " + j + ")"); // Posiciones del tablero
-                botones[i][j].setEnabled(false); // Deshabilitar los botones
-                if ((i + j) % 2 == 0) {
-                    botones[i][j].setBackground(Color.GREEN); // Fondo verde para posiciones impares
-                }
-                panel_tablero.add(botones[i][j]);
-            }
-        }
+        try {
+			JPanel panel_tablero = prepareTable();
+			GridBagConstraints gbc = new GridBagConstraints();
+	        gbc.gridx = 0;
+	        gbc.gridy = 0;
+	        gbc.weightx = 1.0;
+	        gbc.weighty = 1.0;
+	        gbc.fill = GridBagConstraints.BOTH;
+	        gbc.insets = new Insets(10, 10, 10, 10); // Margen para separar el panel del borde del panel_iz
+	        panel_iz.add(panel_tablero, gbc);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         JPanel panel_de = new JPanel();
         panel_de.setOpaque(false);
@@ -109,5 +120,48 @@ public class TableGUI extends JDialog{
     }
     public void prepareActions() {
         
+    }
+    
+    /**
+     * Create the board to play
+     * @return a panel with the board
+     * @throws ClassNotFoundException 
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws IllegalArgumentException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
+     */
+    public JPanel prepareTable() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+    	int contador = 1;
+    	int ajuste = 9 ;
+    	int valor = 0 ;
+    	juego = new JPanel();
+        juego.setLayout(new GridLayout(10, 10));
+        botones = new JPanel[10][10];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+            	String x = Integer.toString(i+j);
+            	if(i % 2 != 0) {
+            		valor = 101 -contador - ajuste;
+            		ajuste = ajuste-2;
+            	}else {
+            		ajuste = 9;
+            		valor = 101 - contador;
+            	}
+            	CasillasGUI casilla = (CasillasGUI)Class.forName("presentation.NormalGUI").getConstructor(String.class,String.class).newInstance(Integer.toString(valor),x);
+                botones[i][j] = casilla;
+                juego.add(casilla);
+                juego.validate();
+                juego.repaint();
+                contador++;
+            }
+        }
+        return juego;
+    }
+    
+    private void prepareDado() {
+    	
     }
 }
