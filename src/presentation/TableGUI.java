@@ -7,20 +7,28 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
-
+import java.util.HashMap;
+import java.util.Map;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
 public class TableGUI extends JDialog{
 
-    private JPanel[][] botones;
+    private Map<Integer,JPanel> botones;
     private JPanel juego;
     private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
     private final int width = dimensions.width ;
     private final int height = dimensions.height ;
+    private JLabel dado;
+    private DadoGUI imagenDado;
+    private JButton btnNewButton;
     private static String nombre1 ;
     private static String nombre2 ;
     public static final String[] typesCasillas = {"Normal","Mortal","Saltarinas","SaltarinaInversa","Escalera","Serpiente"};
@@ -107,19 +115,23 @@ public class TableGUI extends JDialog{
         JLabel lblNewLabel_3 = new JLabel("Playe 2");
         panel_de.add(lblNewLabel_3);
         
-        JLabel lblNewLabel = new JLabel("");
-        lblNewLabel.setIcon(new ImageIcon("resourses\\dado.png"));
-        panel_de.add(lblNewLabel);
+        dado = new JLabel();
+        imagenDado = new DadoGUI();
+        dado.setIcon(imagenDado.getImagen());
+        panel_de.add(dado);
         
-        JLabel lblNewLabel_6 = new JLabel("");
-        lblNewLabel_6.setIcon(new ImageIcon("resourses\\dado.png"));
-        panel_de.add(lblNewLabel_6);
-        
-        JButton btnNewButton = new JButton("Lanzar");
+        btnNewButton = new JButton("Lanzar");
         panel_de.add(btnNewButton);
     }
     public void prepareActions() {
-        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        WindowListener Cerrar = new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        };
+        this.addWindowListener(Cerrar);
+        btnNewButton.addActionListener(e -> jugar());
     }
     
     /**
@@ -139,7 +151,7 @@ public class TableGUI extends JDialog{
     	int valor = 0 ;
     	juego = new JPanel();
         juego.setLayout(new GridLayout(10, 10));
-        botones = new JPanel[10][10];
+        botones = new HashMap<>();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
             	String x = Integer.toString(i+j);
@@ -151,7 +163,7 @@ public class TableGUI extends JDialog{
             		valor = 101 - contador;
             	}
             	CasillasGUI casilla = (CasillasGUI)Class.forName("presentation.NormalGUI").getConstructor(String.class,String.class).newInstance(Integer.toString(valor),x);
-                botones[i][j] = casilla;
+                botones.put(valor,casilla);
                 juego.add(casilla);
                 juego.validate();
                 juego.repaint();
@@ -160,8 +172,11 @@ public class TableGUI extends JDialog{
         }
         return juego;
     }
-    
-    private void prepareDado() {
-    	
+
+    private void jugar(){
+        DadoGUI lanzar = new DadoGUI();
+        dado.setIcon(lanzar.getImagen());
+        validate();
+        repaint();
     }
 }
