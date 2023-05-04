@@ -15,18 +15,15 @@ import java.awt.event.WindowListener;
 //import Domain.*;
 
 public class ConfigMaquina extends JDialog {
-    private final JRadioButton principiante = new JRadioButton("Principiante");
-    private final JRadioButton aprendiz = new JRadioButton("Aprendiz");
-    private final JRadioButton normal = new JRadioButton("Normal");
-    private final JRadioButton quicktime = new JRadioButton("Quicktime");
-    private final JRadioButton relampago = new JRadioButton("Relampago");
-    private final JRadioButton permanente = new JRadioButton("Permanente");
-    private final int width = Estilos.dimensions.width/4;
+    private JTextField nombreJugador1,porcentajeCasillas,porcentajeModificadores,sizeTablero;
+    private JRadioButton Rojo1,Negro1,Azul1,Amarillo1,Verde1,Blanco1,cambioT,cambioF,principiante,aprendiz;
+    private ButtonGroup coloresJ1,cambio,maquina;
+    private final int width = Estilos.dimensions.width/2;
     private final int heigth = Estilos.dimensions.height/2; 
 
     private final JButton jugar = new JButton("Empezar a Jugar");
-    private JTextField nombreJugador1,porcentaje;
-    private String modoMaquina,tipo,tipoCasilla;
+    private String modoMaquina,color;
+    private boolean cambioES = false;
 
     public ConfigMaquina(){
     	setIconImage(Estilos.icono.getImage());
@@ -41,72 +38,101 @@ public class ConfigMaquina extends JDialog {
     public void prepareElements(){
         JPanel pantallaCarga = new JPanel();
         JPanel ingresarNombre = new JPanel();
-        ingresarNombre.setLayout(new GridLayout(1, 1));
+        ingresarNombre.setLayout(null);
+        ingresarNombre.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("Ingresar Datos")));
 
-        JPanel panelFichas = new JPanel();
-        panelFichas.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("Configuracion")));
 
-        JPanel panelMaquina = new JPanel();
-        panelMaquina
-                .setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("Configure la maquina")));
+        JPanel Configuracion = new JPanel();
+        Configuracion.setLayout(null);
+        Configuracion.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("Configuracion")));
 
+       
         JLabel jugador = new JLabel("Ingrese Su Nombre:");
-        jugador.setBounds(width/2-110, 40, 200, 50);
+        jugador.setBounds(50, 40, 150, 50);
         nombreJugador1 = new JTextField();
-        nombreJugador1.setBounds(width/2+10, 50, 180, 30);
-        jugar.setBounds(width/2-100, heigth-100, 200, 50);
-        /*JLabel dificultadMaquina = new JLabel("Nivel de Dificultad de la Maquina:");
-        dificultadMaquina.setBounds(20, 100, 200, 20);
-        principiante.setBounds(50, 140, 100, 20);
-        aprendiz.setBounds(200, 140, 100, 20);
-        JLabel modos = new JLabel("Modo de Juego:");
-        modos.setBounds(20, 180, 200, 20);
-        normal.setBounds(50, 220, 100, 20);
-        quicktime.setBounds(200, 220, 100, 20);
-        JLabel casillas = new JLabel("Visualización de casillas:");
-        casillas.setBounds(20, 260, 200, 20);
-        permanente.setBounds(50, 300, 100, 20);
-        relampago.setBounds(200, 300, 100, 20);
-        JLabel pregunta = new JLabel("Digite el porcentade de casillas especiales:");
-        pregunta.setBounds(20,340,300,20);
-        porcentaje = new JTextField();
-        porcentaje.setBounds(300,340,40,20);
+        nombreJugador1.setBounds(width/4, 50, 180, 30);
+
+        JLabel colorJ1 = new JLabel("Color jugador 1:");
+        coloresJ1 = new ButtonGroup();
+        colorJ1.setBounds(10,100,100,20);
+        Rojo1 = new JRadioButton("Rojo");
+        Rojo1.setBounds(50, 150, 60, 30);
+        coloresJ1.add(Rojo1);
+        Blanco1 = new JRadioButton("Blanco");
+        Blanco1.setBounds(width/4-50, 150, 100, 30);
+        coloresJ1.add(Blanco1);
+        Negro1 = new JRadioButton("Negro");
+        Negro1.setBounds(50, 210, 60, 30);
+        coloresJ1.add(Negro1);
+        Verde1 = new JRadioButton("Verde");
+        Verde1.setBounds(width/4+150, 150, 60, 30);
+        coloresJ1.add(Verde1);
+        Amarillo1 = new JRadioButton("Amarillo");
+        Amarillo1.setBounds(width/4 -50, 210, 60, 30);
+        coloresJ1.add(Amarillo1);
+        Azul1 = new JRadioButton("Azul");
+        Azul1.setBounds(width/4 +150, 210, 60, 30);
+        coloresJ1.add(Azul1);
+        JPanel color1 = new JPanel();
+        color1.setBounds(width/4-200, heigth/2, 50, 50);
+        JLabel tiposMaquina = new JLabel("Escoja la dificultad de la maquina");
+        tiposMaquina.setBounds(50, heigth/2,200, 20);
+        maquina = new ButtonGroup();
+        principiante = new JRadioButton("Principiante");
+        principiante.setBounds(width/4 -100, heigth/2 +50,100,20);
+        aprendiz = new JRadioButton("Aprendiz");
+        aprendiz.setBounds(width/4 +100, heigth/2 +50,100,20);
+        maquina.add(aprendiz);
+        maquina.add(principiante);
+        ingresarNombre.add(colorJ1);
+        ingresarNombre.add(Rojo1);
+        ingresarNombre.add(Azul1);
+        ingresarNombre.add(Blanco1);
+        ingresarNombre.add(Verde1);
+        ingresarNombre.add(Negro1);
+        ingresarNombre.add(Amarillo1);
+        ingresarNombre.add(tiposMaquina);
+        ingresarNombre.add(principiante);
+        ingresarNombre.add(aprendiz);
         
+        JLabel numCasillas = new JLabel("Ingrese el porcentaje de casillas especiales");
+        numCasillas.setBounds(50,20,250,20);
+        porcentajeCasillas = new JTextField();
+        porcentajeCasillas.setBounds(width/4 +100, 20, 50, 20);
+        JLabel numBonificadores = new JLabel("Ingrese el porcentaje de bonificadores");
+        numBonificadores.setBounds(50,100,250,20);
+        porcentajeModificadores = new JTextField();
+        porcentajeModificadores.setBounds(width/4 + 100, 100, 50, 20);
+        JLabel size = new JLabel("Ingrese el tamaño del tablero");
+        size.setBounds(50, 150, 200, 20);
+        sizeTablero = new JTextField();
+        sizeTablero.setBounds(width/4 + 100, 150,50,20);
+        JLabel cambioEsSer = new JLabel("¿Quiere que las escaleras y serpientes puedan cambiar?");
+        cambioEsSer.setBounds(50,200,350,20);
+        cambio = new ButtonGroup();
+        cambioT = new JRadioButton("Si");
+        cambioT.setBounds(width/4-100, 250, 40, 20);
+        cambioF = new JRadioButton("No");
+        cambioF.setBounds(width/4+100, 250, 40, 20);
+        cambio.add(cambioF);
+        cambio.add(cambioT);
+        jugar.setBounds(width/4-100, heigth-100, 200, 50);
 
+        Configuracion.add(numCasillas);
+        Configuracion.add(numBonificadores);
+        Configuracion.add(porcentajeCasillas);
+        Configuracion.add(porcentajeModificadores);
+        Configuracion.add(cambioT);
+        Configuracion.add(cambioF);
+        Configuracion.add(cambioEsSer);
+        Configuracion.add(jugar);
 
-
-        panelFichas.setLayout(null);
-        
-        panelFichas.add(jugar);
-        panelFichas.add(modos);
-        panelFichas.add(principiante);
-        panelFichas.add(aprendiz);
-        panelFichas.add(casillas);
-        panelFichas.add(permanente);
-        panelFichas.add(relampago);
-        panelFichas.add(dificultadMaquina);
-        panelFichas.add(normal);
-        panelFichas.add(quicktime);
-        panelFichas.add(pregunta);
-        panelFichas.add(porcentaje);
-        
-        ButtonGroup modosMaquina = new ButtonGroup();
-        modosMaquina.add(principiante);
-        modosMaquina.add(aprendiz);
-        ButtonGroup tipoCasillas = new ButtonGroup();
-        tipoCasillas.add(permanente);
-        tipoCasillas.add(relampago);
-        ButtonGroup modosJuego = new ButtonGroup();
-        modosJuego.add(normal);
-        modosJuego.add(quicktime);
-        */
-
-        panelFichas.setLayout(null);
-        panelFichas.add(jugador);
-        panelFichas.add(nombreJugador1);
-        panelFichas.add(jugar);
-        pantallaCarga.setLayout(new GridLayout(1, 1));
-        pantallaCarga.add(panelFichas);
+        ingresarNombre.setLayout(null);
+        ingresarNombre.add(jugador);
+        ingresarNombre.add(nombreJugador1);
+        pantallaCarga.setLayout(new GridLayout(1, 2));
+        pantallaCarga.add(ingresarNombre);
+        pantallaCarga.add(Configuracion);
 
         add(pantallaCarga);
     }
@@ -116,13 +142,15 @@ public class ConfigMaquina extends JDialog {
         WindowListener Cerrar = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
         };
-        this.addWindowListener(Cerrar);/* 
+        this.addWindowListener(Cerrar);
         principiante.addActionListener(e -> checkBox());
         aprendiz.addActionListener(e -> checkBox());
-        normal.addActionListener(e -> checkBox());
-        quicktime.addActionListener(e -> checkBox());
-        permanente.addActionListener(e -> checkBox());
-        relampago.addActionListener(e -> checkBox());*/
+        Rojo1.addActionListener(e -> checkBox());
+        Azul1.addActionListener(e -> checkBox());
+        Negro1.addActionListener(e -> checkBox());
+        Amarillo1.addActionListener(e -> checkBox());
+        Blanco1.addActionListener(e -> checkBox());
+        Verde1.addActionListener(e -> checkBox());
         jugar.addActionListener(e -> {
             try {
                 empezarJuego();
@@ -134,37 +162,66 @@ public class ConfigMaquina extends JDialog {
 
 
     private void checkBox(){
-        if (principiante.isSelected()) {
-            modoMaquina ="principiante";
+        if(Azul1.isSelected()){
+            color = "blue";
         }
-        if (aprendiz.isSelected()) {
-        	modoMaquina = "aprendiz";
+        else if(Blanco1.isSelected()){
+            color = "white";
         }
-        if (normal.isSelected()) {
-        	tipo = "normal";
+        else if(Amarillo1.isSelected()){
+            color = "yellow";
         }
-        if (quicktime.isSelected()) {
-        	tipo = "quicktime";
-        }if (permanente.isSelected()) {
-        	tipoCasilla = "permanente";
+        else if(Verde1.isSelected()){
+            color = "green";
         }
-        if (relampago.isSelected()) {
-            tipoCasilla = "relampago";
+        else if(Negro1.isSelected()){
+            color = "black";
+        }
+        else if(Rojo1.isSelected()){
+            color = "red";
+        }
+        if(principiante.isSelected()){
+            modoMaquina = "principiante";
+        }
+        else if(aprendiz.isSelected()){
+            modoMaquina = "aprendiz";
+        }
+        if(cambioT.isSelected()){
+            cambioES = true;
+        }
+        else if(cambioF.isSelected()){
+            cambioES = false;
         }
     }
 
     private void empezarJuego() throws PoobStairsExceptions {
-        if (!nombreJugador1.getText().isEmpty()){
+        if (!nombreJugador1.getText().isEmpty() && color != null && modoMaquina != null){
             try{
                 String nombre = nombreJugador1.getText();
                 String maquina = "DaPooInteligancia01";
-                TableGUI tablero = new TableGUI(nombre,maquina);
+                int porCasillas,porBonificacion,size;
+                if(porcentajeCasillas.getText().isEmpty()){
+                    porCasillas =0;
+                }else{
+                    porCasillas =Integer.parseInt(porcentajeCasillas.getText()) ;
+                }
+                if(porcentajeModificadores.getText().isEmpty()){
+                    porBonificacion =0;
+                }else{
+                    porBonificacion =Integer.parseInt(porcentajeCasillas.getText()) ;
+                }
+                if(sizeTablero.getText().isEmpty()){
+                    size =0;
+                }else{
+                    size =Integer.parseInt(porcentajeCasillas.getText()) ;
+                }
+                TableGUI tablero = new TableGUI(nombre,maquina,porCasillas,porBonificacion,size,cambioES);
                 tablero.setVisible(true);
                 this.dispose();
             }catch(NumberFormatException e){
                 //hrow new DamasException(DamasException.BAD_PERCENTAGE);
             }
-        }else if ( nombreJugador1.getText().isEmpty()) {
+        }else if ( nombreJugador1.getText().isEmpty() || color == null || modoMaquina == null) {
             throw new PoobStairsExceptions(PoobStairsExceptions.IS_EMPTY);
         }
     }

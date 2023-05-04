@@ -37,7 +37,7 @@ public class TableGUI extends JDialog{
     /**
      * Let create the poobStairsGUI.
      */
-    public TableGUI(String nombre1, String nombre2) {
+    public TableGUI(String nombre1, String nombre2,int porcentajeMaquina, int porcentajeBonificador, int Tamaño , boolean modificar) {
     	setIconImage(Estilos.icono.getImage());
         setTitle("POOBSTAIRS");
         setSize(width, height);

@@ -20,12 +20,13 @@ import java.awt.event.WindowListener;
 public class ConfigJugador extends JDialog {
 
     private final JButton jugar = new JButton("Empezar a Jugar");
-    private JTextField nombreJugador1, nombreJugador2,porcentajeCasillas,porcentajeModificadores,sizetablero;
-    private JRadioButton Rojo1,Negro1,Azul1,Amarillo1,Verde1,Blanco1,Rojo2,Negro2,Azul2,Amarillo2,Verde2,Blanco2;
-    private ButtonGroup coloresJ1,coloresJ2;
+    private JTextField nombreJugador1, nombreJugador2,porcentajeCasillas,porcentajeModificadores,sizeTablero;
+    private JRadioButton Rojo1,Negro1,Azul1,Amarillo1,Verde1,Blanco1,Rojo2,Negro2,Azul2,Amarillo2,Verde2,Blanco2,cambioT,cambioF;
+    private ButtonGroup coloresJ1,coloresJ2,cambio;
     private String tipo,tipoCasilla;
     private final int width = Estilos.dimensions.width/2;
     private final int heigth = Estilos.dimensions.height/2; 
+    private static boolean cambioES = false;
     /**
      * Constructor de la pantalla de configuracion.
      */
@@ -44,14 +45,14 @@ public class ConfigJugador extends JDialog {
      */
     public void prepareElements(){
         JPanel pantallaCarga = new JPanel();
-        JPanel Datos = new JPanel();
-        Datos.setLayout(new GridLayout(1, 2));
-        Datos.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("Ingresen Datos")));
+        
 
         JPanel Configuracion = new JPanel();
+        Configuracion.setLayout(null);
         Configuracion.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("Configuracion")));
         
         JPanel nombres = new JPanel();
+        nombres.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("Ingresen Datos")));
         nombres.setLayout(null);
         JLabel jugador = new JLabel("Ingrese Su Nombre Jugador 1:");
         jugador.setBounds(10, 20, 200, 20);
@@ -69,6 +70,8 @@ public class ConfigJugador extends JDialog {
 
         JLabel colorJ1 = new JLabel("Color jugador 1:");
         JLabel colorJ2 = new JLabel("Color jugador 2:");
+        JPanel color1 = new JPanel();
+        JPanel color2 = new JPanel();
         coloresJ1 = new ButtonGroup();
         coloresJ2 = new ButtonGroup();
         colorJ1.setBounds(10,100,100,20);
@@ -109,6 +112,10 @@ public class ConfigJugador extends JDialog {
         Azul2 = new JRadioButton("Azul");
         Azul2.setBounds(width/4, 300, 60, 30);
         coloresJ2.add(Azul2);
+        color1.setBounds(width/4-100,heigth -100,50,50);
+        color2.setBounds(width/4+100,heigth-100,50,50);
+        color1.setBackground(Color.black);
+        color2.setBackground(Color.black);
     
         nombres.add(Rojo1);
         nombres.add(Rojo2);
@@ -124,55 +131,45 @@ public class ConfigJugador extends JDialog {
         nombres.add(Azul2);
         nombres.add(colorJ1);
         nombres.add(colorJ2);
-        jugar.setBounds(width/2-100, heigth-100, 200, 50);
-
-
-
-        /* 
-        JLabel casillas = new JLabel("Visualización de casillas:");
-        casillas.setBounds(20, 150, 200, 50);
-        permanente.setBounds(50, 175, 100, 50);
-        relampago.setBounds(200, 175, 100, 50);
-        JLabel modos = new JLabel("Modo de Juego:");
-        modos.setBounds(20, 200, 200, 50);
-        normal.setBounds(50, 225, 100, 50);
-        quicktime.setBounds(200, 225, 100, 50);
-        JLabel pregunta = new JLabel("Digite el porcentade de casillas especiales:");
-        pregunta.setBounds(20,275,300,50);
-        porcentaje = new JTextField();
-        porcentaje.setBounds(300,285,40,20);
-        jugar.setBounds(75, 350, 200, 50);
+        nombres.add(color1);
+        nombres.add(color2);
         
+        jugar.setBounds(width/4-100, heigth-100, 200, 50);
 
+        JLabel numCasillas = new JLabel("Ingrese el porcentaje de casillas especiales");
+        numCasillas.setBounds(50,20,250,20);
+        porcentajeCasillas = new JTextField();
+        porcentajeCasillas.setBounds(width/4 +100, 20, 50, 20);
+        JLabel numBonificadores = new JLabel("Ingrese el porcentaje de bonificadores");
+        numBonificadores.setBounds(50,100,250,20);
+        porcentajeModificadores = new JTextField();
+        porcentajeModificadores.setBounds(width/4 + 100, 100, 50, 20);
+        JLabel size = new JLabel("Ingrese el tamaño del tablero");
+        size.setBounds(50, 150, 200, 20);
+        sizeTablero = new JTextField();
+        sizeTablero.setBounds(width/4 + 100, 150,50,20);
+        JLabel cambioEsSer = new JLabel("¿Quiere que las escaleras y serpientes puedan cambiar?");
+        cambioEsSer.setBounds(50,200,350,20);
+        cambio = new ButtonGroup();
+        cambioT = new JRadioButton("Si");
+        cambioT.setBounds(width/4-100, 250, 40, 20);
+        cambioF = new JRadioButton("No");
+        cambioF.setBounds(width/4+100, 250, 40, 20);
+        cambio.add(cambioF);
+        cambio.add(cambioT);
 
+        Configuracion.add(numCasillas);
+        Configuracion.add(numBonificadores);
+        Configuracion.add(porcentajeCasillas);
+        Configuracion.add(porcentajeModificadores);
+        Configuracion.add(cambioT);
+        Configuracion.add(cambioF);
+        Configuracion.add(cambioEsSer);
+        Configuracion.add(jugar);
 
-        
-        panelFichas.add(jugador);
-        panelFichas.add(nombreJugador1);
-        panelFichas.add(casillas);
-        panelFichas.add(relampago);
-        panelFichas.add(permanente);
-        panelFichas.add(jugar);
-        panelFichas.add(nombreJugador2);
-        panelFichas.add(jugador2);
-        panelFichas.add(normal);
-        panelFichas.add(quicktime);
-        panelFichas.add(modos);
-        panelFichas.add(porcentaje);
-        panelFichas.add(pregunta);
-
-        ButtonGroup modosJuego = new ButtonGroup();
-        modosJuego.add(normal);
-        modosJuego.add(quicktime);
-        
-
-        ButtonGroup tipoCasillas = new ButtonGroup();
-        tipoCasillas.add(permanente);
-        tipoCasillas.add(relampago);*/
-
-        nombres.add(jugar);
-        pantallaCarga.setLayout(new GridLayout(1,1));
+        pantallaCarga.setLayout(new GridLayout(1,2));
         pantallaCarga.add(nombres);
+        pantallaCarga.add(Configuracion);
 
         add(pantallaCarga);
     }
@@ -204,7 +201,23 @@ public class ConfigJugador extends JDialog {
             try{
                 String nombre = nombreJugador1.getText();
                 String nombre2 = nombreJugador2.getText();
-                TableGUI tablero = new TableGUI(nombre,nombre2);
+                int porCasillas,porBonificacion,size;
+                if(porcentajeCasillas.getText().isEmpty()){
+                    porCasillas =0;
+                }else{
+                    porCasillas =Integer.parseInt(porcentajeCasillas.getText()) ;
+                }
+                if(porcentajeModificadores.getText().isEmpty()){
+                    porBonificacion =0;
+                }else{
+                    porBonificacion =Integer.parseInt(porcentajeCasillas.getText()) ;
+                }
+                if(sizeTablero.getText().isEmpty()){
+                    size =0;
+                }else{
+                    size =Integer.parseInt(porcentajeCasillas.getText()) ;
+                }
+                TableGUI tablero = new TableGUI(nombre,nombre2,porCasillas,porBonificacion,size,cambioES);
                 tablero.setVisible(true);
                 this.dispose();
             }catch(NumberFormatException e){
