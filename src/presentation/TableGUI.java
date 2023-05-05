@@ -130,7 +130,7 @@ public class TableGUI extends JDialog{
         
         dado = new JLabel();
         imagenDado = new DadoGUI();
-        dado.setIcon((Icon) new DadoGUI());
+        dado.setIcon(imagenDado.getImagen());
         panel_de.add(dado);
         
         btnNewButton = new JButton("Lanzar");

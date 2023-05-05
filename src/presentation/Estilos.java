@@ -4,8 +4,11 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.Font;
@@ -16,6 +19,7 @@ public class Estilos {
     public static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
     public static final Font FUENTE_TITULO = new Font("Kristen ITC", Font.BOLD, 30);
     public static final Font FUENTE_LETRA = new Font("Kristen ITC", Font.BOLD, 20);
+    public static final Font FUENTE_LETRA_MENOR = new Font("Lucida Sans Typewriter", Font.BOLD, 15);
     public static final Color COLOR_LETRAS = Color.WHITE;
     public static final Color COLOR_FONDO = new Color(34, 49, 63);
     public static final int ANCHO_BOTONES = 200;
