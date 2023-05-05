@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 /**
- * Me crea la pantalla de configuracion para jugar contra un jugador
+ *  Let me type the player's name and select all the different characteristics of the game. 
  * @author Sebastian Zamora Urrego.
  * @author Johann Amaya Lopez.
  *@version 1.3
@@ -23,7 +23,7 @@ public class ConfigJugador extends JDialog {
     private JTextField nombreJugador1, nombreJugador2,porcentajeCasillas,porcentajeModificadores,sizeTablero;
     private JRadioButton Rojo1,Negro1,Azul1,Amarillo1,Verde1,Blanco1,Rojo2,Negro2,Azul2,Amarillo2,Verde2,Blanco2,cambioT,cambioF;
     private ButtonGroup coloresJ1,coloresJ2,cambio;
-    private String tipo,tipoCasilla;
+    private String modoMaquina,color,color2;
     private final int width = Estilos.dimensions.width/2;
     private final int heigth = Estilos.dimensions.height/2; 
     private static boolean cambioES = false;
@@ -175,14 +175,20 @@ public class ConfigJugador extends JDialog {
     }
 
     /**
-     * Me prepara las acciones de la pantalla de configuracion.
+     * Prepare all the button's actions
      */
-    public void prepareActions(){
+    public void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         WindowListener Cerrar = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
         };
         this.addWindowListener(Cerrar);
+        Rojo1.addActionListener(e -> checkBox());
+        Azul1.addActionListener(e -> checkBox());
+        Negro1.addActionListener(e -> checkBox());
+        Amarillo1.addActionListener(e -> checkBox());
+        Blanco1.addActionListener(e -> checkBox());
+        Verde1.addActionListener(e -> checkBox());
         jugar.addActionListener(e -> {
             try {
                 empezarJuego();
@@ -193,14 +199,62 @@ public class ConfigJugador extends JDialog {
     }
 
     /**
-     * Me valida que el usuario halla llenado toda la informacion necesaria
-     * @throws PoobStairsExceptions
+     * Verify which of the JRadiumButtons are selected and save its message.
+     */
+    private void checkBox(){
+        if(Azul1.isSelected()){
+            color = "blue";
+        }
+        else if(Blanco1.isSelected()){
+            color = "white";
+        }
+        else if(Amarillo1.isSelected()){
+            color = "yellow";
+        }
+        else if(Verde1.isSelected()){
+            color = "green";
+        }
+        else if(Negro1.isSelected()){
+            color = "black";
+        }
+        else if(Rojo1.isSelected()){
+            color2 = "red";
+        }
+        if(Azul2.isSelected()){
+            color2 = "blue";
+        }
+        else if(Blanco2.isSelected()){
+            color2 = "white";
+        }
+        else if(Amarillo1.isSelected()){
+            color2 = "yellow";
+        }
+        else if(Verde1.isSelected()){
+            color2 = "green";
+        }
+        else if(Negro1.isSelected()){
+            color2 = "black";
+        }
+        else if(Rojo1.isSelected()){
+            color2 = "red";
+        }
+        if(cambioT.isSelected()){
+            cambioES = true;
+        }
+        else if(cambioF.isSelected()){
+            cambioES = false;
+        }
+    }
+
+    /**
+     * Let me verify if the user bring the less parameters to start the game.
+     * @throws PoobStairsExceptions	If the user put a bad number or doesn't put all not filled in the necessary fields.
      */
     private void empezarJuego() throws PoobStairsExceptions {
-    	if (!nombreJugador2.getText().isEmpty() && !nombreJugador1.getText().isEmpty()){
+        if (!nombreJugador1.getText().isEmpty() && !nombreJugador2.getText().isEmpty() && color != null && color2 != null && modoMaquina != null){
             try{
                 String nombre = nombreJugador1.getText();
-                String nombre2 = nombreJugador2.getText();
+                String maquina = "DaPooInteligancia01";
                 int porCasillas,porBonificacion,size;
                 if(porcentajeCasillas.getText().isEmpty()){
                     porCasillas =0;
@@ -217,13 +271,13 @@ public class ConfigJugador extends JDialog {
                 }else{
                     size =Integer.parseInt(porcentajeCasillas.getText()) ;
                 }
-                TableGUI tablero = new TableGUI(nombre,nombre2,porCasillas,porBonificacion,size,cambioES);
+                TableGUI tablero = new TableGUI(nombre,maquina,porCasillas,porBonificacion,size,cambioES,color,color2);
                 tablero.setVisible(true);
                 this.dispose();
             }catch(NumberFormatException e){
-                //throw new DamasException(DamasException.BAD_PERCENTAGE);
+                throw new PoobStairsExceptions(PoobStairsExceptions.BAD_PERCENTAGE);
             }
-        }else if ( nombreJugador2.getText().isEmpty()  || nombreJugador1.getText().isEmpty() || tipo != null || tipoCasilla != null) {
+        }else if ( nombreJugador1.getText().isEmpty() || color == null || modoMaquina == null || nombreJugador2.getText().isEmpty() || color2 == null) {
             throw new PoobStairsExceptions(PoobStairsExceptions.IS_EMPTY);
         }
     }

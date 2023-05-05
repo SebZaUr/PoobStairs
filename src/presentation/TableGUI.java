@@ -17,8 +17,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+/**
+ * teh
+ * @author MILLO
+ *
+ */
 public class TableGUI extends JDialog{
 
     private Map<Integer,JPanel> botones;
@@ -26,18 +32,18 @@ public class TableGUI extends JDialog{
     private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
     private final int width = dimensions.width ;
     private final int height = dimensions.height ;
+    private static int size,porcentajeBonificador,porcentajeMaquina;
     private JLabel dado;
     private DadoGUI imagenDado;
     private JButton btnNewButton;
-    private static String nombre1 ;
-    private static String nombre2 ;
-    public static final String[] typesCasillas = {"Normal","Mortal","Saltarinas","SaltarinaInversa","Escalera","Serpiente"};
+    private static ImageIcon fichaJ1,fichaJ2;
+    private static String nombre1, nombre2,colorJ1,colorJ2 ;
     public static final String[] typesModificadores = {"Nulo","Bonificacion","Penalizacion","CambioPosicion","Pregunta"};
 
     /**
      * Let create the poobStairsGUI.
      */
-    public TableGUI(String nombre1, String nombre2,int porcentajeMaquina, int porcentajeBonificador, int Tamaño , boolean modificar) {
+    public TableGUI(String nombre1, String nombre2,int porcentajeMaquina, int porcentajeBonificador, int size , boolean modificar,String colorJ1, String colorJ2) {
     	setIconImage(Estilos.icono.getImage());
         setTitle("POOBSTAIRS");
         setSize(width, height);
@@ -48,6 +54,13 @@ public class TableGUI extends JDialog{
         setVisible(true);
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
+        this.size= size;
+        this.porcentajeMaquina = porcentajeMaquina;
+        this.porcentajeBonificador = porcentajeBonificador;
+        this.colorJ1 = colorJ1;
+        this.colorJ2 = colorJ2;
+        fichaJ1 = new PlayerGUI(colorJ1).getImage();
+        fichaJ1 = new PlayerGUI(colorJ2).getImage();
     }
 
     /**
@@ -117,7 +130,7 @@ public class TableGUI extends JDialog{
         
         dado = new JLabel();
         imagenDado = new DadoGUI();
-        dado.setIcon(imagenDado.getImagen());
+        dado.setIcon((Icon) new DadoGUI());
         panel_de.add(dado);
         
         btnNewButton = new JButton("Lanzar");

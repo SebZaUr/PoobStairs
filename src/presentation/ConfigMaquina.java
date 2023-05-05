@@ -4,16 +4,19 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import domain.PoobStairsExceptions;
-
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-//import Domain.*;
-
+/**
+ * Let me type my name and select all the different characteristics of the game. 
+ * @author Sebastian Zamora.
+ * @author Johann Amaya.
+ * @version 1.2
+ *
+ */
 public class ConfigMaquina extends JDialog {
     private JTextField nombreJugador1,porcentajeCasillas,porcentajeModificadores,sizeTablero;
     private JRadioButton Rojo1,Negro1,Azul1,Amarillo1,Verde1,Blanco1,cambioT,cambioF,principiante,aprendiz;
@@ -22,7 +25,7 @@ public class ConfigMaquina extends JDialog {
     private final int heigth = Estilos.dimensions.height/2; 
 
     private final JButton jugar = new JButton("Empezar a Jugar");
-    private String modoMaquina,color;
+    private String modoMaquina,color,color2;
     private boolean cambioES = false;
 
     public ConfigMaquina(){
@@ -35,6 +38,9 @@ public class ConfigMaquina extends JDialog {
         setVisible(true);
     }
 
+    /**
+     * Create all visuas elements
+     */
     public void prepareElements(){
         JPanel pantallaCarga = new JPanel();
         JPanel ingresarNombre = new JPanel();
@@ -137,6 +143,9 @@ public class ConfigMaquina extends JDialog {
         add(pantallaCarga);
     }
 
+    /**
+     * Prepare all the button's actions
+     */
     public void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         WindowListener Cerrar = new WindowAdapter() {
@@ -160,7 +169,9 @@ public class ConfigMaquina extends JDialog {
         });
     }
 
-
+    /**
+     * Verify which of the JRadiumButtons are selected and save its message.
+     */
     private void checkBox(){
         if(Azul1.isSelected()){
             color = "blue";
@@ -194,6 +205,10 @@ public class ConfigMaquina extends JDialog {
         }
     }
 
+    /**
+     * Let me verify if the user bring the less parameters to start the game.
+     * @throws PoobStairsExceptions	If the user put a bad number or doesn't put all not filled in the necessary fields.
+     */
     private void empezarJuego() throws PoobStairsExceptions {
         if (!nombreJugador1.getText().isEmpty() && color != null && modoMaquina != null){
             try{
@@ -215,11 +230,16 @@ public class ConfigMaquina extends JDialog {
                 }else{
                     size =Integer.parseInt(porcentajeCasillas.getText()) ;
                 }
-                TableGUI tablero = new TableGUI(nombre,maquina,porCasillas,porBonificacion,size,cambioES);
+                if(color != "negro") {
+                	color2 = "blue";
+                }else {
+                	color2 = "black";
+                }
+                TableGUI tablero = new TableGUI(nombre,maquina,porCasillas,porBonificacion,size,cambioES,color,color2);
                 tablero.setVisible(true);
                 this.dispose();
             }catch(NumberFormatException e){
-                //hrow new DamasException(DamasException.BAD_PERCENTAGE);
+                throw new PoobStairsExceptions(PoobStairsExceptions.BAD_PERCENTAGE);
             }
         }else if ( nombreJugador1.getText().isEmpty() || color == null || modoMaquina == null) {
             throw new PoobStairsExceptions(PoobStairsExceptions.IS_EMPTY);
