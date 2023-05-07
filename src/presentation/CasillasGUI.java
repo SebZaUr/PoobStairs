@@ -1,13 +1,26 @@
 package presentation;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public abstract class CasillasGUI extends JPanel{
-	protected static JLabel texto;
-	protected static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
-	
+public class CasillasGUI extends JPanel {
+	private JLabel texto;
+
+	/**
+	 * Constructor of the class NormalGUI
+	 */
+	public CasillasGUI(String valor, String x) {
+		setLayout(null);
+		texto = new JLabel(valor);
+		texto.setBounds(25, 50, 30, 20);
+		add(texto);
+		if (Integer.parseInt(x) % 2 == 0) {
+			setBackground(Color.cyan);
+		} else {
+			setBackground(Color.orange);
+		}
+	}
+
 }
