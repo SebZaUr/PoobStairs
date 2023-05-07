@@ -9,13 +9,10 @@ import java.awt.Font;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -24,7 +21,7 @@ import javax.swing.JOptionPane;
  * 
  * @author Sebastian Zamora
  * @author Johann Amaya
- * @version 1.0
+ * @version 1.2
  */
 public class PoobStairsGUI extends JDialog {
 
@@ -40,7 +37,7 @@ public class PoobStairsGUI extends JDialog {
      * Let create the poobStairsGUI.
      */
     public PoobStairsGUI() {
-        
+
         setIconImage(Estilos.icono.getImage());
         setTitle(Estilos.TITULO);
         setSize(width, height);
@@ -65,7 +62,7 @@ public class PoobStairsGUI extends JDialog {
         JLabel laders = new JLabel("LADDERS");
         chuters.setForeground(Estilos.COLOR_LETRAS);
         chuters.setFont(Estilos.FUENTE_TITULO);
-        
+
         chuters.setBounds(width / 2 - 100, (int) (height / 4.5) - 60, 200, 50);
         and.setForeground(Estilos.COLOR_LETRAS);
         and.setFont(Estilos.FUENTE_TITULO);

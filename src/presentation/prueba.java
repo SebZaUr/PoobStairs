@@ -34,9 +34,9 @@ public class prueba extends JDialog {
 	private final int width = Estilos.dimensions.width / 2;
 	private final int heigth = Estilos.dimensions.height / 2;
 	private static boolean cambioES = false;
-	private JPanel Player_2 ;
+	private JPanel Player_2;
 	private JTextField nombreJugador2;
-	private JLabel colorJ2,lblNombre, lblNombre_2;
+	private JLabel colorJ2, lblNombre, lblNombre_2;
 	private JPanel color2_1;
 	private JPanel Player_1;
 	private JLabel jugador;
@@ -83,14 +83,13 @@ public class prueba extends JDialog {
 		setIconImage(Estilos.icono.getImage());
 		setTitle(Estilos.TITULO);
 		setSize(width, heigth);
-		
-	    prepareElements();
-	    prepareActions();
-	    
+
+		prepareElements();
+		prepareActions();
+
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-	
 
 	public void prepareElements() {
 
@@ -102,20 +101,20 @@ public class prueba extends JDialog {
 		Configuracion.setLayout(null);
 		Configuracion.setOpaque(false);
 		// Crear el borde con el nuevo estilo y color
-        TitledBorder borde_1 = BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(Color.WHITE), "Configuracion",
-            TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
-            Estilos.FUENTE_LETRA, Estilos.COLOR_LETRAS);
+		TitledBorder borde_1 = BorderFactory.createTitledBorder(
+				BorderFactory.createLineBorder(Color.WHITE), "Configuracion",
+				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
+				Estilos.FUENTE_LETRA, Estilos.COLOR_LETRAS);
 		Configuracion.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), borde_1));
 		Configuracion.setFont(getFont());
 
 		JPanel nombres = new JPanel();
 		nombres.setOpaque(false);
 		// Crear el borde con el nuevo estilo y color
-        TitledBorder borde_2 = BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(Color.WHITE), "Ingresen Datos",
-            TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
-            Estilos.FUENTE_TITULO, Estilos.COLOR_LETRAS);
+		TitledBorder borde_2 = BorderFactory.createTitledBorder(
+				BorderFactory.createLineBorder(Color.WHITE), "Ingresen Datos",
+				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
+				Estilos.FUENTE_TITULO, Estilos.COLOR_LETRAS);
 		nombres.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), borde_2));
 		nombres.setLayout(new GridLayout(0, 2, 30, 0));
 		coloresJ1 = new ButtonGroup();
@@ -264,14 +263,14 @@ public class prueba extends JDialog {
 		cambioF.setBounds(width / 4 + 100, 250, 40, 20);
 		cambio.add(cambioF);
 		cambio.add(cambioT);
-		
+
 		coloresJ1.add(Verde1);
 		coloresJ1.add(Azul1);
 		coloresJ1.add(Rojo1);
 		coloresJ1.add(Amarillo1);
 		coloresJ1.add(Negro1);
 		coloresJ1.add(Blanco1);
-		
+
 		coloresJ1.add(Verde2);
 		coloresJ1.add(Azul2);
 		coloresJ1.add(Rojo2);
@@ -321,7 +320,7 @@ public class prueba extends JDialog {
 	private void checkBox() {
 		if (Azul1.isSelected()) {
 			color = "blue";
-			image= "./resourses/Blue.png"
+			// image= "./resourses/Blue.png";
 		} else if (Blanco1.isSelected()) {
 			color = "white";
 		} else if (Amarillo1.isSelected()) {
