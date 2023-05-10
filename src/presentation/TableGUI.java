@@ -53,12 +53,28 @@ public class TableGUI extends JFrame {
     private ImageIcon fichaJ1, fichaJ2;
     private String nombre1, nombre2, colorJ1, colorJ2;
     private PoobStairs poobStairs;
+    private PlayerGUI jugador1, jugador2;
 
     /**
      * Let create the poobStairsGUI.
      */
     public TableGUI(String nombre1, String nombre2, int porcentajeMaquina, int porcentajeBonificador, int size,
             boolean modificar, String colorJ1, String colorJ2) {
+        this.size = size;
+        poobStairs = PoobStairs.getInstance(this.nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
+                porcentajeBonificador, modificar);
+
+        this.nombre1 = nombre1;
+        this.nombre2 = nombre2;
+
+        this.porcentajeMaquina = porcentajeMaquina;
+        this.porcentajeBonificador = porcentajeBonificador;
+        this.colorJ1 = colorJ1;
+        jugador1 = new PlayerGUI(colorJ1);
+        fichaJ1 = jugador1.getImage();
+        this.colorJ2 = colorJ2;        
+        jugador2 = new PlayerGUI(colorJ2);        
+        fichaJ2 = jugador2.getImage();
         setIconImage(Estilos.icono.getImage());
         setTitle(Estilos.TITULO);
         setSize(width, height);
@@ -67,17 +83,6 @@ public class TableGUI extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
-        this.nombre1 = nombre1;
-        this.nombre2 = nombre2;
-        this.size = size;
-        this.porcentajeMaquina = porcentajeMaquina;
-        this.porcentajeBonificador = porcentajeBonificador;
-        this.colorJ1 = colorJ1;
-        this.colorJ2 = colorJ2;
-        fichaJ1 = new PlayerGUI(colorJ1).getImage();
-        fichaJ1 = new PlayerGUI(colorJ2).getImage();
-        poobStairs = PoobStairs.getInstance(this.nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
-                porcentajeBonificador, modificar);
     }
 
     /**
@@ -143,9 +148,6 @@ public class TableGUI extends JFrame {
         panel_de.add(panel);
         panel.setLayout(new GridLayout(0, 2, 0, 0));
 
-        fichaJ1 = new ImageIcon("resourses\\Red.png");
-        fichaJ2 = new ImageIcon("resourses\\Black.png");
-
         JLabel lblNewLabel = new JLabel();
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setIcon(fichaJ1);
@@ -156,13 +158,13 @@ public class TableGUI extends JFrame {
         lblNewLabel_2.setIcon(fichaJ2);
         panel.add(lblNewLabel_2);
 
-        JLabel lblNewLabel_3 = new JLabel("Player 1");
+        JLabel lblNewLabel_3 = new JLabel(nombre1);
         lblNewLabel_3.setFont(Estilos.FUENTE_TITULO);
         lblNewLabel_3.setForeground(Estilos.COLOR_LETRAS);
         lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(lblNewLabel_3);
 
-        JLabel lblNewLabel_4 = new JLabel("Player 2");
+        JLabel lblNewLabel_4 = new JLabel(nombre2);
         lblNewLabel_4.setFont(Estilos.FUENTE_TITULO);
         lblNewLabel_4.setForeground(Estilos.COLOR_LETRAS);
         lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -239,8 +241,46 @@ public class TableGUI extends JFrame {
         juego.setLayout(new GridLayout(10, 10));
         botones = new HashMap<>();
         CasillasGUI casilla = null;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        /*int n = 4; // Tamano de la matriz (cambiar por el valor deseado)
+        
+        // Inicializar la matriz
+        int[][] matriz = new int[n][n];
+
+        // Llenar la matriz con valores
+        for (int fila = 0; fila < n; fila++) {
+            for (int columna = 0; columna < n; columna++) {
+                matriz[fila][columna] = fila * n + columna + 1;
+            }
+        }
+
+        // Cambiar la orientacion de las filas pares
+        for (int fila = 0; fila < n; fila++) {
+            if (fila % 2 == 1) {
+                for (int columna = 0; columna < n / 2; columna++) {
+                    int temp = matriz[fila][columna];
+                    matriz[fila][columna] = matriz[fila][n - 1 - columna];
+                    matriz[fila][n - 1 - columna] = temp;
+                }
+            }
+        }
+
+        // Invertir la matriz
+        int[][] matriz_invertida = new int[n][n];
+        for (int fila = 0; fila < n; fila++) {
+            for (int columna = 0; columna < n; columna++) {
+                matriz_invertida[n - 1 - fila][columna] = matriz[fila][columna];
+            }
+        }
+
+        // Imprimir la matriz invertida
+        for (int fila = 0; fila < n; fila++) {
+            for (int columna = 0; columna < n; columna++) {
+                System.out.print(matriz_invertida[fila][columna] + " ");
+            }
+            System.out.println();
+        }*/
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 String x = Integer.toString(i + j);
                 if (i % 2 != 0) {
                     valor = 101 - contador - ajuste;
