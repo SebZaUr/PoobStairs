@@ -1,9 +1,11 @@
 package presentation;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
@@ -16,34 +18,41 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import domain.Table;
+import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
 import domain.Casillas;
+import domain.PoobStairs;
+import domain.Table;
+
+import javax.swing.JLabel;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
- * Create and configure the game table's graphics elements
+ * Clase de Tablero visual
  * 
  * @author Sebastian Zamora
  * @author Johann Amaya
- * @version 1.2
- *
+ * @version 1.7
  */
-public class TableGUI extends JDialog {
+public class TableGUI extends JFrame {
 
     private Map<Integer, JPanel> botones;
     private JPanel juego;
     private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
     private final int width = dimensions.width;
     private final int height = dimensions.height;
-    private static int size, porcentajeBonificador, porcentajeMaquina;
+    private int size, porcentajeBonificador, porcentajeMaquina;
     private JLabel dado;
     private DadoGUI imagenDado;
     private JButton btnNewButton;
-    private static ImageIcon fichaJ1, fichaJ2;
-    private static String nombre1, nombre2, colorJ1, colorJ2;
-    public static final String[] typesModificadores = { "Nulo", "Bonificacion", "Penalizacion", "CambioPosicion",
-            "Pregunta" };
+    private ImageIcon fichaJ1, fichaJ2;
+    private String nombre1, nombre2, colorJ1, colorJ2;
+    private PoobStairs poobStairs;
 
     /**
      * Let create the poobStairsGUI.
@@ -51,8 +60,13 @@ public class TableGUI extends JDialog {
     public TableGUI(String nombre1, String nombre2, int porcentajeMaquina, int porcentajeBonificador, int size,
             boolean modificar, String colorJ1, String colorJ2) {
         setIconImage(Estilos.icono.getImage());
-        setTitle("POOBSTAIRS");
+        setTitle(Estilos.TITULO);
         setSize(width, height);
+        prepareElements();
+        prepareActions();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setVisible(true);
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
         this.size = size;
@@ -62,11 +76,8 @@ public class TableGUI extends JDialog {
         this.colorJ2 = colorJ2;
         fichaJ1 = new PlayerGUI(colorJ1).getImage();
         fichaJ1 = new PlayerGUI(colorJ2).getImage();
-        prepareElements();
-        prepareActions();
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setVisible(true);
+        poobStairs = PoobStairs.getInstance(this.nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
+                porcentajeBonificador, modificar);
     }
 
     /**
@@ -118,34 +129,82 @@ public class TableGUI extends JDialog {
         JPanel panel_de = new JPanel();
         panel_de.setOpaque(false);
         PantallaInicial.add(panel_de);
-        panel_de.setLayout(new GridLayout(4, 3, 4, 4));
+        imagenDado = new DadoGUI();
+        panel_de.setLayout(new GridLayout(0, 1, 0, 0));
 
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setIcon(new ImageIcon("resourses\\hoimbre.png"));
-        panel_de.add(lblNewLabel_1);
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        // Crear el borde con el nuevo estilo y color
+        TitledBorder borde = BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.WHITE), "Jugadores",
+                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
+                Estilos.FUENTE_TITULO, Estilos.COLOR_LETRAS);
+        panel.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), borde));
+        panel_de.add(panel);
+        panel.setLayout(new GridLayout(0, 2, 0, 0));
 
-        JLabel lblNewLabel_2 = new JLabel("");
-        lblNewLabel_2.setIcon(new ImageIcon("resourses\\mujer.png"));
-        panel_de.add(lblNewLabel_2);
+        fichaJ1 = new ImageIcon("resourses\\Red.png");
+        fichaJ2 = new ImageIcon("resourses\\Black.png");
 
-        JLabel lblNewLabel_4 = new JLabel("Player 1");
-        panel_de.add(lblNewLabel_4);
+        JLabel lblNewLabel = new JLabel();
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setIcon(fichaJ1);
+        panel.add(lblNewLabel);
 
-        JLabel lblNewLabel_3 = new JLabel("Playe 2");
-        panel_de.add(lblNewLabel_3);
+        JLabel lblNewLabel_2 = new JLabel();
+        lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2.setIcon(fichaJ2);
+        panel.add(lblNewLabel_2);
+
+        JLabel lblNewLabel_3 = new JLabel("Player 1");
+        lblNewLabel_3.setFont(Estilos.FUENTE_TITULO);
+        lblNewLabel_3.setForeground(Estilos.COLOR_LETRAS);
+        lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(lblNewLabel_3);
+
+        JLabel lblNewLabel_4 = new JLabel("Player 2");
+        lblNewLabel_4.setFont(Estilos.FUENTE_TITULO);
+        lblNewLabel_4.setForeground(Estilos.COLOR_LETRAS);
+        lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(lblNewLabel_4);
+
+        JPanel panel_1 = new JPanel();
+        panel_1.setOpaque(false);
+        panel_de.add(panel_1);
+        panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 
         dado = new JLabel();
-        imagenDado = new DadoGUI();
-        dado.setIcon(imagenDado.getImagen());
-        panel_de.add(dado);
+        dado.setHorizontalAlignment(SwingConstants.CENTER);
+        panel_1.add(dado);
+
+        // Obtener el ImageIcon original
+        ImageIcon iconoOriginal = imagenDado.getImagen();
+
+        // Obtener la imagen subyacente y escalarla
+        Image imagenOriginal = iconoOriginal.getImage();
+        int nuevoAncho = 250; // Modificar según el tamaño deseado
+        int nuevoAlto = 250;
+        Image imagenEscalada = imagenOriginal.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+
+        // Crear un nuevo ImageIcon a partir de la imagen escalada
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+
+        // Establecer el nuevo ImageIcon como icono del JLabel
+        dado.setIcon(iconoEscalado);
+
+        JPanel panel_2 = new JPanel();
+        panel_2.setOpaque(false);
+        panel_1.add(panel_2);
 
         btnNewButton = new JButton("Lanzar");
-        panel_de.add(btnNewButton);
+        btnNewButton.setFont(Estilos.FUENTE_TITULO);
+        btnNewButton.setBackground(Color.GREEN);
+        btnNewButton.setForeground(Color.WHITE);
+        btnNewButton.setPreferredSize(new Dimension(200, 150));
+
+        panel_2.add(btnNewButton);
     }
 
-    /**
-     * Active all the action Listener for all the buttons.
-     */
     public void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         WindowListener Cerrar = new WindowAdapter() {
@@ -176,10 +235,10 @@ public class TableGUI extends JDialog {
         int valor = 0;
         Table.getInstance(size);
         Casillas[][] table = Table.getGameTable();
-        Table.createTable(porcentajeMaquina);
         juego = new JPanel();
         juego.setLayout(new GridLayout(10, 10));
         botones = new HashMap<>();
+        CasillasGUI casilla = null;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 String x = Integer.toString(i + j);
@@ -190,8 +249,7 @@ public class TableGUI extends JDialog {
                     ajuste = 9;
                     valor = 101 - contador;
                 }
-                String clase = table[i][j].getType();
-                CasillasGUI casilla = (CasillasGUI) Class.forName("presentation." + clase + "GUI")
+                casilla = (CasillasGUI) Class.forName("presentation.CasillasGUI")
                         .getConstructor(String.class, String.class).newInstance(Integer.toString(valor), x);
                 botones.put(valor, casilla);
                 juego.add(casilla);

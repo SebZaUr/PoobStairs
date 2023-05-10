@@ -16,7 +16,7 @@ public class Table {
 	private static Table instance;
 
 	private Table(int size) {
-		Table.size = size;
+		this.size = size;
 		table = new Casillas[size][size];
 	}
 
@@ -47,9 +47,17 @@ public class Table {
 			Class.forName("Domain." + type).getConstructor().newInstance();
 		}
 		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				if (table[i][j] == null) {
-					table[i][j] = new Casillas(size);
+			if (i % 2 != 0) {
+				for (int j = 0; j < size; j++) {
+					if (table[i][j] == null) {
+						table[i][j] = new Casillas(size);
+					}
+				}
+			} else {
+				for (int j = size - 1; j >= 0; j--) {
+					if (table[i][j] == null) {
+						table[i][j] = new Casillas(size);
+					}
 				}
 			}
 		}
@@ -72,9 +80,9 @@ public class Table {
 	 * @param size
 	 * @return
 	 */
-	public static Table getInstance(int size) {
+	public static Table getInstance(int value) {
 		if (instance == null) {
-			instance = new Table(size);
+			instance = new Table(value);
 		}
 		return instance;
 	}
