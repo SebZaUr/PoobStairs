@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import domain.Casillas;
+import domain.Dado;
 import domain.PoobStairs;
 import domain.Table;
 
@@ -48,12 +49,12 @@ public class TableGUI extends JFrame {
     private final int height = dimensions.height;
     private int size, porcentajeBonificador, porcentajeMaquina;
     private JLabel dado;
-    private DadoGUI imagenDado;
     private JButton btnNewButton;
     private ImageIcon fichaJ1, fichaJ2;
     private String nombre1, nombre2, colorJ1, colorJ2;
     private PoobStairs poobStairs;
     private PlayerGUI jugador1, jugador2;
+    private Dado dice;
 
     /**
      * Let create the poobStairsGUI.
@@ -66,7 +67,7 @@ public class TableGUI extends JFrame {
 
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
-
+        dice =Dado.getInstance(porcentajeBonificador);
         this.porcentajeMaquina = porcentajeMaquina;
         this.porcentajeBonificador = porcentajeBonificador;
         this.colorJ1 = colorJ1;
@@ -86,7 +87,7 @@ public class TableGUI extends JFrame {
     }
 
     /**
-     * 
+     * Create and configure all visual elements of the table.
      */
     public void prepareElements() {
         JPanel PantallaInicial = Estilos.GradientPanel();
@@ -134,7 +135,6 @@ public class TableGUI extends JFrame {
         JPanel panel_de = new JPanel();
         panel_de.setOpaque(false);
         PantallaInicial.add(panel_de);
-        imagenDado = new DadoGUI();
         panel_de.setLayout(new GridLayout(0, 1, 0, 0));
 
         JPanel panel = new JPanel();
@@ -180,7 +180,7 @@ public class TableGUI extends JFrame {
         panel_1.add(dado);
 
         // Obtener el ImageIcon original
-        ImageIcon iconoOriginal = imagenDado.getImagen();
+        ImageIcon iconoOriginal =  selecImageDice(dice.getValue());
 
         // Obtener la imagen subyacente y escalarla
         Image imagenOriginal = iconoOriginal.getImage();
@@ -233,64 +233,28 @@ public class TableGUI extends JFrame {
     public JPanel prepareTable() throws InstantiationException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
         int contador = 1;
-        int ajuste = 9;
+        int ajuste = size-1;
         int valor = 0;
         Table.getInstance(size);
         Casillas[][] table = Table.getGameTable();
         juego = new JPanel();
-        juego.setLayout(new GridLayout(10, 10));
+        juego.setLayout(new GridLayout(size, size));
         botones = new HashMap<>();
         CasillasGUI casilla = null;
-        /*int n = 4; // Tamano de la matriz (cambiar por el valor deseado)
         
-        // Inicializar la matriz
-        int[][] matriz = new int[n][n];
-
-        // Llenar la matriz con valores
-        for (int fila = 0; fila < n; fila++) {
-            for (int columna = 0; columna < n; columna++) {
-                matriz[fila][columna] = fila * n + columna + 1;
-            }
-        }
-
-        // Cambiar la orientacion de las filas pares
-        for (int fila = 0; fila < n; fila++) {
-            if (fila % 2 == 1) {
-                for (int columna = 0; columna < n / 2; columna++) {
-                    int temp = matriz[fila][columna];
-                    matriz[fila][columna] = matriz[fila][n - 1 - columna];
-                    matriz[fila][n - 1 - columna] = temp;
-                }
-            }
-        }
-
-        // Invertir la matriz
-        int[][] matriz_invertida = new int[n][n];
-        for (int fila = 0; fila < n; fila++) {
-            for (int columna = 0; columna < n; columna++) {
-                matriz_invertida[n - 1 - fila][columna] = matriz[fila][columna];
-            }
-        }
-
-        // Imprimir la matriz invertida
-        for (int fila = 0; fila < n; fila++) {
-            for (int columna = 0; columna < n; columna++) {
-                System.out.print(matriz_invertida[fila][columna] + " ");
-            }
-            System.out.println();
-        }*/
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                String x = Integer.toString(i + j);
+
+                int x =i + j;
                 if (i % 2 != 0) {
-                    valor = 101 - contador - ajuste;
+                    valor = (size*size+1) - contador - ajuste;
                     ajuste = ajuste - 2;
                 } else {
-                    ajuste = 9;
-                    valor = 101 - contador;
+                    ajuste = size-1;
+                    valor = (size*size+1) - contador;
                 }
                 casilla = (CasillasGUI) Class.forName("presentation.CasillasGUI")
-                        .getConstructor(String.class, String.class).newInstance(Integer.toString(valor), x);
+                        .getConstructor(String.class, int.class).newInstance(Integer.toString(valor), x);
                 botones.put(valor, casilla);
                 juego.add(casilla);
                 juego.validate();
@@ -301,10 +265,51 @@ public class TableGUI extends JFrame {
         return juego;
     }
 
+    /**
+     * The action Listener that the lanzar.
+     */
     private void jugar() {
-        DadoGUI lanzar = new DadoGUI();
-        dado.setIcon(lanzar.getImagen());
+        int valor = dice.getValue();
+        ImageIcon iconoOriginal = selecImageDice(valor);
+        Image imagenOriginal = iconoOriginal.getImage();
+        int nuevoAncho = 250;
+        int nuevoAlto = 250;
+        Image imagenEscalada = imagenOriginal.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        dado.setIcon(iconoEscalado);
         validate();
         repaint();
+    }
+
+    /**
+     * Choose the dice's image.
+     * @param puntos the dice's value.
+     * @return  the dice's image.
+     */
+    private ImageIcon selecImageDice(int puntos){
+        ImageIcon imagen =  null;
+        switch (puntos) {
+            case 1:
+                imagen = new ImageIcon("resourses\\dado_1.png");
+                break;
+            case 2:
+                imagen = new ImageIcon("resourses\\dado_2.png");
+                break;
+            case 3:
+                imagen = new ImageIcon("resourses\\dado_3.png");
+                break;
+            case 4:
+                imagen = new ImageIcon("resourses\\dado_4.png");
+                break;
+            case 5:
+                imagen = new ImageIcon("resourses\\dado_5.png");
+                break;
+            case 6:
+                imagen = new ImageIcon("resourses\\dado_6.png");
+                break;
+            default:
+                break;
+        }
+        return imagen;
     }
 }

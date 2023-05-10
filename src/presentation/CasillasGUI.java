@@ -11,12 +11,12 @@ public class CasillasGUI extends JPanel {
 	/**
 	 * Constructor of the class NormalGUI
 	 */
-	public CasillasGUI(String valor, String x) {
+	public CasillasGUI(String valor, int x) {
 		setLayout(null);
 		texto = new JLabel(valor);
 		texto.setBounds(25, 50, 30, 20);
 		add(texto);
-		if (Integer.parseInt(x) % 2 == 0) {
+		if (x % 2 == 0) {
 			setBackground(Color.cyan);
 		} else {
 			setBackground(Color.orange);

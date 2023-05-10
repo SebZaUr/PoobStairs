@@ -485,7 +485,7 @@ public class ConfigJugador extends JDialog {
 				if (sizeTablero.getText().isEmpty()) {
 					size = 10;
 				} else {
-					size = Integer.parseInt(porcentajeCasillas.getText());
+					size = Integer.parseInt(sizeTablero.getText());
 				}
 				TableGUI tablero = new TableGUI(nombre, maquina, porCasillas, porBonificacion, size, cambioES, color,
 						color2);

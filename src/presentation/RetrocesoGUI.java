@@ -8,7 +8,7 @@ public class RetrocesoGUI extends CasillasGUI {
     /**
      * Constructor of the class NormalGUI
      */
-    public RetrocesoGUI(String valor, String x) {
+    public RetrocesoGUI(String valor, int x) {
         super("Retroceso", x);
     }
 }

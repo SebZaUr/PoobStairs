@@ -8,7 +8,7 @@ public class PreguntonaGUI extends CasillasGUI {
     /**
      * Constructor of the class NormalGUI
      */
-    public PreguntonaGUI(String valor, String x) {
+    public PreguntonaGUI(String valor, int x) {
         super("Preguntona", x);
     }
 }

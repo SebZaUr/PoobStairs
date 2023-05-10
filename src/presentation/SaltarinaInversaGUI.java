@@ -8,7 +8,7 @@ public class SaltarinaInversaGUI extends CasillasGUI {
     /**
      * Constructor of the class NormalGUI
      */
-    public SaltarinaInversaGUI(String valor, String x) {
+    public SaltarinaInversaGUI(String valor, int x) {
         super("SaltarinaI", x);
     }
 }

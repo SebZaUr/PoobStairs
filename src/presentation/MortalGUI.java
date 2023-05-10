@@ -8,7 +8,7 @@ public class MortalGUI extends CasillasGUI {
     /**
      * Constructor of the class NormalGUI
      */
-    public MortalGUI(String valor, String x) {
+    public MortalGUI(String valor, int x) {
         super("Mortal", x);
     }
 }

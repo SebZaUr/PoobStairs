@@ -9,7 +9,7 @@ public class SaltarinasGUI extends CasillasGUI {
 	/**
 	 * Constructor of the class NormalGUI
 	 */
-	public SaltarinasGUI(String valor, String x) {
+	public SaltarinasGUI(String valor, int x) {
 		super("Saltarina", x);
 	}
 }
