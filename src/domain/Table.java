@@ -34,7 +34,7 @@ public class Table {
 	public static void createTable(int percentage)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException {
-		int numCasillasEspeciales = percentage / 100;
+		int numCasillasEspeciales = (percentage *size*size) / 100;
 		Random rand = new Random();
 		String[] typesCasillas = { "Mortal", "Saltarinas", "SaltarinaInversa", "Avance", "Retroceso", "Preguntona" };
 		int contador = 1;
@@ -44,7 +44,8 @@ public class Table {
 		}
 		while (contador <= numCasillasEspeciales) {
 			String type = typesCasillas[rand.nextInt(typesCasillas.length)];
-			Class.forName("Domain." + type).getConstructor().newInstance();
+			Class.forName("domain." + type).getConstructor(int.class).newInstance(size);
+			contador++;
 		}
 		for (int i = 0; i < size; i++) {
 			if (i % 2 != 0) {

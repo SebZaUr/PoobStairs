@@ -12,6 +12,7 @@ import java.util.Random;
 public class Casillas {
     protected Casillas[][] table;
     private Random numero = new Random();
+    protected static int startX;
     protected int salto = 0;
     protected String type = "Casillas";
 
@@ -31,6 +32,7 @@ public class Casillas {
                 table[x][y] = this;
                 colocada = true;
             }
+            startX = x;
         }
     }
 

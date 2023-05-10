@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 public class CasillasGUI extends JPanel {
 	private JLabel texto;
+	protected String type;
 
 	/**
 	 * Constructor of the class NormalGUI
@@ -21,6 +22,11 @@ public class CasillasGUI extends JPanel {
 		} else {
 			setBackground(Color.orange);
 		}
+		type = "casillas";
+	}
+
+	public String getType(){
+		return type;
 	}
 
 }

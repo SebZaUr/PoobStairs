@@ -3,7 +3,6 @@ package domain;
 import java.util.Random;
 
 public class Escalera extends Casillas {
-    private static int startX;
     private static int finalX;
     private static int finalY;
     private Random numero = new Random();
@@ -25,12 +24,11 @@ public class Escalera extends Casillas {
      * @param size the game table's size.
      */
     public void putFinal(int size) {
-        int borde = size - startX;
         boolean colocada = false;
         while (!colocada) {
-            int x = numero.nextInt(borde) + startX + 1;
+            int x = numero.nextInt(size);
             int y = numero.nextInt(size);
-            if (x < size) {
+            if (x > startX) {
                 if (table[x][y] == null) {
                     table[x][y] = this;
                     colocada = true;

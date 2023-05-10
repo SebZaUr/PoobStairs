@@ -20,7 +20,7 @@ public class PoobStairs {
     private PoobStairs(String jugador1, String jugador2, String color1, String color2, int size, int porCasillas,
             int porBonificador, boolean modificar) {
         try {
-            Table.getInstance(10);
+            Table.getInstance(size);
             Table.createTable(porCasillas);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException | ClassNotFoundException e) {

@@ -244,7 +244,6 @@ public class TableGUI extends JFrame {
         
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-
                 int x =i + j;
                 if (i % 2 != 0) {
                     valor = (size*size+1) - contador - ajuste;
@@ -253,8 +252,14 @@ public class TableGUI extends JFrame {
                     ajuste = size-1;
                     valor = (size*size+1) - contador;
                 }
-                casilla = (CasillasGUI) Class.forName("presentation.CasillasGUI")
+                if(table[i][j].getType().equals("Escalera")){
+                    casilla = new EscaleraGUI(Integer.toString(valor), x);
+                }else if(table[i][j].getType().equals("Escalera")){
+                    casilla = new SerpienteGUI(Integer.toString(valor), x);
+                }else{
+                    casilla = (CasillasGUI) Class.forName("presentation."+table[i][j].getType()+"GUI")
                         .getConstructor(String.class, int.class).newInstance(Integer.toString(valor), x);
+                }
                 botones.put(valor, casilla);
                 juego.add(casilla);
                 juego.validate();

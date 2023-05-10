@@ -25,12 +25,16 @@ public class Serpiente extends Casillas {
      * @param size the game table's size.
      */
     public void putFinal(int size) {
-        int borde = size - startX;
         boolean colocada = false;
+        int x,y;
         while (!colocada) {
-            int x = numero.nextInt(borde) + startX + 1;
-            int y = numero.nextInt(size);
-            if (x < size) {
+            if(startX == 0){
+                x =  numero.nextInt(size)+1;
+            }else{
+                x = numero.nextInt(startX)+1;
+            }
+            y = numero.nextInt(size);
+            if(x < size){
                 if (table[x][y] == null) {
                     table[x][y] = this;
                     colocada = true;

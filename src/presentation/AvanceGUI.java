@@ -6,5 +6,6 @@ public class AvanceGUI extends CasillasGUI {
 	 */
 	public AvanceGUI(String valor, int x) {
 		super("Avance", x);
+		type = "Avance";
 	}
 }
