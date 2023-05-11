@@ -98,9 +98,10 @@ public class Table {
 					valor = (size * size + 1) - contador;
 				}
 				mapTable.put(valor, table[i][j]);
+				contador++;
 			}
-			contador++;
 		}
+		System.out.println(mapTable.size());
 	}
 
 	public Casillas getBox(int key) {

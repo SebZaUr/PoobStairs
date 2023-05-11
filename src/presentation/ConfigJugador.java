@@ -470,7 +470,7 @@ public class ConfigJugador extends JDialog {
 				&& color2 != null) {
 			try {
 				String nombre = nombreJugador1.getText();
-				String maquina = "DaPooInteligancia01";
+				String maquina = nombreJugador2.getText();
 				int porCasillas, porBonificacion, size;
 				if (porcentajeCasillas.getText().isEmpty()) {
 					porCasillas = 0;
@@ -485,7 +485,7 @@ public class ConfigJugador extends JDialog {
 				if (sizeTablero.getText().isEmpty()) {
 					size = 10;
 				} else {
-					size = Integer.parseInt(porcentajeCasillas.getText());
+					size = Integer.parseInt(sizeTablero.getText());
 				}
 				TableGUI tablero = new TableGUI(nombre, maquina, porCasillas, porBonificacion, size, cambioES, color,
 						color2);
