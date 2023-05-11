@@ -34,7 +34,7 @@ public class Serpiente extends Casillas {
                 x = numero.nextInt(startX)+1;
             }
             y = numero.nextInt(size);
-            if(x < startX){
+            if(x < size){
                 if (table[x][y] == null) {
                     table[x][y] = this;
                     colocada = true;

@@ -1,7 +1,10 @@
 package presentation;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -14,9 +17,7 @@ public class CasillasGUI extends JPanel {
 	 */
 	public CasillasGUI(String valor, int x) {
 		setLayout(null);
-		texto = new JLabel(valor);
-		texto.setBounds(25, 50, 30, 20);
-		add(texto);
+		fondo(valor);
 		if (x % 2 == 0) {
 			setBackground(Color.cyan);
 		} else {
@@ -24,7 +25,19 @@ public class CasillasGUI extends JPanel {
 		}
 		type = "casillas";
 	}
-
+	
+	public void fondo(String valor) {
+		setLayout(new GridLayout(0, 1, 0, 0));
+		JButton btnNewButton = new JButton(valor);
+		btnNewButton.setFont(Estilos.FUENTE_TITULO);
+        btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBorderPainted(false);
+		btnNewButton.setContentAreaFilled(false);
+		btnNewButton.setFocusPainted(false);
+		btnNewButton.setOpaque(false);
+		btnNewButton.setIcon(new ImageIcon("resourses\\Black.png"));
+		add(btnNewButton);
+	}
 	public String getType(){
 		return type;
 	}
