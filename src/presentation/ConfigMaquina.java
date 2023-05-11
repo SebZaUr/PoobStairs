@@ -83,7 +83,6 @@ public class ConfigMaquina extends JDialog {
         panel_1.add(jugador);
 
         nombreJugador1 = new JTextField();
-        nombreJugador1.setText("Nombre Jugador");
         nombreJugador1.setHorizontalAlignment(SwingConstants.CENTER);
         nombreJugador1.setPreferredSize(new Dimension(175, 50));
         panel_1.add(nombreJugador1);
@@ -143,42 +142,6 @@ public class ConfigMaquina extends JDialog {
         lblNewLabel = new JLabel();
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setPreferredSize(new Dimension(100, 10));
-        // ActionListener para los botones de colores del jugador 1
-        Rojo1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                lblNewLabel.setIcon(imagenRojo);
-            }
-        });
-
-        Negro1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                lblNewLabel.setIcon(imagenNegro);
-            }
-        });
-
-        Blanco1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                lblNewLabel.setIcon(imagenBlanco);
-            }
-        });
-
-        Verde1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                lblNewLabel.setIcon(imagenVerde);
-            }
-        });
-
-        Azul1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                lblNewLabel.setIcon(imagenAzul);
-            }
-        });
-
-        Amarillo1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                lblNewLabel.setIcon(imagenAmarillo);
-            }
-        });
 
         panel.add(lblNewLabel);
 
@@ -197,7 +160,7 @@ public class ConfigMaquina extends JDialog {
 
         // Crear el borde con el nuevo estilo y color
         TitledBorder borde_4 = BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(Color.WHITE), "Dificultad",
+                BorderFactory.createLineBorder(Color.BLACK), "Dificultad",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 Estilos.FUENTE_LETRA, Estilos.COLOR_LETRAS);
         panel_31.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), borde_4));
@@ -240,7 +203,6 @@ public class ConfigMaquina extends JDialog {
         panel_21.add(numCasillas);
         porcentajeCasillas = new JTextField();
         porcentajeCasillas.setHorizontalAlignment(SwingConstants.CENTER);
-        porcentajeCasillas.setText("Porcentaje de Casillas");
         porcentajeCasillas.setPreferredSize(new Dimension(175, 50));
         panel_21.add(porcentajeCasillas);
 
@@ -249,7 +211,6 @@ public class ConfigMaquina extends JDialog {
         numBonificadores.setForeground(Estilos.COLOR_LETRAS);
         panel_21.add(numBonificadores);
         porcentajeModificadores = new JTextField();
-        porcentajeModificadores.setText("Porcentaje Bonificadores");
         porcentajeModificadores.setHorizontalAlignment(SwingConstants.CENTER);
         porcentajeCasillas.setPreferredSize(new Dimension(175, 50));
         panel_21.add(porcentajeModificadores);
@@ -259,7 +220,6 @@ public class ConfigMaquina extends JDialog {
         numBonificadores_1.setForeground(Estilos.COLOR_LETRAS);
         panel_21.add(numBonificadores_1);
         sizeTablero = new JTextField();
-        sizeTablero.setText("Tamaño de Tablero");
         sizeTablero.setHorizontalAlignment(SwingConstants.CENTER);
         porcentajeCasillas.setPreferredSize(new Dimension(175, 50));
         panel_21.add(sizeTablero);
@@ -310,6 +270,13 @@ public class ConfigMaquina extends JDialog {
         cambioF.setOpaque(false);
         panel_4_1.add(cambioF);
         cambio.add(cambioF);
+
+        Amarillo1.addActionListener(e -> checkBox());
+        Azul1.addActionListener(e -> checkBox());
+        Blanco1.addActionListener(e -> checkBox());
+        Negro1.addActionListener(e -> checkBox());
+        Rojo1.addActionListener(e -> checkBox());
+        Verde1.addActionListener(e -> checkBox());
 
         panel_2 = new JPanel();
         panel_2.setOpaque(false);
@@ -378,9 +345,9 @@ public class ConfigMaquina extends JDialog {
                     porBonificacion = Integer.parseInt(porcentajeCasillas.getText());
                 }
                 if (sizeTablero.getText().isEmpty()) {
-                    size = 0;
+                    size = 10;
                 } else {
-                    size = Integer.parseInt(porcentajeCasillas.getText());
+                    size = Integer.parseInt(sizeTablero.getText());
                 }
                 if (color != "negro") {
                     color2 = "blue";

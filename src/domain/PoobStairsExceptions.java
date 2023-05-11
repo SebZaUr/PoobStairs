@@ -12,7 +12,8 @@ public class PoobStairsExceptions extends Exception {
     public static final String BAD_PERCENTAGE = "Valor numerico invalido, porfavor vuelva a ingresar.";
     public static final String SAME_COLOR = "Ambos jugadores tienen el mismo color, porfavor alguno cambie.";
     public static final String MORTAL = "!HAS CAIDO EN UNA CASILLA MORTAL!.Inicia denuevo";
-    public static final String SNAKE = "CAISTE EN UNA SERPIENTE";
+    public static final String SNAKE = "MUEVETE AL FINAL DE LA SERPIENTE";
+    public static final String LADERS = "MUEVETE AL FINAL DE LA ESCALERA";
     public static final String PREGUNTA = "CAISTE EN UNA PREGUNTO, Si respondes bien a una pregunta de conocimiento general avanzas una casilla, ingrese un numero del 1 al ";
 
     /**
