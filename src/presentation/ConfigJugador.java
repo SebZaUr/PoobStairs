@@ -343,18 +343,18 @@ public class ConfigJugador extends JDialog {
 		}
 		if (Blanco1.isSelected()) {
 			color = "white";
-			Blanco2.setEnabled(false);
 			Azul2.setEnabled(true);
 			Amarillo2.setEnabled(true);
 			Negro2.setEnabled(true);
+			Blanco2.setEnabled(false);
 			Rojo2.setEnabled(true);
 			Verde2.setEnabled(true);
 			imagenColor1.setIcon(imagenBlanco);
 		}
 		if (Amarillo1.isSelected()) {
 			color = "yellow";
-			Amarillo2.setEnabled(false);
 			Azul2.setEnabled(true);
+			Amarillo2.setEnabled(false);
 			Negro2.setEnabled(true);
 			Blanco2.setEnabled(true);
 			Rojo2.setEnabled(true);
@@ -363,19 +363,19 @@ public class ConfigJugador extends JDialog {
 		}
 		if (Verde1.isSelected()) {
 			color = "green";
-			Verde2.setEnabled(false);
-			Amarillo2.setEnabled(true);
 			Azul2.setEnabled(true);
+			Amarillo2.setEnabled(true);
 			Negro2.setEnabled(true);
 			Blanco2.setEnabled(true);
 			Rojo2.setEnabled(true);
+			Verde2.setEnabled(false);
 			imagenColor1.setIcon(imagenVerde);
 		}
 		if (Negro1.isSelected()) {
 			color = "black";
-			Negro2.setEnabled(false);
-			Amarillo2.setEnabled(true);
 			Azul2.setEnabled(true);
+			Amarillo2.setEnabled(true);
+			Negro2.setEnabled(false);
 			Blanco2.setEnabled(true);
 			Rojo2.setEnabled(true);
 			Verde2.setEnabled(true);
@@ -383,11 +383,11 @@ public class ConfigJugador extends JDialog {
 		}
 		if (Rojo1.isSelected()) {
 			color2 = "red";
-			Rojo2.setEnabled(false);
-			Amarillo2.setEnabled(true);
 			Azul2.setEnabled(true);
+			Amarillo2.setEnabled(true);
 			Negro2.setEnabled(true);
 			Blanco2.setEnabled(true);
+			Rojo2.setEnabled(false);
 			Verde2.setEnabled(true);
 			imagenColor1.setIcon(imagenRojo);
 		}
@@ -411,31 +411,31 @@ public class ConfigJugador extends JDialog {
 			Verde1.setEnabled(true);
 			imagenColor2.setIcon(imagenBlanco);
 		}
-		if (Amarillo1.isSelected()) {
+		if (Amarillo2.isSelected()) {
 			color2 = "yellow";
-			Amarillo1.setEnabled(false);
 			Azul1.setEnabled(true);
+			Amarillo1.setEnabled(false);
 			Negro1.setEnabled(true);
 			Blanco1.setEnabled(true);
 			Rojo1.setEnabled(true);
 			Verde1.setEnabled(true);
 			imagenColor2.setIcon(imagenAmarillo);
 		}
-		if (Verde1.isSelected()) {
+		if (Verde2.isSelected()) {
 			color2 = "green";
-			Verde1.setEnabled(false);
 			Azul1.setEnabled(true);
 			Amarillo1.setEnabled(true);
 			Negro1.setEnabled(true);
 			Blanco1.setEnabled(true);
 			Rojo1.setEnabled(true);
+			Verde1.setEnabled(false);
 			imagenColor2.setIcon(imagenVerde);
 		}
-		if (Negro1.isSelected()) {
+		if (Negro2.isSelected()) {
 			color2 = "black";
-			Negro1.setEnabled(false);
 			Azul1.setEnabled(true);
 			Amarillo1.setEnabled(true);
+			Negro1.setEnabled(false);
 			Blanco1.setEnabled(true);
 			Rojo1.setEnabled(true);
 			Verde1.setEnabled(true);
@@ -443,14 +443,14 @@ public class ConfigJugador extends JDialog {
 		}
 		if (Rojo2.isSelected()) {
 			color2 = "red";
-			Rojo1.setEnabled(false);
 			Azul1.setEnabled(true);
 			Amarillo1.setEnabled(true);
 			Negro1.setEnabled(true);
 			Blanco1.setEnabled(true);
+			Rojo1.setEnabled(false);
 			Verde1.setEnabled(true);
 			imagenColor2.setIcon(imagenRojo);
-			;
+
 		}
 		if (cambioT.isSelected()) {
 			cambioES = true;
