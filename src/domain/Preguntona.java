@@ -20,7 +20,7 @@ public class Preguntona extends Casillas {
      * @param size the table's size.
      */
     public Preguntona(int size) {
-        super(size);
+        super(size, "Preguntona");
         type = "Preguntona";
     }
 

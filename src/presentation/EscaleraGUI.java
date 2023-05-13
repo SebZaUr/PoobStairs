@@ -5,6 +5,6 @@ public class EscaleraGUI extends CasillasGUI {
      * Constructor of the class NormalGUI
      */
     public EscaleraGUI(String valor, int x) {
-        super("Escalera", x);
+        super(valor, x);
     }
 }

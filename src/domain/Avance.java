@@ -15,7 +15,7 @@ public class Avance extends Casillas {
      * @param size the table's size.
      */
     public Avance(int size) {
-        super(size);
+        super(size, "Avance");
         type = "Avance";
         salto = 1;
     }

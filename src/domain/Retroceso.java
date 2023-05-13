@@ -15,7 +15,7 @@ public class Retroceso extends Casillas {
      * @param size the table's size.
      */
     public Retroceso(int size) {
-        super(size);
+        super(size, "Retroceso");
         type = "Retroceso";
     }
 }

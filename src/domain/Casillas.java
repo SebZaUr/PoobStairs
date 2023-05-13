@@ -12,7 +12,7 @@ import java.util.Random;
 public class Casillas {
     protected Casillas[][] table;
     private Random numero = new Random();
-    protected static int startX, startY;
+    protected static int startX, startY, id;
     protected int salto = 0;
     protected String type = "Casillas";
 
@@ -21,19 +21,21 @@ public class Casillas {
      * 
      * @param size the table's size.
      */
-    public Casillas(int size) {
+    public Casillas(int size, String type) {
         Table.getInstance(size);
         table = Table.getGameTable();
         boolean colocada = false;
         while (!colocada) {
             int x = numero.nextInt(size);
             int y = numero.nextInt(size);
-            if (table[x][y] == null) {
-                table[x][y] = this;
-                colocada = true;
+            if (validate(type, x, size, y)) {
+                if (table[x][y] == null) {
+                    table[x][y] = this;
+                    colocada = true;
+                }
+                startX = x;
+                startY = y;
             }
-            startX = x;
-            startY = y;
         }
     }
 
@@ -54,5 +56,18 @@ public class Casillas {
      */
     public String getType() {
         return type;
+    }
+
+    private boolean validate(String type, int x, int size, int y) {
+        boolean couldCreate = true;
+        if (type.equals("Serpientes") && x == size - 1) {
+            couldCreate = false;
+        }
+        if (type.equals("Escalera") && x == 0) {
+            couldCreate = false;
+        } else if (type.equals("Mortal") && x == 0 && y == 0) {
+            couldCreate = false;
+        }
+        return couldCreate;
     }
 }

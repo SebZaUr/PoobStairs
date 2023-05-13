@@ -24,6 +24,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import domain.Casillas;
 import domain.Dado;
+import domain.Escalera;
 import domain.PoobStairs;
 import domain.Player;
 import domain.Table;
@@ -54,6 +55,8 @@ public class TableGUI extends JFrame {
     private PoobStairs poobStairs;
     private PlayerGUI jugador1, jugador2;
     private Dado dice;
+    private int[][] endEscalera = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
+    private int[][] endSerpiente = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
 
     /**
      * Let create the poobStairsGUI.
@@ -417,7 +420,7 @@ public class TableGUI extends JFrame {
                     valor = (size * size + 1) - contador;
                 }
                 if (table[i][j].getType().equals("Escalera")) {
-                    casilla = new EscaleraGUI(Integer.toString(valor), x);
+                    casilla = putFinalEscalera(table[i][j], i, j, x);
                 } else if (table[i][j].getType().equals("Escalera")) {
                     casilla = new SerpienteGUI(Integer.toString(valor), x);
                 } else {
@@ -486,5 +489,23 @@ public class TableGUI extends JFrame {
 
     private void movement() {
         Player[] jugadores = poobStairs.getJugadores();
+    }
+
+    public CasillasGUI putFinalEscalera(Casillas box, int i, int j, int x) {
+        Escalera aux = (Escalera) box;
+        endEscalera[aux.getId()] = aux.getFinish();
+        CasillasGUI casilla = null;
+        boolean put = false;
+        for (int[] w : endEscalera) {
+            if (w[0] == i && w[1] == j) {
+                casilla = new CasillasGUI("EF" + Integer.toString(aux.getId()), x);
+                put = true;
+                System.out.println(Integer.toString(w[0]) + "-" + Integer.toString(w[1]));
+            }
+        }
+        if (!put) {
+            casilla = new CasillasGUI("E" + Integer.toString(aux.getId()), x);
+        }
+        return casilla;
     }
 }

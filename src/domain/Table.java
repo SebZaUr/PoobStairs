@@ -42,8 +42,8 @@ public class Table {
 		String[] typesCasillas = { "Mortal", "Saltarinas", "SaltarinaInversa", "Avance", "Retroceso", "Preguntona" };
 		int contador = 1;
 		for (int i = 0; i < 5; i++) {
-			new Escalera(size);
-			new Serpiente(size);
+			new Escalera(size, i);
+			new Serpiente(size, i);
 		}
 		while (contador <= numCasillasEspeciales) {
 			String type = typesCasillas[rand.nextInt(typesCasillas.length)];
@@ -53,7 +53,7 @@ public class Table {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (table[i][j] == null) {
-					table[i][j] = new Casillas(size);
+					table[i][j] = new Casillas(size, "Casillas");
 				}
 			}
 		}
@@ -101,7 +101,6 @@ public class Table {
 				contador++;
 			}
 		}
-		System.out.println(mapTable.size());
 	}
 
 	public Casillas getBox(int key) {

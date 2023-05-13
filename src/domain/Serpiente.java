@@ -13,9 +13,10 @@ public class Serpiente extends Casillas {
      * 
      * @param size the table's size.
      */
-    public Serpiente(int size) {
-        super(size);
+    public Serpiente(int size, int id) {
+        super(size, "Serpiente");
         putFinal(size);
+        this.id = id;
         type = "Serpiente";
     }
 
@@ -26,21 +27,19 @@ public class Serpiente extends Casillas {
      */
     public void putFinal(int size) {
         boolean colocada = false;
-        int x,y;
+        int x, y;
         while (!colocada) {
-            if(startX == 0){
-                x =  numero.nextInt(size)+1;
-            }else{
-                x = numero.nextInt(startX)+1;
+            if (startX == 0) {
+                x = numero.nextInt(size - 1) + 1;
+            } else {
+                x = numero.nextInt(startX);
             }
             y = numero.nextInt(size);
-            if(x < size){
-                if (table[x][y] == null) {
-                    table[x][y] = this;
-                    colocada = true;
-                    finalX = x;
-                    finalY = y;
-                }
+            if (table[x][y] == null) {
+                table[x][y] = this;
+                colocada = true;
+                finalX = x;
+                finalY = y;
             }
         }
     }
@@ -57,5 +56,9 @@ public class Serpiente extends Casillas {
     @Override
     public int enCasilla() throws PoobStairsExceptions {
         throw new PoobStairsExceptions(PoobStairsExceptions.SNAKE);
+    }
+
+    public int getId() {
+        return id;
     }
 }

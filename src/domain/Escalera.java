@@ -12,9 +12,10 @@ public class Escalera extends Casillas {
      * 
      * @param size the table's size.
      */
-    public Escalera(int size) {
-        super(size);
+    public Escalera(int size, int i) {
+        super(size, "Escalera");
         putFinal(size);
+        id = i;
         type = "Escalera";
     }
 
@@ -26,15 +27,13 @@ public class Escalera extends Casillas {
     public void putFinal(int size) {
         boolean colocada = false;
         while (!colocada) {
-            int x = numero.nextInt(size);
+            int x = numero.nextInt(startX);
             int y = numero.nextInt(size);
-            if (x > startX) {
-                if (table[x][y] == null) {
-                    table[x][y] = this;
-                    colocada = true;
-                    finalX = x;
-                    finalY = y;
-                }
+            if (table[x][y] == null) {
+                table[x][y] = this;
+                colocada = true;
+                finalX = x;
+                finalY = y;
             }
         }
     }
@@ -51,5 +50,9 @@ public class Escalera extends Casillas {
     @Override
     public int enCasilla() throws PoobStairsExceptions {
         throw new PoobStairsExceptions(PoobStairsExceptions.SNAKE);
+    }
+
+    public int getId() {
+        return id;
     }
 }

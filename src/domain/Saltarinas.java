@@ -8,7 +8,7 @@ public class Saltarinas extends Casillas {
      * @param size the table's size.
      */
     public Saltarinas(int size) {
-        super(size);
+        super(size, "Saltarinas");
         type = "Saltarinas";
         salto = 5;
     }

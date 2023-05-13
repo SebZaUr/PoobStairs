@@ -8,7 +8,7 @@ public class Mortal extends Casillas {
      * @param size the table's size.
      */
     public Mortal(int size) {
-        super(size);
+        super(size, "Mortal");
         type = "Mortal";
     }
 
