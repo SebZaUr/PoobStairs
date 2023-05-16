@@ -31,6 +31,7 @@ import domain.Table;
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
@@ -48,12 +49,14 @@ public class TableGUI extends JFrame {
     private final int width = dimensions.width;
     private final int height = dimensions.height;
     private int size, porcentajeBonificador, porcentajeMaquina;
-    private JLabel dado;
+    private JLabel dado,lblNewLabel_5;
     private JButton btnNewButton;
     private ImageIcon fichaJ1, fichaJ2, esca, serp, boni, band;
     private String nombre1, nombre2, colorJ1, colorJ2;
     private PoobStairs poobStairs;
     private PlayerGUI jugador1, jugador2;
+    private Icon icon;
+	private ImageIcon image;
     private Dado dice;
     private int[][] endEscalera = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
     private int[][] endSerpiente = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
@@ -185,10 +188,13 @@ public class TableGUI extends JFrame {
         panel_5.add(panel_6);
         panel_6.setLayout(new GridLayout(0, 2, 0, 0));
 
-        JLabel lblNewLabel_5 = new JLabel();
-        lblNewLabel_5.setIcon(esca);
-        lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_5 = new JLabel();
         panel_6.add(lblNewLabel_5);
+
+        // Obtén el tamaño del label1 y asegúrate de que no sea 0 en ninguna de las dimensiones
+		if (lblNewLabel_5.getWidth() != 0 && lblNewLabel_5.getHeight() != 0) {
+			this.SetImageLabel(this.lblNewLabel_5, "resourses\\Fin-serpiente.png");
+		}
 
         JLabel lblNewLabel_6 = new JLabel("New label");
         lblNewLabel_6.setFont(Estilos.FUENTE_TITULO);
@@ -508,4 +514,11 @@ public class TableGUI extends JFrame {
         }
         return casilla;
     }
+
+    private void SetImageLabel(JLabel labelName, String root) {
+		this.image = new ImageIcon(root);
+		this.icon = new ImageIcon(this.image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(), Image.SCALE_DEFAULT));
+		labelName.setIcon(icon);
+		labelName.repaint();
+	}
 }
