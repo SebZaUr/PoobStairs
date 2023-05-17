@@ -172,7 +172,8 @@ public class TableGUI extends JFrame {
         lblNewLabel.setIcon(fichaJ1);
         panel_3.add(lblNewLabel);
 
-        JLabel lblNewLabel_3 = new JLabel(nombre1);
+        String mayus = Character.toUpperCase(nombre1.charAt(0)) + nombre1.substring(1);
+        JLabel lblNewLabel_3 = new JLabel(mayus);
         lblNewLabel_3.setFont(Estilos.FUENTE_TITULO);
         lblNewLabel_3.setForeground(Estilos.COLOR_LETRAS);
         lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -189,12 +190,10 @@ public class TableGUI extends JFrame {
         panel_6.setLayout(new GridLayout(0, 2, 0, 0));
 
         lblNewLabel_5 = new JLabel();
+        lblNewLabel_5.setIcon(esca);
+        lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6.add(lblNewLabel_5);
 
-        // Obtén el tamaño del label1 y asegúrate de que no sea 0 en ninguna de las dimensiones
-		if (lblNewLabel_5.getWidth() != 0 && lblNewLabel_5.getHeight() != 0) {
-			this.SetImageLabel(this.lblNewLabel_5, "resourses\\Fin-serpiente.png");
-		}
 
         JLabel lblNewLabel_6 = new JLabel("New label");
         lblNewLabel_6.setFont(Estilos.FUENTE_TITULO);
@@ -268,7 +267,8 @@ public class TableGUI extends JFrame {
         lblNewLabel_2.setIcon(fichaJ2);
         panel_4_1.add(lblNewLabel_2);
 
-        JLabel lblNewLabel_4 = new JLabel(nombre2);
+        String mayus2 = Character.toUpperCase(nombre2.charAt(0)) + nombre2.substring(1);
+        JLabel lblNewLabel_4 = new JLabel(mayus2);
         lblNewLabel_4.setFont(Estilos.FUENTE_TITULO);
         lblNewLabel_4.setForeground(Estilos.COLOR_LETRAS);
         lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
