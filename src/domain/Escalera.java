@@ -49,7 +49,7 @@ public class Escalera extends Casillas {
 
     @Override
     public int enCasilla() throws PoobStairsExceptions {
-        throw new PoobStairsExceptions(PoobStairsExceptions.SNAKE);
+        throw new PoobStairsExceptions(PoobStairsExceptions.LADERS);
     }
 
     public int getId() {

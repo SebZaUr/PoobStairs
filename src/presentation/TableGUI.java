@@ -427,8 +427,8 @@ public class TableGUI extends JFrame {
                 }
                 if (table[i][j].getType().equals("Escalera")) {
                     casilla = putFinalEscalera(table[i][j], i, j, x);
-                } else if (table[i][j].getType().equals("Escalera")) {
-                    casilla = new SerpienteGUI(Integer.toString(valor), x);
+                } else if (table[i][j].getType().equals("Serpiente")) {
+                    casilla = new SerpienteGUI("Serpiente", x);
                 } else {
                     casilla = (CasillasGUI) Class.forName("presentation." + table[i][j].getType() + "GUI")
                             .getConstructor(String.class, int.class).newInstance(Integer.toString(valor), x);

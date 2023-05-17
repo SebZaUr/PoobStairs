@@ -43,9 +43,9 @@ public class prueba {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 258, 169);
+		frame.setBounds(100, 100, 300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(0, 2, 0, 0));
+		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		label1 = new JLabel();
 		frame.getContentPane().add(label1);

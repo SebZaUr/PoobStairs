@@ -1,5 +1,9 @@
 package domain;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JOptionPane;
@@ -104,5 +108,44 @@ public class PoobStairs {
     public int[] getPositions(){
         int[] positions = {Jugador1.getPosition(),Jugador2.getPosition()};
         return positions;
+    }
+    
+    public void save(File nombre,String[] detallesJugadores) {
+    	try {
+			PrintWriter archivo = new PrintWriter(new FileOutputStream(nombre.getName()));
+			archivo.println(detallesJugadores[0]);
+			archivo.println(detallesJugadores[1]);
+			archivo.println("Jugador en turno:");
+			if(Jugador1.getTurn()) {
+				archivo.println("Jugador 1");
+			}else {
+				archivo.println("Jugador 2");
+			}
+			String[] tablero = copyTable();
+			for(String i: tablero) {
+				archivo.println(i);
+			}
+			archivo.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void open(File nombre) {
+    	
+    }
+    
+    private String[] copyTable() {
+    	String[] tablero = new String[size];
+    	Table.getInstance(size);
+		Casillas[][] instancia = Table.getGameTable();
+		for(int i = 0; i< size;i++) {
+			String copia = instancia[i][0].getType();
+			for(int j = 1; j<size;i++) {
+				copia = copia + "," + instancia[i][j].getType();;
+			}
+		}
+		return tablero;
     }
 }
