@@ -299,15 +299,20 @@ public class ConfigMaquina extends JDialog {
     private void checkBox() {
         if (Azul1.isSelected()) {
             color = "blue";
-        } else if (Blanco1.isSelected()) {
+        }
+        if (Blanco1.isSelected()) {
             color = "white";
-        } else if (Amarillo1.isSelected()) {
+        }
+        if (Amarillo1.isSelected()) {
             color = "yellow";
-        } else if (Verde1.isSelected()) {
+        }
+        if (Verde1.isSelected()) {
             color = "green";
-        } else if (Negro1.isSelected()) {
+        }
+        if (Negro1.isSelected()) {
             color = "black";
-        } else if (Rojo1.isSelected()) {
+        }
+        if (Rojo1.isSelected()) {
             color = "red";
         }
         if (principiante.isSelected()) {
@@ -349,7 +354,7 @@ public class ConfigMaquina extends JDialog {
                 } else {
                     size = Integer.parseInt(sizeTablero.getText());
                 }
-                if (color != "negro") {
+                if (color.equals("black")) {
                     color2 = "blue";
                 } else {
                     color2 = "black";

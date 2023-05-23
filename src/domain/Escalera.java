@@ -34,6 +34,8 @@ public class Escalera extends Casillas {
                 colocada = true;
                 finalX = x;
                 finalY = y;
+                int[][] finals = { { finalX, finalY }, { startX, startY } };
+                Table.setFinal(finals, "Escalera");
             }
         }
     }

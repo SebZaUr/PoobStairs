@@ -9,12 +9,15 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -24,11 +27,14 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import domain.Casillas;
 import domain.Dado;
-import domain.Escalera;
 import domain.PoobStairs;
 import domain.Player;
 import domain.Table;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -49,17 +55,22 @@ public class TableGUI extends JFrame {
     private final int width = dimensions.width;
     private final int height = dimensions.height;
     private int size, porcentajeBonificador, porcentajeMaquina;
-    private JLabel dado,lblNewLabel_5;
+    private JLabel dado, lblNewLabel_5;
     private JButton btnNewButton;
-    private ImageIcon fichaJ1, fichaJ2, esca, serp, boni, band;
+    private ImageIcon fichaJ1, fichaJ2, esca, serp, boni, band, image;
     private String nombre1, nombre2, colorJ1, colorJ2;
     private PoobStairs poobStairs;
     private PlayerGUI jugador1, jugador2;
     private Icon icon;
-	private ImageIcon image;
     private Dado dice;
-    private int[][] endEscalera = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
-    private int[][] endSerpiente = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
+    private JLabel escalera1, serpiente1, bonificadores1, posMax1, escalera2, serpiente2, bonificadores2, posMax2;
+    private ArrayList<int[][]> finalEscaleras = new ArrayList<>();
+    private ArrayList<int[][]> finalSerpiente = new ArrayList<>();
+    private Player player1, player2;
+    private JMenu menu;
+    private JMenuBar menuBar;
+    private JMenuItem inicio, cargar, salvar, finalizar;
+    private JFileChooser selecionarArchivos = new JFileChooser();
 
     /**
      * Let create the poobStairsGUI.
@@ -67,9 +78,13 @@ public class TableGUI extends JFrame {
     public TableGUI(String nombre1, String nombre2, int porcentajeMaquina, int porcentajeBonificador, int size,
             boolean modificar, String colorJ1, String colorJ2) {
         this.size = size;
-        poobStairs = PoobStairs.getInstance(this.nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
+        poobStairs = new PoobStairs(this.nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
                 porcentajeBonificador, modificar);
-
+        Player[] aux = poobStairs.getJugadores();
+        player1 = aux[0];
+        player2 = aux[1];
+        finalEscaleras = Table.getFinalLadder();
+        finalSerpiente = Table.getFinalSnake();
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
         esca = new ImageIcon("resourses\\T_esc.png");
@@ -98,7 +113,7 @@ public class TableGUI extends JFrame {
     /**
      * Create and configure all visual elements of the table.
      */
-    public void prepareElements() {
+    private void prepareElements() {
         JPanel PantallaInicial = Estilos.GradientPanel();
         getContentPane().add(PantallaInicial);
         PantallaInicial.setLayout(new GridLayout(1, 0, 0, 0));
@@ -106,6 +121,8 @@ public class TableGUI extends JFrame {
         JPanel panel_iz = new JPanel(new GridBagLayout());
         panel_iz.setOpaque(false);
         PantallaInicial.add(panel_iz);
+
+        prepareElementsMenu();
 
         // Nuevo JPanel para contener los botones del tablero
         try {
@@ -194,11 +211,10 @@ public class TableGUI extends JFrame {
         lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6.add(lblNewLabel_5);
 
-
-        JLabel lblNewLabel_6 = new JLabel("New label");
-        lblNewLabel_6.setFont(Estilos.FUENTE_TITULO);
-        lblNewLabel_6.setForeground(Estilos.COLOR_LETRAS);
-        panel_6.add(lblNewLabel_6);
+        escalera1 = new JLabel("0");
+        escalera1.setFont(Estilos.FUENTE_TITULO);
+        escalera1.setForeground(Estilos.COLOR_LETRAS);
+        panel_6.add(escalera1);
 
         JPanel panel_6_1 = new JPanel();
         panel_6_1.setOpaque(false);
@@ -210,10 +226,10 @@ public class TableGUI extends JFrame {
         lblNewLabel_5_1.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6_1.add(lblNewLabel_5_1);
 
-        JLabel lblNewLabel_6_1 = new JLabel("New label");
-        lblNewLabel_6_1.setFont(Estilos.FUENTE_TITULO);
-        lblNewLabel_6_1.setForeground(Estilos.COLOR_LETRAS);
-        panel_6_1.add(lblNewLabel_6_1);
+        serpiente1 = new JLabel("0");
+        serpiente1.setFont(Estilos.FUENTE_TITULO);
+        serpiente1.setForeground(Estilos.COLOR_LETRAS);
+        panel_6_1.add(serpiente1);
 
         JPanel panel_5_2 = new JPanel();
         panel_5_2.setOpaque(false);
@@ -230,10 +246,10 @@ public class TableGUI extends JFrame {
         lblNewLabel_5_3.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6_3.add(lblNewLabel_5_3);
 
-        JLabel lblNewLabel_6_3 = new JLabel("New label");
-        lblNewLabel_6_3.setFont(Estilos.FUENTE_TITULO);
-        lblNewLabel_6_3.setForeground(Estilos.COLOR_LETRAS);
-        panel_6_3.add(lblNewLabel_6_3);
+        bonificadores1 = new JLabel("0");
+        bonificadores1.setFont(Estilos.FUENTE_TITULO);
+        bonificadores1.setForeground(Estilos.COLOR_LETRAS);
+        panel_6_3.add(bonificadores1);
 
         JPanel panel_6_1_2 = new JPanel();
         panel_6_1_2.setOpaque(false);
@@ -245,10 +261,10 @@ public class TableGUI extends JFrame {
         lblNewLabel_5_1_2.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6_1_2.add(lblNewLabel_5_1_2);
 
-        JLabel lblNewLabel_6_1_2 = new JLabel("New label");
-        lblNewLabel_6_1_2.setFont(Estilos.FUENTE_TITULO);
-        lblNewLabel_6_1_2.setForeground(Estilos.COLOR_LETRAS);
-        panel_6_1_2.add(lblNewLabel_6_1_2);
+        posMax1 = new JLabel("0");
+        posMax1.setFont(Estilos.FUENTE_TITULO);
+        posMax1.setForeground(Estilos.COLOR_LETRAS);
+        panel_6_1_2.add(posMax1);
 
         JPanel panel_4 = new JPanel();
         panel_4.setOpaque(false);
@@ -289,10 +305,10 @@ public class TableGUI extends JFrame {
         lblNewLabel_5_4.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6_4.add(lblNewLabel_5_4);
 
-        JLabel lblNewLabel_6_4 = new JLabel("New label");
-        lblNewLabel_6_4.setFont(Estilos.FUENTE_TITULO);
-        lblNewLabel_6_4.setForeground(Estilos.COLOR_LETRAS);
-        panel_6_4.add(lblNewLabel_6_4);
+        escalera2 = new JLabel("0");
+        escalera2.setFont(Estilos.FUENTE_TITULO);
+        escalera2.setForeground(Estilos.COLOR_LETRAS);
+        panel_6_4.add(escalera2);
 
         JPanel panel_6_1_3 = new JPanel();
         panel_6_1_3.setOpaque(false);
@@ -304,10 +320,10 @@ public class TableGUI extends JFrame {
         lblNewLabel_5_1_3.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6_1_3.add(lblNewLabel_5_1_3);
 
-        JLabel lblNewLabel_6_1_3 = new JLabel("New label");
-        lblNewLabel_6_1_3.setFont(Estilos.FUENTE_TITULO);
-        lblNewLabel_6_1_3.setForeground(Estilos.COLOR_LETRAS);
-        panel_6_1_3.add(lblNewLabel_6_1_3);
+        serpiente2 = new JLabel("0");
+        serpiente2.setFont(Estilos.FUENTE_TITULO);
+        serpiente2.setForeground(Estilos.COLOR_LETRAS);
+        panel_6_1_3.add(serpiente2);
 
         JPanel panel_5_1 = new JPanel();
         panel_5_1.setOpaque(false);
@@ -324,10 +340,10 @@ public class TableGUI extends JFrame {
         lblNewLabel_5_2.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6_2.add(lblNewLabel_5_2);
 
-        JLabel lblNewLabel_6_2 = new JLabel("New label");
-        lblNewLabel_6_2.setFont(Estilos.FUENTE_TITULO);
-        lblNewLabel_6_2.setForeground(Estilos.COLOR_LETRAS);
-        panel_6_2.add(lblNewLabel_6_2);
+        bonificadores2 = new JLabel("0");
+        bonificadores2.setFont(Estilos.FUENTE_TITULO);
+        bonificadores2.setForeground(Estilos.COLOR_LETRAS);
+        panel_6_2.add(bonificadores2);
 
         JPanel panel_6_1_1 = new JPanel();
         panel_6_1_1.setOpaque(false);
@@ -339,10 +355,10 @@ public class TableGUI extends JFrame {
         lblNewLabel_5_1_1.setHorizontalAlignment(SwingConstants.CENTER);
         panel_6_1_1.add(lblNewLabel_5_1_1);
 
-        JLabel lblNewLabel_6_1_1 = new JLabel("New label");
-        lblNewLabel_6_1_1.setFont(Estilos.FUENTE_TITULO);
-        lblNewLabel_6_1_1.setForeground(Estilos.COLOR_LETRAS);
-        panel_6_1_1.add(lblNewLabel_6_1_1);
+        posMax2 = new JLabel("0");
+        posMax2.setFont(Estilos.FUENTE_TITULO);
+        posMax2.setForeground(Estilos.COLOR_LETRAS);
+        panel_6_1_1.add(posMax2);
 
         JPanel panel_1 = new JPanel();
         panel_1.setOpaque(false);
@@ -381,7 +397,28 @@ public class TableGUI extends JFrame {
         panel_2.add(btnNewButton);
     }
 
-    public void prepareActions() {
+    /**
+     * Create all visual's element on the menu.
+     */
+    private void prepareElementsMenu() {
+        menu = new JMenu("Opciones");
+        menuBar = new JMenuBar();
+        inicio = new JMenuItem("Nueva Partida");
+        cargar = new JMenuItem("Cargar Partida");
+        salvar = new JMenuItem("Guardar Partida");
+        finalizar = new JMenuItem("Finalizar Partida");
+        menu.add(inicio);
+        menu.add(cargar);
+        menu.add(salvar);
+        menu.add(finalizar);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
+    }
+
+    /**
+     * Configure all the actions that need the game.
+     */
+    private void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         WindowListener Cerrar = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -390,6 +427,76 @@ public class TableGUI extends JFrame {
         };
         this.addWindowListener(Cerrar);
         btnNewButton.addActionListener(e -> jugar());
+        prepareActionsMenu();
+    }
+
+    /**
+     * Configure all menu's actions.
+     */
+    private void prepareActionsMenu() {
+        inicio.addActionListener(e -> nuevoJuego());
+        cargar.addActionListener(e -> cargarJuego());
+        salvar.addActionListener(e -> salvarJuego());
+        finalizar.addActionListener(e -> finalizarJuego());
+    }
+
+    /**
+     * Let the player create other game.
+     */
+    private void nuevoJuego() {
+        int Confirmacion = JOptionPane.showConfirmDialog(null,
+                "¿Quiere guardar la partida antes de iniciar una nueva?");
+        if (Confirmacion == JOptionPane.YES_OPTION) {
+            salvarJuego();
+        } else {
+            ConfigurationGUI nueva = new ConfigurationGUI();
+            nueva.setVisible(true);
+            this.dispose();
+        }
+    }
+
+    /**
+     * Let save the actual state of the game.
+     */
+    private void cargarJuego() {
+
+    }
+
+    private void salvarJuego() {
+        selecionarArchivos.setVisible(true);
+        int action = selecionarArchivos.showOpenDialog(cargar);
+        if (action == JFileChooser.APPROVE_OPTION) {
+            File archivo = selecionarArchivos.getSelectedFile();
+            String informacionJ1 = nombre1 + "," + colorJ1 + "," + escalera1.getText() + "," + serpiente1.getText()
+                    + "," + bonificadores1.getText() + "," + posMax1.getText();
+            String informacionJ2 = nombre2 + "," + colorJ2 + "," + escalera2.getText() + "," + serpiente2.getText()
+                    + "," + bonificadores2.getText() + "," + posMax2.getText();
+            try {
+                poobStairs.save(archivo, informacionJ1, informacionJ2, Integer.toString(porcentajeMaquina),
+                        Integer.toString(porcentajeBonificador), Integer.toString(size), finalEscaleras,
+                        finalSerpiente);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "No se pudo guardar el archivo", "Error Guardar",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }
+
+    /**
+     * Let exit in an any game's state.
+     */
+    private void finalizarJuego() {
+        int Confirmacion = JOptionPane.showConfirmDialog(null,
+                "¿Seguro quieres abandonar tu partida sin guardar?");
+        if (Confirmacion == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else {
+            salvarJuego();
+            PoobStairsGUI nueva = new PoobStairsGUI();
+            nueva.setVisible(true);
+            this.dispose();
+        }
     }
 
     /**
@@ -426,17 +533,18 @@ public class TableGUI extends JFrame {
                     valor = (size * size + 1) - contador;
                 }
                 if (table[i][j].getType().equals("Escalera")) {
-                    casilla = putFinalEscalera(table[i][j], i, j, x);
+                    casilla = putFinalEscalera(i, j, x);
                 } else if (table[i][j].getType().equals("Serpiente")) {
-                    casilla = new SerpienteGUI("Serpiente", x);
+                    casilla = new SerpienteGUI("Serpientes", x);
+                    // casilla = putFinalSerpinete(i, j, x);
                 } else {
                     casilla = (CasillasGUI) Class.forName("presentation." + table[i][j].getType() + "GUI")
                             .getConstructor(String.class, int.class).newInstance(Integer.toString(valor), x);
+
                 }
                 botones.put(valor, casilla);
                 juego.add(casilla);
-                juego.validate();
-                juego.repaint();
+                repintar();
                 contador++;
             }
         }
@@ -448,16 +556,12 @@ public class TableGUI extends JFrame {
      */
     private void jugar() {
         int valor = poobStairs.mover();
-        ImageIcon iconoOriginal = selecImageDice(valor);
-        Image imagenOriginal = iconoOriginal.getImage();
-        int nuevoAncho = 250;
-        int nuevoAlto = 250;
-        Image imagenEscalada = imagenOriginal.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
-        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-        dado.setIcon(iconoEscalado);
+        putDice(valor);
+        movement(valor);
+        updateInformation();
+        repintar();
         validate();
         repaint();
-        movement();
     }
 
     /**
@@ -493,32 +597,109 @@ public class TableGUI extends JFrame {
         return imagen;
     }
 
-    private void movement() {
-        Player[] jugadores = poobStairs.getJugadores();
+    /**
+     * Make the visual change on the table game.
+     */
+    private void movement(int valor) {
+        if (player1.getTurn()) {
+            updatePosition(player1);
+        } else {
+            updatePosition(player2);
+        }
     }
 
-    public CasillasGUI putFinalEscalera(Casillas box, int i, int j, int x) {
-        Escalera aux = (Escalera) box;
-        endEscalera[aux.getId()] = aux.getFinish();
+    public CasillasGUI putFinalEscalera(int i, int j, int x) {
         CasillasGUI casilla = null;
         boolean put = false;
-        for (int[] w : endEscalera) {
-            if (w[0] == i && w[1] == j) {
-                casilla = new CasillasGUI("EF" + Integer.toString(aux.getId()), x);
+        for (int k = 0; k < 5; k++) {
+            if (i == finalEscaleras.get(k)[0][0] && j == finalEscaleras.get(k)[0][1]) {
                 put = true;
-                System.out.println(Integer.toString(w[0]) + "-" + Integer.toString(w[1]));
+                casilla = new EscaleraGUI("EF" + k, x);
             }
         }
         if (!put) {
-            casilla = new CasillasGUI("E" + Integer.toString(aux.getId()), x);
+            for (int k = 0; k < 5; k++) {
+                if (i == finalEscaleras.get(k)[1][0] && j == finalEscaleras.get(k)[1][1]) {
+                    casilla = new EscaleraGUI("E" + k, x);
+                }
+            }
+        }
+        return casilla;
+    }
+
+    public CasillasGUI putFinalSerpinete(int i, int j, int x) {
+        CasillasGUI casilla = null;
+        boolean put = false;
+        for (int k = 0; k < 5; k++) {
+            System.out.println(Integer.toString(finalSerpiente.get(k)[0][0]) + "-"
+                    + Integer.toString(finalSerpiente.get(k)[0][1]));
+            if (i == finalSerpiente.get(k)[0][0] && j == finalSerpiente.get(k)[0][1]) {
+                put = true;
+                casilla = new SerpienteGUI("SF" + k, x);
+            }
+        }
+        if (!put) {
+            for (int k = 0; k < 5; k++) {
+                System.out.println(Integer.toString(finalSerpiente.get(k)[0][0]) + "-"
+                        + Integer.toString(finalSerpiente.get(k)[0][1]));
+                if (i == finalSerpiente.get(k)[1][0] && j == finalSerpiente.get(k)[1][1]) {
+                    casilla = new SerpienteGUI("S" + k, x);
+                }
+            }
         }
         return casilla;
     }
 
     private void SetImageLabel(JLabel labelName, String root) {
-		this.image = new ImageIcon(root);
-		this.icon = new ImageIcon(this.image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(), Image.SCALE_DEFAULT));
-		labelName.setIcon(icon);
-		labelName.repaint();
-	}
+        this.image = new ImageIcon(root);
+        this.icon = new ImageIcon(this.image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(),
+                Image.SCALE_DEFAULT));
+        labelName.setIcon(icon);
+        labelName.repaint();
+    }
+
+    /**
+     * Refresh the game table's view.
+     */
+    private void repintar() {
+        juego.validate();
+        juego.repaint();
+    }
+
+    /**
+     * Put the dice's image in each throw.
+     * 
+     * @param valor
+     */
+    private void putDice(int valor) {
+        ImageIcon iconoOriginal = selecImageDice(valor);
+        Image imagenOriginal = iconoOriginal.getImage();
+        int nuevoAncho = 250;
+        int nuevoAlto = 250;
+        Image imagenEscalada = imagenOriginal.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        dado.setIcon(iconoEscalado);
+    }
+
+    /**
+     * Update the players' information.
+     */
+    private void updateInformation() {
+        escalera1.setText(player1.stairs());
+        escalera2.setText(player2.stairs());
+        serpiente1.setText(player1.snake());
+        serpiente2.setText(player2.snake());
+        bonificadores1.setText(player1.getBonificadores());
+        bonificadores2.setText(player2.getBonificadores());
+        if (Integer.parseInt(posMax1.getText()) > player1.getPosition()) {
+            posMax1.setText(Integer.toString(player1.getPosition()));
+        }
+        if (Integer.parseInt(posMax2.getText()) > player2.getPosition()) {
+            posMax2.setText(Integer.toString(player2.getPosition()));
+        }
+    }
+
+    private void updatePosition(Player player) {
+
+    }
 }

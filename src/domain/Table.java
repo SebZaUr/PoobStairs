@@ -1,6 +1,7 @@
 package domain;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -16,6 +17,8 @@ public class Table {
 	private static Casillas[][] table;
 	private static Table instance;
 	private static HashMap<Integer, Casillas> mapTable;
+	private static ArrayList<int[][]> posFinalEscalera = new ArrayList<>();
+	private static ArrayList<int[][]> posFinalSerpiente = new ArrayList<>();
 
 	private Table(int size) {
 		this.size = size;
@@ -84,6 +87,9 @@ public class Table {
 		return instance;
 	}
 
+	/**
+	 * Let me put all table on a hashmap.
+	 */
 	private static void ordenar() {
 		int valor = 0;
 		int contador = 1;
@@ -103,7 +109,35 @@ public class Table {
 		}
 	}
 
+	/**
+	 * Return the box on the hashmap
+	 * 
+	 * @param key the box's number.
+	 * @return the box.
+	 */
 	public Casillas getBox(int key) {
 		return mapTable.get(key);
+	}
+
+	/**
+	 * Let´s save the final ladder or snake position.
+	 * 
+	 * @param posicion
+	 * @param type
+	 */
+	public static void setFinal(int[][] posicion, String type) {
+		if (type.equals("Serpiente")) {
+			posFinalSerpiente.add(posicion);
+		} else {
+			posFinalEscalera.add(posicion);
+		}
+	}
+
+	public static ArrayList<int[][]> getFinalLadder() {
+		return posFinalEscalera;
+	}
+
+	public static ArrayList<int[][]> getFinalSnake() {
+		return posFinalSerpiente;
 	}
 }

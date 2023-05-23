@@ -14,7 +14,7 @@ public class Dado {
      * @param porBonificador
      */
     private Dado(int porBonificador) {
-        this.valor = numero.nextInt(6) + 1;
+        Dado.valor = numero.nextInt(6) + 1;
         percentage = porBonificador / 100;
     }
 
