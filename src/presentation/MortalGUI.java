@@ -1,10 +1,6 @@
 package presentation;
 
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
-public class MortalGUI extends CasillasGUI {
+public class MortalGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */

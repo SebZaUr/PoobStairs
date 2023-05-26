@@ -1,6 +1,6 @@
 package presentation;
 
-public class AvanceGUI extends CasillasGUI {
+public class AvanceGUI extends NCasillaGUI {
 	/**
 	 * Constructor of the class NormalGUI
 	 */

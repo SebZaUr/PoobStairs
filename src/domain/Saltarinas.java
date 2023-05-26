@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Random;
+
 public class Saltarinas extends Casillas {
 
     /**
@@ -8,9 +10,28 @@ public class Saltarinas extends Casillas {
      * @param size the table's size.
      */
     public Saltarinas(int size) {
-        super(size, "Saltarinas");
         type = "Saltarinas";
-        salto = 5;
+        Table.getInstance(size);
+        table = Table.getGameTable();
+        boolean colocada = false;
+        while (!colocada) {
+            int x = numero.nextInt(size);
+            int y = numero.nextInt(size);
+            if (validate(type, x, size, y)) {
+                if (table[x][y] == null) {
+                    table[x][y] = this;
+                    colocada = true;
+                }
+                startX = x;
+                startY = y;
+            }
+        }
+    }
+
+    @Override
+    public int enCasilla(int size) throws PoobStairsExceptions {
+        Random numero = new Random();
+        return numero.nextInt(6) + 1;
     }
 
 }

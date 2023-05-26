@@ -1,10 +1,6 @@
 package presentation;
 
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
-public class PreguntonaGUI extends CasillasGUI {
+public class PreguntonaGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */

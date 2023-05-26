@@ -1,13 +1,12 @@
 package presentation;
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

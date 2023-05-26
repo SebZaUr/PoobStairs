@@ -2,6 +2,7 @@ package domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Let me create a box that if the player falls in has to answer a question to
@@ -12,7 +13,7 @@ import java.util.Map;
  * @version 1.0
  */
 public class Preguntona extends Casillas {
-    private Map<Integer, Pregunta> preguntas = new HashMap<>();
+    private static Map<Integer, Pregunta> preguntas = new HashMap<>();
 
     /**
      * Let me create a Preguntona's box.
@@ -20,12 +21,26 @@ public class Preguntona extends Casillas {
      * @param size the table's size.
      */
     public Preguntona(int size) {
-        super(size, "Preguntona");
         type = "Preguntona";
+        Table.getInstance(size);
+        table = Table.getGameTable();
+        boolean colocada = false;
+        while (!colocada) {
+            int x = numero.nextInt(size);
+            int y = numero.nextInt(size);
+            if (validate(type, x, size, y)) {
+                if (table[x][y] == null) {
+                    table[x][y] = this;
+                    colocada = true;
+                }
+                startX = x;
+                startY = y;
+            }
+        }
     }
 
     @Override
-    public int enCasilla() throws PoobStairsExceptions {
+    public int enCasilla(int size) throws PoobStairsExceptions {
         throw new PoobStairsExceptions(PoobStairsExceptions.PREGUNTA);
     }
 
@@ -35,41 +50,8 @@ public class Preguntona extends Casillas {
      * @param i the question's identifier.
      * @return the question.
      */
-    public Pregunta getPregunta(int i) {
-        return preguntas.get(i);
-    }
-}
-
-class Pregunta {
-    private String pregunta;
-    private String respuesta;
-
-    /**
-     * Create a question with the answer.
-     * 
-     * @param pregunta  the question's statement.
-     * @param respuesta the question's answer.
-     */
-    public Pregunta(String pregunta, String respuesta) {
-        this.pregunta = pregunta;
-        this.respuesta = respuesta;
-    }
-
-    /**
-     * Return the question's statement.
-     * 
-     * @return a String with the question's statement.
-     */
-    public String getPregunta() {
-        return pregunta;
-    }
-
-    /**
-     * Return the question's answer.
-     * 
-     * @return a String with the question's answer
-     */
-    public String getRespuesta() {
-        return respuesta;
+    public static Pregunta getPregunta() {
+        Random alazar = new Random();
+        return preguntas.get(alazar.nextInt(preguntas.size()));
     }
 }

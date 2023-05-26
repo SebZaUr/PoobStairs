@@ -11,6 +11,7 @@ public class Dado {
 
     /**
      * Create the dice with the bonus's percentage.
+     * 
      * @param porBonificador
      */
     private Dado(int porBonificador) {
@@ -20,7 +21,8 @@ public class Dado {
 
     /**
      * Get the dice's value.
-     * @return  the dice's value.
+     * 
+     * @return the dice's value.
      */
     public int getValue() {
         valor = numero.nextInt(6) + 1;
@@ -28,14 +30,16 @@ public class Dado {
     }
 
     /**
-     * Let me verify if exist an instance in this class, in the case, that exists it doesn't create one.
+     * Let me verify if exist an instance in this class, in the case, that exists it
+     * doesn't create one.
+     * 
      * @param porBonificador the bonus's percentage.
-     * @return  the dice.
+     * @return the dice.
      */
-    public static Dado getInstance(int porBonificador){
-        if(instance == null){
+    public static Dado getInstance(int porBonificador) {
+        if (instance == null) {
             instance = new Dado(porBonificador);
-        } 
+        }
         return instance;
     }
 }

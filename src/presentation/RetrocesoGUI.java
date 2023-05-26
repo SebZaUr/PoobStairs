@@ -1,10 +1,6 @@
 package presentation;
 
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
-public class RetrocesoGUI extends CasillasGUI {
+public class RetrocesoGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */

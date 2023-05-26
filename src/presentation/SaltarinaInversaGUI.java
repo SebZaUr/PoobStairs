@@ -1,10 +1,6 @@
 package presentation;
 
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
-public class SaltarinaInversaGUI extends CasillasGUI {
+public class SaltarinaInversaGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */

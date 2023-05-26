@@ -1,16 +1,15 @@
 package domain;
 
 public class Player {
-    private String name;
     private Piece pieza;
     private int positions, lastPosition;
     private int fallSnake = 0;
     private int fallStairs = 0;
     private int bonificadores = 0;
     private boolean inTurn = false;
+    private boolean question = false;
 
-    public Player(String name, String color, int size) {
-        this.name = name;
+    public Player(String color, int size) {
         this.pieza = new Piece(color);
     }
 
@@ -22,9 +21,13 @@ public class Player {
         this.inTurn = turn;
     }
 
-    public int move(int value) {
-        lastPosition += positions;
-        positions += value;
+    public int move(int value, int size) {
+        if (lastPosition + positions > (size * size)) {
+            value = 0;
+        } else {
+            lastPosition += positions;
+            positions += value;
+        }
         return pieza.move(value);
     }
 
@@ -58,5 +61,13 @@ public class Player {
 
     public int getLastPosition() {
         return lastPosition;
+    }
+
+    public void setQuestion(boolean value) {
+        this.question = value;
+    }
+
+    public boolean hasQuestion() {
+        return question;
     }
 }

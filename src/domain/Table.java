@@ -21,7 +21,7 @@ public class Table {
 	private static ArrayList<int[][]> posFinalSerpiente = new ArrayList<>();
 
 	private Table(int size) {
-		this.size = size;
+		Table.size = size;
 		table = new Casillas[size][size];
 		mapTable = new HashMap<>();
 	}
@@ -46,6 +46,8 @@ public class Table {
 		int contador = 1;
 		for (int i = 0; i < 5; i++) {
 			new Escalera(size, i);
+		}
+		for (int i = 0; i < 5; i++) {
 			new Serpiente(size, i);
 		}
 		while (contador <= numCasillasEspeciales) {
@@ -56,7 +58,7 @@ public class Table {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (table[i][j] == null) {
-					table[i][j] = new Casillas(size, "Casillas");
+					table[i][j] = new NCasilla(size, "NCasilla");
 				}
 			}
 		}
@@ -104,6 +106,7 @@ public class Table {
 					valor = (size * size + 1) - contador;
 				}
 				mapTable.put(valor, table[i][j]);
+				table[i][j].setPosition(valor);
 				contador++;
 			}
 		}

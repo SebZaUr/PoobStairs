@@ -1,6 +1,6 @@
 package presentation;
 
-public class SerpienteGUI extends CasillasGUI {
+public class SerpienteGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */

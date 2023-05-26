@@ -1,8 +1,6 @@
 package presentation;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
@@ -29,10 +27,10 @@ public class ConfigJugador extends JDialog {
 	private JRadioButton cambioT, cambioF, Rojo1, Negro1, Blanco1, Verde1, Azul1, Amarillo1, Rojo2, Blanco2, Negro2,
 			Verde2, Amarillo2, Azul2;
 	private ButtonGroup coloresJ1, coloresJ2, cambio;
-	private String modoMaquina, color, color2,imageroot2,imageroot1;
+	private String color, color2, imageroot2, imageroot1;
 	private final int width = Estilos.dimensions.width / 2;
 	private final int heigth = Estilos.dimensions.height / 2;
-	private ImageIcon imagenRojo, image, imagenNegro, imagenBlanco, imagenVerde, imagenAzul, imagenAmarillo;
+	private ImageIcon image;
 	private static boolean cambioES = false;
 	private JPanel pantallaCarga, nombres, Configuracion, panel_4, panel_2, panel_4_1, color2_1, Player_2, Player_1,
 			color1, Color_1, Color_2, panel, panel_1, panel_3;
@@ -333,7 +331,7 @@ public class ConfigJugador extends JDialog {
 			Blanco2.setEnabled(true);
 			Rojo2.setEnabled(true);
 			Verde2.setEnabled(true);
-			imageroot1="resourses\\Blue.png";
+			imageroot1 = "resourses\\Blue.png";
 
 		}
 		if (Blanco1.isSelected()) {
@@ -344,7 +342,7 @@ public class ConfigJugador extends JDialog {
 			Blanco2.setEnabled(false);
 			Rojo2.setEnabled(true);
 			Verde2.setEnabled(true);
-			imageroot1="resourses\\White.png";
+			imageroot1 = "resourses\\White.png";
 
 		}
 		if (Amarillo1.isSelected()) {
@@ -355,7 +353,7 @@ public class ConfigJugador extends JDialog {
 			Blanco2.setEnabled(true);
 			Rojo2.setEnabled(true);
 			Verde2.setEnabled(true);
-			imageroot1="resourses\\Yellow.png";
+			imageroot1 = "resourses\\Yellow.png";
 
 		}
 		if (Verde1.isSelected()) {
@@ -366,7 +364,7 @@ public class ConfigJugador extends JDialog {
 			Blanco2.setEnabled(true);
 			Rojo2.setEnabled(true);
 			Verde2.setEnabled(false);
-			imageroot1="resourses\\Green.png";
+			imageroot1 = "resourses\\Green.png";
 
 		}
 		if (Negro1.isSelected()) {
@@ -377,7 +375,7 @@ public class ConfigJugador extends JDialog {
 			Blanco2.setEnabled(true);
 			Rojo2.setEnabled(true);
 			Verde2.setEnabled(true);
-			imageroot1="resourses\\Black.png";
+			imageroot1 = "resourses\\Black.png";
 
 		}
 		if (Rojo1.isSelected()) {
@@ -388,7 +386,7 @@ public class ConfigJugador extends JDialog {
 			Blanco2.setEnabled(true);
 			Rojo2.setEnabled(false);
 			Verde2.setEnabled(true);
-			imageroot1="resourses\\Red.png";
+			imageroot1 = "resourses\\Red.png";
 
 		}
 		if (Azul2.isSelected()) {
@@ -399,7 +397,7 @@ public class ConfigJugador extends JDialog {
 			Blanco1.setEnabled(true);
 			Rojo1.setEnabled(true);
 			Verde1.setEnabled(true);
-			imageroot2="resourses\\Blue.png";
+			imageroot2 = "resourses\\Blue.png";
 
 		}
 		if (Blanco2.isSelected()) {
@@ -410,7 +408,7 @@ public class ConfigJugador extends JDialog {
 			Blanco1.setEnabled(false);
 			Rojo1.setEnabled(true);
 			Verde1.setEnabled(true);
-			imageroot2="resourses\\White.png";
+			imageroot2 = "resourses\\White.png";
 
 		}
 		if (Amarillo2.isSelected()) {
@@ -421,7 +419,7 @@ public class ConfigJugador extends JDialog {
 			Blanco1.setEnabled(true);
 			Rojo1.setEnabled(true);
 			Verde1.setEnabled(true);
-			imageroot2="resourses\\Yellow.png";
+			imageroot2 = "resourses\\Yellow.png";
 
 		}
 		if (Verde2.isSelected()) {
@@ -432,7 +430,7 @@ public class ConfigJugador extends JDialog {
 			Blanco1.setEnabled(true);
 			Rojo1.setEnabled(true);
 			Verde1.setEnabled(false);
-			imageroot2="resourses\\Green.png";
+			imageroot2 = "resourses\\Green.png";
 
 		}
 		if (Negro2.isSelected()) {
@@ -443,7 +441,7 @@ public class ConfigJugador extends JDialog {
 			Blanco1.setEnabled(true);
 			Rojo1.setEnabled(true);
 			Verde1.setEnabled(true);
-			imageroot2="resourses\\Black.png";
+			imageroot2 = "resourses\\Black.png";
 
 		}
 		if (Rojo2.isSelected()) {
@@ -454,8 +452,7 @@ public class ConfigJugador extends JDialog {
 			Blanco1.setEnabled(true);
 			Rojo1.setEnabled(false);
 			Verde1.setEnabled(true);
-			imageroot2="resourses\\Red.png";
-
+			imageroot2 = "resourses\\Red.png";
 
 		}
 		if (cambioT.isSelected()) {
@@ -502,7 +499,7 @@ public class ConfigJugador extends JDialog {
 					size = Integer.parseInt(sizeTablero.getText());
 				}
 				TableGUI tablero = new TableGUI(nombre, maquina, porCasillas, porBonificacion, size, cambioES, color,
-						color2);
+						color2, null);
 				tablero.setVisible(true);
 				this.dispose();
 			} catch (NumberFormatException e) {

@@ -1,8 +1,6 @@
 package presentation;
 
-import domain.Casillas;
-
-public class EscaleraGUI extends CasillasGUI {
+public class EscaleraGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */

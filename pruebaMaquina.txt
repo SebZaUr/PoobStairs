@@ -1,0 +1,27 @@
+adssad,blue,0,0,0,3
+DaPooInteligancia01,black,0,0,0,0
+Jugador 2
+12,0,10,false,Principiante
+Escaleras: 
+8-8-2-7
+0-5-5-9
+3-1-1-4
+8-5-2-0
+4-1-3-7
+Serpientes: 
+5-9-8-5
+2-0-3-5
+0-4-4-1
+0-9-1-5
+3-2-9-8
+Tablero: 
+NCasilla,NCasilla,NCasilla,NCasilla,Escalera,Serpiente,NCasilla,NCasilla,Escalera,Escalera
+NCasilla,NCasilla,Escalera,NCasilla,Escalera,Serpiente,NCasilla,NCasilla,NCasilla,Avance
+Escalera,NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,Escalera,NCasilla,NCasilla
+NCasilla,Escalera,Escalera,Avance,NCasilla,NCasilla,Escalera,Escalera,NCasilla,NCasilla
+NCasilla,Escalera,Avance,NCasilla,NCasilla,NCasilla,NCasilla,Mortal,NCasilla,NCasilla
+NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,Escalera
+Mortal,Serpiente,NCasilla,Saltarinas,NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,Avance
+NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,Saltarinas,NCasilla,NCasilla,NCasilla
+NCasilla,Retroceso,Preguntona,NCasilla,Avance,Serpiente,NCasilla,NCasilla,Escalera,NCasilla
+NCasilla,NCasilla,NCasilla,NCasilla,NCasilla,Avance,NCasilla,Escalera,Serpiente,NCasilla

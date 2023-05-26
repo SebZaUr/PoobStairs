@@ -1,4 +1,5 @@
 package presentation;
+
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -46,16 +47,17 @@ public class prueba {
 		frame.setBounds(100, 100, 300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		label1 = new JLabel();
 		frame.getContentPane().add(label1);
 
 		label2 = new JLabel();
 		frame.getContentPane().add(label2);
-		
+
 		frame.setVisible(true); // hace visible el frame
-		
-		// Obtén el tamaño del label1 y asegúrate de que no sea 0 en ninguna de las dimensiones
+
+		// Obtén el tamaño del label1 y asegúrate de que no sea 0 en ninguna de las
+		// dimensiones
 		if (label1.getWidth() != 0 && label1.getHeight() != 0) {
 			this.SetImageLabel(this.label1, "resourses\\Fin-serpiente.png");
 		}
@@ -66,7 +68,8 @@ public class prueba {
 
 	private void SetImageLabel(JLabel labelName, String root) {
 		this.image = new ImageIcon(root);
-		this.icon = new ImageIcon(this.image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(), Image.SCALE_DEFAULT));
+		this.icon = new ImageIcon(this.image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(),
+				Image.SCALE_DEFAULT));
 		labelName.setIcon(icon);
 		labelName.repaint();
 	}

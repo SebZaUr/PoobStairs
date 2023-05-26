@@ -6,8 +6,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import domain.PoobStairsExceptions;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -316,9 +314,9 @@ public class ConfigMaquina extends JDialog {
             color = "red";
         }
         if (principiante.isSelected()) {
-            modoMaquina = "principiante";
+            modoMaquina = "Principiante";
         } else if (aprendiz.isSelected()) {
-            modoMaquina = "aprendiz";
+            modoMaquina = "Aprendiz";
         }
         if (cambioT.isSelected()) {
             cambioES = true;
@@ -360,7 +358,7 @@ public class ConfigMaquina extends JDialog {
                     color2 = "black";
                 }
                 TableGUI tablero = new TableGUI(nombre, maquina, porCasillas, porBonificacion, size, cambioES, color,
-                        color2);
+                        color2, modoMaquina);
                 tablero.setVisible(true);
                 this.dispose();
             } catch (NumberFormatException e) {

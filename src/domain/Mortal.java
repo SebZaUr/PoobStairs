@@ -8,12 +8,26 @@ public class Mortal extends Casillas {
      * @param size the table's size.
      */
     public Mortal(int size) {
-        super(size, "Mortal");
         type = "Mortal";
+        Table.getInstance(size);
+        table = Table.getGameTable();
+        boolean colocada = false;
+        while (!colocada) {
+            int x = numero.nextInt(size);
+            int y = numero.nextInt(size);
+            if (validate(type, x, size, y)) {
+                if (table[x][y] == null) {
+                    table[x][y] = this;
+                    colocada = true;
+                }
+                startX = x;
+                startY = y;
+            }
+        }
     }
 
     @Override
-    public int enCasilla() throws PoobStairsExceptions {
+    public int enCasilla(int size) throws PoobStairsExceptions {
         throw new PoobStairsExceptions(PoobStairsExceptions.MORTAL);
     }
 }

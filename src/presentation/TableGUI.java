@@ -15,6 +15,7 @@ import java.util.Map;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.IOException;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -58,7 +59,7 @@ public class TableGUI extends JFrame {
     private JLabel dado, lblNewLabel_5;
     private JButton btnNewButton;
     private ImageIcon fichaJ1, fichaJ2, esca, serp, boni, band, image;
-    private String nombre1, nombre2, colorJ1, colorJ2;
+    private String nombre1, nombre2, colorJ1, colorJ2, modoMaquina;
     private PoobStairs poobStairs;
     private PlayerGUI jugador1, jugador2;
     private Icon icon;
@@ -71,15 +72,22 @@ public class TableGUI extends JFrame {
     private JMenuBar menuBar;
     private JMenuItem inicio, cargar, salvar, finalizar;
     private JFileChooser selecionarArchivos = new JFileChooser();
+    private boolean modificar;
 
     /**
      * Let create the poobStairsGUI.
      */
     public TableGUI(String nombre1, String nombre2, int porcentajeMaquina, int porcentajeBonificador, int size,
-            boolean modificar, String colorJ1, String colorJ2) {
+            boolean modificar, String colorJ1, String colorJ2, String modoMaquina) {
         this.size = size;
-        poobStairs = new PoobStairs(this.nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
-                porcentajeBonificador, modificar);
+        try {
+            poobStairs = new PoobStairs(this.nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
+                    porcentajeBonificador, modificar, modoMaquina);
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(rootPane, "No se pudo crear al jugador maquina", "Error Maquina",
+                    JOptionPane.ERROR_MESSAGE);
+        }
         Player[] aux = poobStairs.getJugadores();
         player1 = aux[0];
         player2 = aux[1];
@@ -94,6 +102,8 @@ public class TableGUI extends JFrame {
         dice = Dado.getInstance(porcentajeBonificador);
         this.porcentajeMaquina = porcentajeMaquina;
         this.porcentajeBonificador = porcentajeBonificador;
+        this.modoMaquina = modoMaquina;
+        this.modificar = modificar;
         this.colorJ1 = colorJ1;
         jugador1 = new PlayerGUI(colorJ1);
         fichaJ1 = jugador1.getImage();
@@ -459,7 +469,43 @@ public class TableGUI extends JFrame {
      * Let save the actual state of the game.
      */
     private void cargarJuego() {
-
+        selecionarArchivos.setVisible(true);
+        ArrayList<String[]> informacion = new ArrayList<>();
+        int action = selecionarArchivos.showOpenDialog(cargar);
+        if (action == JFileChooser.APPROVE_OPTION) {
+            File archivo = selecionarArchivos.getSelectedFile();
+            try {
+                informacion = poobStairs.open(archivo.getName());
+                String[] infoJ1 = informacion.get(0);
+                String[] infoJ2 = informacion.get(1);
+                String[] infoVariables = informacion.get(3);
+                ArrayList<String[]> escaleras = new ArrayList<>();
+                ArrayList<String[]> serpientes = new ArrayList<>();
+                ArrayList<String[]> tablero = new ArrayList<>();
+                for (int i = 5; i < 10; i++) {
+                    escaleras.add(informacion.get(i));
+                    serpientes.add(informacion.get(i + 6));
+                }
+                for (int i = 17; i < informacion.size(); i++) {
+                    tablero.add(informacion.get(i));
+                }
+                String modoMaquina;
+                if (infoVariables.length == 4) {
+                    modoMaquina = null;
+                } else {
+                    modoMaquina = infoVariables[4];
+                }
+                TableGUI nuevo = new TableGUI(infoJ1[0], infoJ2[0], Integer.parseInt(infoVariables[0]),
+                        Integer.parseInt(infoVariables[1]), Integer.parseInt(infoVariables[2]),
+                        Boolean.valueOf(infoVariables[3]), infoJ1[1], infoJ2[1], modoMaquina);
+                nuevo.updateTable(tablero, escaleras, serpientes, informacion.get(2), infoJ1, infoJ2);
+                nuevo.setVisible(true);
+                this.dispose();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(rootPane, "No se pudo abrir el archivo", "Error Abrir",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     private void salvarJuego() {
@@ -474,7 +520,7 @@ public class TableGUI extends JFrame {
             try {
                 poobStairs.save(archivo, informacionJ1, informacionJ2, Integer.toString(porcentajeMaquina),
                         Integer.toString(porcentajeBonificador), Integer.toString(size), finalEscaleras,
-                        finalSerpiente);
+                        finalSerpiente, modoMaquina, modificar);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, "No se pudo guardar el archivo", "Error Guardar",
                         JOptionPane.ERROR_MESSAGE);
@@ -521,7 +567,8 @@ public class TableGUI extends JFrame {
         juego = new JPanel();
         juego.setLayout(new GridLayout(size, size));
         botones = new HashMap<>();
-        CasillasGUI casilla = null;
+        NCasillaGUI[][] auxSEGUI = snakeAndLadders(size);
+        NCasillaGUI casilla = null;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 int x = i + j;
@@ -532,13 +579,10 @@ public class TableGUI extends JFrame {
                     ajuste = size - 1;
                     valor = (size * size + 1) - contador;
                 }
-                if (table[i][j].getType().equals("Escalera")) {
-                    casilla = putFinalEscalera(i, j, x);
-                } else if (table[i][j].getType().equals("Serpiente")) {
-                    casilla = new SerpienteGUI("Serpientes", x);
-                    // casilla = putFinalSerpinete(i, j, x);
+                if (auxSEGUI[i][j] != null) {
+                    casilla = auxSEGUI[i][j];
                 } else {
-                    casilla = (CasillasGUI) Class.forName("presentation." + table[i][j].getType() + "GUI")
+                    casilla = (NCasillaGUI) Class.forName("presentation." + table[i][j].getType() + "GUI")
                             .getConstructor(String.class, int.class).newInstance(Integer.toString(valor), x);
 
                 }
@@ -555,7 +599,8 @@ public class TableGUI extends JFrame {
      * The action Listener that the lanzar.
      */
     private void jugar() {
-        int valor = poobStairs.mover();
+        int valor = dice.getValue();
+        poobStairs.mover(valor);
         putDice(valor);
         movement(valor);
         updateInformation();
@@ -608,48 +653,6 @@ public class TableGUI extends JFrame {
         }
     }
 
-    public CasillasGUI putFinalEscalera(int i, int j, int x) {
-        CasillasGUI casilla = null;
-        boolean put = false;
-        for (int k = 0; k < 5; k++) {
-            if (i == finalEscaleras.get(k)[0][0] && j == finalEscaleras.get(k)[0][1]) {
-                put = true;
-                casilla = new EscaleraGUI("EF" + k, x);
-            }
-        }
-        if (!put) {
-            for (int k = 0; k < 5; k++) {
-                if (i == finalEscaleras.get(k)[1][0] && j == finalEscaleras.get(k)[1][1]) {
-                    casilla = new EscaleraGUI("E" + k, x);
-                }
-            }
-        }
-        return casilla;
-    }
-
-    public CasillasGUI putFinalSerpinete(int i, int j, int x) {
-        CasillasGUI casilla = null;
-        boolean put = false;
-        for (int k = 0; k < 5; k++) {
-            System.out.println(Integer.toString(finalSerpiente.get(k)[0][0]) + "-"
-                    + Integer.toString(finalSerpiente.get(k)[0][1]));
-            if (i == finalSerpiente.get(k)[0][0] && j == finalSerpiente.get(k)[0][1]) {
-                put = true;
-                casilla = new SerpienteGUI("SF" + k, x);
-            }
-        }
-        if (!put) {
-            for (int k = 0; k < 5; k++) {
-                System.out.println(Integer.toString(finalSerpiente.get(k)[0][0]) + "-"
-                        + Integer.toString(finalSerpiente.get(k)[0][1]));
-                if (i == finalSerpiente.get(k)[1][0] && j == finalSerpiente.get(k)[1][1]) {
-                    casilla = new SerpienteGUI("S" + k, x);
-                }
-            }
-        }
-        return casilla;
-    }
-
     private void SetImageLabel(JLabel labelName, String root) {
         this.image = new ImageIcon(root);
         this.icon = new ImageIcon(this.image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(),
@@ -691,15 +694,75 @@ public class TableGUI extends JFrame {
         serpiente2.setText(player2.snake());
         bonificadores1.setText(player1.getBonificadores());
         bonificadores2.setText(player2.getBonificadores());
-        if (Integer.parseInt(posMax1.getText()) > player1.getPosition()) {
+        if (Integer.parseInt(posMax1.getText()) < player1.getPosition()) {
             posMax1.setText(Integer.toString(player1.getPosition()));
         }
-        if (Integer.parseInt(posMax2.getText()) > player2.getPosition()) {
+        if (Integer.parseInt(posMax2.getText()) < player2.getPosition()) {
             posMax2.setText(Integer.toString(player2.getPosition()));
         }
     }
 
+    /**
+     * show the piece's movement.
+     * 
+     * @param player
+     */
     private void updatePosition(Player player) {
+
+    }
+
+    /**
+     * Create the snakes and ladders visual part.
+     * 
+     * @param size
+     * @return
+     */
+    private NCasillaGUI[][] snakeAndLadders(int size) {
+        NCasillaGUI[][] tablero = new NCasillaGUI[size][size];
+        for (int i = 0; i < 5; i++) {
+            int[][] positions = finalEscaleras.get(i);
+            int x = positions[0][0] + positions[0][1];
+            EscaleraGUI casilla = new EscaleraGUI("E" + i, x);
+            tablero[positions[0][0]][positions[0][1]] = casilla;
+            int y = positions[1][0] + positions[1][1];
+            casilla = new EscaleraGUI("EF" + i, y);
+            tablero[positions[1][0]][positions[1][1]] = casilla;
+        }
+        for (int i = 0; i < 5; i++) {
+            int[][] positions = finalSerpiente.get(i);
+            int x = positions[0][0] + positions[0][1];
+            SerpienteGUI casilla = new SerpienteGUI("S" + i, x);
+            tablero[positions[0][0]][positions[0][1]] = casilla;
+            int y = positions[1][0] + positions[1][1];
+            casilla = new SerpienteGUI("SF" + i, y);
+            tablero[positions[1][0]][positions[1][1]] = casilla;
+        }
+        return tablero;
+    }
+
+    /**
+     * Let me update the table on logic and repaint the table and the other
+     * information.
+     * 
+     * @param tablero
+     * @param escaleras
+     * @param serpientes
+     * @param turno
+     */
+    private void updateTable(ArrayList<String[]> tablero, ArrayList<String[]> escaleras, ArrayList<String[]> serpientes,
+            String[] turno, String[] infoj1, String[] infoj2) {
+        // poobStairs.change(tablero,escaleras,serpientes);
+        // poobStairs.setTurn(turno);
+        juego.removeAll();
+        prepareElements();
+        escalera1.setText(infoj1[2]);
+        escalera2.setText(infoj2[2]);
+        serpiente1.setText(infoj1[3]);
+        serpiente2.setText(infoj2[3]);
+        bonificadores1.setText(infoj1[4]);
+        bonificadores2.setText(infoj2[4]);
+        posMax1.setText(infoj1[5]);
+        posMax2.setText(infoj2[5]);
 
     }
 }
