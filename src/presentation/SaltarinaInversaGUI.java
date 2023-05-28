@@ -4,7 +4,7 @@ public class SaltarinaInversaGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */
-    public SaltarinaInversaGUI(String valor, int x) {
-        super("SaltarinaI", x);
+    public SaltarinaInversaGUI(String valor,  String num,int x) {
+        super("SaltarinaI",num,x);
     }
 }

@@ -1,5 +1,6 @@
 package presentation;
 
+import domain.PoobStairs;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -28,7 +29,6 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import domain.Casillas;
 import domain.Dado;
-import domain.PoobStairs;
 import domain.Player;
 import domain.Table;
 import javax.swing.JLabel;
@@ -81,8 +81,9 @@ public class TableGUI extends JFrame {
             boolean modificar, String colorJ1, String colorJ2, String modoMaquina) {
         this.size = size;
         try {
-            poobStairs = new PoobStairs(this.nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
+            poobStairs = new PoobStairs(nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
                     porcentajeBonificador, modificar, modoMaquina);
+
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException | ClassNotFoundException e) {
             JOptionPane.showMessageDialog(rootPane, "No se pudo crear al jugador maquina", "Error Maquina",
@@ -583,7 +584,8 @@ public class TableGUI extends JFrame {
                     casilla = auxSEGUI[i][j];
                 } else {
                     casilla = (NCasillaGUI) Class.forName("presentation." + table[i][j].getType() + "GUI")
-                            .getConstructor(String.class, int.class).newInstance(Integer.toString(valor), x);
+                            .getConstructor(String.class, String.class, int.class)
+                            .newInstance(Integer.toString(valor), Integer.toString(valor), x);
 
                 }
                 botones.put(valor, casilla);
@@ -722,19 +724,19 @@ public class TableGUI extends JFrame {
         for (int i = 0; i < 5; i++) {
             int[][] positions = finalEscaleras.get(i);
             int x = positions[0][0] + positions[0][1];
-            EscaleraGUI casilla = new EscaleraGUI("E" + i, x);
+            EscaleraGUI casilla = new EscaleraGUI("resourses\\Escalera-Ini.png", String.valueOf(i), x);
             tablero[positions[0][0]][positions[0][1]] = casilla;
             int y = positions[1][0] + positions[1][1];
-            casilla = new EscaleraGUI("EF" + i, y);
+            casilla = new EscaleraGUI("resourses\\Escalera-Fin.png", String.valueOf(i), y);
             tablero[positions[1][0]][positions[1][1]] = casilla;
         }
         for (int i = 0; i < 5; i++) {
             int[][] positions = finalSerpiente.get(i);
             int x = positions[0][0] + positions[0][1];
-            SerpienteGUI casilla = new SerpienteGUI("S" + i, x);
+            SerpienteGUI casilla = new SerpienteGUI("resourses\\Inicio-serpiente.png", String.valueOf(i), x);
             tablero[positions[0][0]][positions[0][1]] = casilla;
             int y = positions[1][0] + positions[1][1];
-            casilla = new SerpienteGUI("SF" + i, y);
+            casilla = new SerpienteGUI("resourses\\Fin-serpiente.png", String.valueOf(i), y);
             tablero[positions[1][0]][positions[1][1]] = casilla;
         }
         return tablero;

@@ -4,7 +4,7 @@ public class SerpienteGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */
-    public SerpienteGUI(String valor, int x) {
-        super(valor, x);
+    public SerpienteGUI(String valor,  String num, int x) {
+        super(valor, num,x);
     }
 }

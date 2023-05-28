@@ -1,76 +1,67 @@
 package presentation;
 
-import java.awt.EventQueue;
-import java.awt.GridLayout;
-import java.awt.Image;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 
 public class prueba {
 
-	private JFrame frame;
-	private JLabel label1, label2;
-	private Icon icon;
-	private ImageIcon image;
+    private JFrame frame;
+    private ImagePanel imagePanel;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					prueba window = new prueba();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    public static void main(String[] args) {
+        prueba window = new prueba();
+        window.frame.setVisible(true);
+    }
 
-	/**
-	 * Create the application.
-	 */
-	public prueba() {
-		initialize();
-	}
+    public prueba() {
+        initialize();
+    }
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 300, 200);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+    private void initialize() {
+        frame = new JFrame();
+        frame.setBounds(100, 100, 150, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		label1 = new JLabel();
-		frame.getContentPane().add(label1);
+        imagePanel = new ImagePanel("F:\\GitHub\\PoobStairs\\resourses\\icono.png");
+        frame.getContentPane().add(imagePanel, BorderLayout.CENTER);
 
-		label2 = new JLabel();
-		frame.getContentPane().add(label2);
+        JLabel lblNewLabel = new JLabel("New label");
+        imagePanel.setLayout(null); // Usar un LayoutManager nulo para controlar la posición del JLabel
+        lblNewLabel.setBounds(0, 0, imagePanel.getWidth(), imagePanel.getHeight()); // Establecer los límites del JLabel
+        imagePanel.add(lblNewLabel);
 
-		frame.setVisible(true); // hace visible el frame
+        frame.setVisible(true);
+    }
 
-		// Obtén el tamaño del label1 y asegúrate de que no sea 0 en ninguna de las
-		// dimensiones
-		if (label1.getWidth() != 0 && label1.getHeight() != 0) {
-			this.SetImageLabel(this.label1, "resourses\\Fin-serpiente.png");
-		}
-		if (label2.getWidth() != 0 && label2.getHeight() != 0) {
-			this.SetImageLabel(this.label2, "resourses\\Fin-serpiente.png");
-		}
-	}
+    private class ImagePanel extends JPanel {
 
-	private void SetImageLabel(JLabel labelName, String root) {
-		this.image = new ImageIcon(root);
-		this.icon = new ImageIcon(this.image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(),
-				Image.SCALE_DEFAULT));
-		labelName.setIcon(icon);
-		labelName.repaint();
-	}
+        private ImageIcon backgroundImage;
+
+        public ImagePanel(String imagePath) {
+            backgroundImage = new ImageIcon(imagePath);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Dimension size = getSize();
+            // Establecer el color de fondo del panel
+            g.setColor(Color.CYAN);
+            g.fillRect(0, 0, size.width, size.height);
+            if (backgroundImage != null) {
+                g.drawImage(backgroundImage.getImage(), 0, 0, size.width, size.height, this);
+            }
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
+        }
+    }
 }
