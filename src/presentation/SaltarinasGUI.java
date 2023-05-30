@@ -6,5 +6,6 @@ public class SaltarinasGUI extends NCasillaGUI {
 	 */
 	public SaltarinasGUI(String valor, String num, int x) {
 		super("Saltarina", num, x);
+		type = "Saltarinas";
 	}
 }

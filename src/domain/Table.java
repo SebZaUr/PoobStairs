@@ -18,8 +18,8 @@ public class Table {
 	private int size;
 	private ArrayList<int[][]> posFinalEscalera = new ArrayList<>();
 	private ArrayList<int[][]> posFinalSerpiente = new ArrayList<>();
-	private ArrayList<Integer> startEscalera;
-	private ArrayList<Integer> startSerpiente;
+	private ArrayList<Integer> startEscalera = new ArrayList<>();
+	private ArrayList<Integer> startSerpiente = new ArrayList<>();
 	private static Table instance;
 	private static Casillas[][] table;
 	private HashMap<Integer, Casillas> mapTable = new HashMap<>();
@@ -183,8 +183,11 @@ public class Table {
 		return escalerasSerpientes.contains(casilla);
 	}
 
-	public void add(int[] casilla) {
-		escalerasSerpientes.add(casilla);
+	public void add(int posi, String type) {
+		if (type.equals("serpiente")) {
+			startSerpiente.add(posi);
+		} else {
+			startEscalera.add(posi);
+		}
 	}
-
 }

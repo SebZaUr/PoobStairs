@@ -6,5 +6,6 @@ public class SaltarinaGUI extends NCasillaGUI {
 	 */
 	public SaltarinaGUI(String valor, String num, int x) {
 		super("resourses\\Salta+.png", num, x);
+		type = "Saltarina";
 	}
 }

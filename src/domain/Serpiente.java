@@ -29,12 +29,15 @@ public abstract class Serpiente {
 			y = numero.nextInt(size);
 			if (table[x][y].getType().equals("NCasilla") && x < size - 1 && x != 0 && y != 0) {
 				inicio = (NCasilla) table[x][y];
-				confirm = true;
-				inicio.putSerpiente(this, "Inicio");
-				int[] startPosition = { x, y };
-				positions[0] = startPosition;
-				putFinal(size, x);
-				(Table.getInstance(size)).setFinal(positions, "Serpiente");
+				if (!inicio.hasBox()) {
+					confirm = true;
+					inicio.putSerpiente(this, "inicio");
+					(Table.getInstance(size)).add(inicio.getPosition(), "serpiente");
+					int[] startPosition = { x, y };
+					positions[0] = startPosition;
+					putFinal(size, x);
+					(Table.getInstance(size)).setFinal(positions, "Serpiente");
+				}
 
 			}
 		}
@@ -60,10 +63,13 @@ public abstract class Serpiente {
 			y = numero.nextInt(size);
 			if (table[x][y].getType().equals("NCasilla")) {
 				fin = (NCasilla) table[x][y];
-				colocada = true;
-				fin.putSerpiente(this, "Fin");
-				int[] startPosition = { x, y };
-				positions[1] = startPosition;
+				if (!fin.hasBox()) {
+					colocada = true;
+					fin.putSerpiente(this, "fin");
+					int[] startPosition = { x, y };
+					positions[1] = startPosition;
+				}
+
 			}
 		}
 

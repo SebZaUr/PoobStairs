@@ -6,5 +6,6 @@ public class SaltarinaInversaGUI extends NCasillaGUI {
      */
     public SaltarinaInversaGUI(String valor, String num, int x) {
         super("resourses\\SaltaAtraz.png", num, x);
+        type = "SaltarinaInversa";
     }
 }

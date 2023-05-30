@@ -6,5 +6,6 @@ public class SerpienteGUI extends NCasillaGUI {
      */
     public SerpienteGUI(String valor,  String num, int x) {
         super(valor, num,x);
+        type = "Serpiente";
     }
 }

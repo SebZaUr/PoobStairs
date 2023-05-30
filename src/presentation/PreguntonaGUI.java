@@ -6,5 +6,6 @@ public class PreguntonaGUI extends NCasillaGUI {
      */
     public PreguntonaGUI(String valor, String num, int x) {
         super("resourses\\Pregunta.png", num, x);
+        type = "Preguntona";
     }
 }

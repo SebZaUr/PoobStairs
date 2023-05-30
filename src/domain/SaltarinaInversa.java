@@ -19,8 +19,7 @@ public class SaltarinaInversa extends Casillas {
 
 	@Override
 	public int enCasilla(int size) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'enCasilla'");
+		return (numero.nextInt(6) + 1) * -1;
 	}
 
 }

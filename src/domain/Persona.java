@@ -3,7 +3,7 @@ package domain;
 public class Persona extends Player {
 
 	public Persona(String color) {
-
+		piece = "resourses\\" + color + ".png";
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public abstract class Casillas {
 
 	protected int position;
 
-	private Casillas[][] table;
+	protected Casillas[][] table;
 
 	public abstract int enCasilla(int size) throws PoobStairsExceptions;
 

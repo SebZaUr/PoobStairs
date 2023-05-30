@@ -6,6 +6,7 @@ public class NCasilla extends Casillas {
 
 	private Serpiente snake;
 	private Escalera ladder;
+	private boolean put = false;
 
 	/**
 	 *  
@@ -35,8 +36,7 @@ public class NCasilla extends Casillas {
 		return valor;
 	}
 
-	public boolean putEscalera(Escalera casilla, String type) {
-		boolean put = false;
+	public void putEscalera(Escalera casilla, String type) {
 		if (type.equals("inicio")) {
 			ladder = casilla;
 			put = true;
@@ -44,11 +44,10 @@ public class NCasilla extends Casillas {
 			ladder = casilla;
 			put = true;
 		}
-		return put;
 	}
 
-	public boolean putSerpiente(Serpiente casilla, String type) {
-		boolean put = false;
+	public void putSerpiente(Serpiente casilla, String type) {
+		put = false;
 		if (type.equals("inicio")) {
 			snake = casilla;
 			put = true;
@@ -56,14 +55,9 @@ public class NCasilla extends Casillas {
 			snake = casilla;
 			put = true;
 		}
-		return put;
 	}
 
 	public boolean hasBox() {
-		boolean isIn = false;
-		if (snake == null && ladder == null) {
-			isIn = true;
-		}
-		return isIn;
+		return put;
 	}
 }

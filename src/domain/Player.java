@@ -11,6 +11,7 @@ public abstract class Player {
 	protected boolean question = false;
 	protected boolean answer = false;
 	protected int bonificacion, penalizacion, cambio;
+	protected String piece;
 
 	public boolean getTurn() {
 		return inTurn;
@@ -21,7 +22,7 @@ public abstract class Player {
 	}
 
 	public int move(int value, int size) {
-		if (lastPosition + position > (size * size)) {
+		if (lastPosition + position > (size * size) || lastPosition + position < 0) {
 			value = 0;
 		} else {
 			lastPosition += position;
@@ -88,5 +89,9 @@ public abstract class Player {
 		} else if (type.equals("Binificacion")) {
 			cambio++;
 		}
+	}
+
+	public String getPiece() {
+		return piece;
 	}
 }

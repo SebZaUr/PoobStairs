@@ -11,8 +11,7 @@ public class Saltarinas extends Casillas {
      */
     public Saltarinas(int size) {
         type = "Saltarinas";
-        Table.getInstance(size);
-        table = Table.getGameTable();
+        table = (Table.getInstance(size)).getGameTable();
         boolean colocada = false;
         while (!colocada) {
             int x = numero.nextInt(size);

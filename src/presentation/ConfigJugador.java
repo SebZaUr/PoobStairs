@@ -324,7 +324,7 @@ public class ConfigJugador extends JDialog {
 	 */
 	private void checkBox() {
 		if (Azul1.isSelected()) {
-			color = "blue";
+			color = "Blue";
 			Azul2.setEnabled(false);
 			Amarillo2.setEnabled(true);
 			Negro2.setEnabled(true);
@@ -335,7 +335,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Blanco1.isSelected()) {
-			color = "white";
+			color = "White";
 			Azul2.setEnabled(true);
 			Amarillo2.setEnabled(true);
 			Negro2.setEnabled(true);
@@ -346,7 +346,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Amarillo1.isSelected()) {
-			color = "yellow";
+			color = "Yellow";
 			Azul2.setEnabled(true);
 			Amarillo2.setEnabled(false);
 			Negro2.setEnabled(true);
@@ -357,7 +357,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Verde1.isSelected()) {
-			color = "green";
+			color = "Green";
 			Azul2.setEnabled(true);
 			Amarillo2.setEnabled(true);
 			Negro2.setEnabled(true);
@@ -368,7 +368,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Negro1.isSelected()) {
-			color = "black";
+			color = "Black";
 			Azul2.setEnabled(true);
 			Amarillo2.setEnabled(true);
 			Negro2.setEnabled(false);
@@ -379,7 +379,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Rojo1.isSelected()) {
-			color2 = "red";
+			color2 = "Red";
 			Azul2.setEnabled(true);
 			Amarillo2.setEnabled(true);
 			Negro2.setEnabled(true);
@@ -390,7 +390,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Azul2.isSelected()) {
-			color2 = "blue";
+			color2 = "Blue";
 			Azul1.setEnabled(false);
 			Amarillo1.setEnabled(true);
 			Negro1.setEnabled(true);
@@ -401,7 +401,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Blanco2.isSelected()) {
-			color2 = "white";
+			color2 = "White";
 			Azul1.setEnabled(true);
 			Amarillo1.setEnabled(true);
 			Negro1.setEnabled(true);
@@ -412,7 +412,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Amarillo2.isSelected()) {
-			color2 = "yellow";
+			color2 = "Yellow";
 			Azul1.setEnabled(true);
 			Amarillo1.setEnabled(false);
 			Negro1.setEnabled(true);
@@ -423,7 +423,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Verde2.isSelected()) {
-			color2 = "green";
+			color2 = "Green";
 			Azul1.setEnabled(true);
 			Amarillo1.setEnabled(true);
 			Negro1.setEnabled(true);
@@ -434,7 +434,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Negro2.isSelected()) {
-			color2 = "black";
+			color2 = "Black";
 			Azul1.setEnabled(true);
 			Amarillo1.setEnabled(true);
 			Negro1.setEnabled(false);
@@ -445,7 +445,7 @@ public class ConfigJugador extends JDialog {
 
 		}
 		if (Rojo2.isSelected()) {
-			color2 = "red";
+			color2 = "Red";
 			Azul1.setEnabled(true);
 			Amarillo1.setEnabled(true);
 			Negro1.setEnabled(true);

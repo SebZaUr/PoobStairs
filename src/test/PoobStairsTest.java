@@ -27,9 +27,8 @@ class PoobStairsTest {
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		juego = new PoobStairs("Sebastian", "Johann", "black", "yellow", 10, 12, 0, false, null);
-		Table.getInstance(10);
-		tablero = Table.getGameTable();
+		juego = new PoobStairs("Sebastian", "Johann", "black", "yellow", 10, 12, 0, false, null, 0);
+		tablero = (Table.getInstance(10)).getGameTable();
 	}
 
 	@Test

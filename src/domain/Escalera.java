@@ -22,12 +22,15 @@ public abstract class Escalera {
 			y = numero.nextInt(size);
 			if (table[x][y].getType().equals("NCasilla") && x > 0) {
 				inicio = (NCasilla) table[x][y];
-				confirm = true;
-				inicio.putEscalera(this, "Inicio");
-				int[] startPosition = { x, y };
-				positions[0] = startPosition;
-				putFinal(size, x);
-				(Table.getInstance(size)).setFinal(positions, "Escalera");
+				if (!inicio.hasBox()) {
+					confirm = true;
+					inicio.putEscalera(this, "inicio");
+					(Table.getInstance(size)).add(inicio.getPosition(), "escalera");
+					int[] startPosition = { x, y };
+					positions[0] = startPosition;
+					putFinal(size, x);
+					(Table.getInstance(size)).setFinal(positions, "Escalera");
+				}
 			}
 		}
 	}
@@ -49,10 +52,12 @@ public abstract class Escalera {
 			y = numero.nextInt(size);
 			if (table[x][y].getType().equals("NCasilla")) {
 				fin = (NCasilla) table[x][y];
-				colocada = true;
-				fin.putEscalera(this, "Fin");
-				int[] startPosition = { x, y };
-				positions[1] = startPosition;
+				if (!fin.hasBox()) {
+					colocada = true;
+					fin.putEscalera(this, "fin");
+					int[] startPosition = { x, y };
+					positions[1] = startPosition;
+				}
 			}
 		}
 

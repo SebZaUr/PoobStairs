@@ -2,9 +2,7 @@ package presentation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +27,7 @@ public class NCasillaGUI extends JPanel {
         } else {
             fond = Color.ORANGE;
         }
+        type = "NCasilla";
         imagePanel = new ImagePanel(valor, fond);
         add(imagePanel, BorderLayout.CENTER);
         this.valor = valor;
