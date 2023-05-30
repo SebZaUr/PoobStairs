@@ -13,8 +13,10 @@ public class SaltarinaInversa extends Casillas {
 	/**
 	 *  
 	 */
-	public SaltarinaInversa(int x, int y) {
-
+	public SaltarinaInversa(int x, int y, int size) {
+		this.type = "SaltarinaInversa";
+		Casillas[][] table = (Table.getInstance(size)).getGameTable();
+		table[x][y] = this;
 	}
 
 	@Override

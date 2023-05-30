@@ -39,7 +39,7 @@ public class PoobStairs {
 	}
 
 	public PoobStairs(String jugador1, String jugador2, String colorJ1, String colorJ2, int size, int porCasillas,
-			int porModificador, int modificar, String modoMaquina, String[] tablero)
+			int porModificador, boolean modificar, String modoMaquina, int numSE, ArrayList<String[]> tablero)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException {
 		(Table.getInstance(size)).createTable(tablero);
@@ -55,34 +55,45 @@ public class PoobStairs {
 		Dado.getInstance(porModificador);
 	}
 
-	public void mover(int value, boolean guardar, String type) {
+	public void mover(int value, boolean guardar, String type) throws PoobStairsExceptions {
 		if (Jugador1.getTurn()) {
-			movement(Jugador1, value);
+			movement(Jugador1, value, true);
 			try {
 				int add = (Table.getInstance(size)).getBox(Jugador1.getPosition()).enCasilla(size);
-				if (add > 0) {
-					movement(Jugador1, add);
+				if (add != 0) {
+					movement(Jugador1, add, false);
 				}
 			} catch (PoobStairsExceptions e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Moriste", JOptionPane.INFORMATION_MESSAGE);
-				movement(Jugador1, -Jugador1.getPosition());
+				if (e.getMessage().equals(PoobStairsExceptions.MORTAL)) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Moriste", JOptionPane.INFORMATION_MESSAGE);
+					movement(Jugador1, -Jugador1.getPosition() + 1, false);
+				} else if (e.getMessage().equals(PoobStairsExceptions.QUESTION)) {
+					Jugador1.setQuestion(true);
+				}
+
 			}
+			win(Jugador1);
 			Jugador1.setTurn(false);
 			Jugador2.setTurn(true);
 			if (guardar) {
 				Jugador1.saveModificador(type);
 			}
 		} else {
-			movement(Jugador2, value);
+			movement(Jugador2, value, true);
 			try {
-				int add = (Table.getInstance(size)).getBox(Jugador1.getPosition()).enCasilla(size);
-				if (add > 0) {
-					movement(Jugador2, add);
+				int add = (Table.getInstance(size)).getBox(Jugador2.getPosition()).enCasilla(size);
+				if (add != 0) {
+					movement(Jugador2, add, false);
 				}
 			} catch (PoobStairsExceptions e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Moriste", JOptionPane.INFORMATION_MESSAGE);
-				movement(Jugador2, -Jugador2.getPosition());
+				if (e.getMessage().equals(PoobStairsExceptions.MORTAL)) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Moriste", JOptionPane.INFORMATION_MESSAGE);
+					movement(Jugador2, -Jugador2.getPosition() + 1, false);
+				} else if (e.getMessage().equals(PoobStairsExceptions.QUESTION)) {
+					Jugador2.setQuestion(true);
+				}
 			}
+			win(Jugador2);
 			Jugador2.setTurn(false);
 			Jugador1.setTurn(true);
 			if (guardar) {
@@ -192,12 +203,12 @@ public class PoobStairs {
 		return positions;
 	}
 
-	private void movement(Player jugador, int value) {
+	private void movement(Player jugador, int value, boolean extra) {
 		try {
 			question(jugador);
 		} catch (PoobStairsExceptions e) {
 			if (!e.getMessage().equals(PoobStairsExceptions.WORNG_ANSWER)) {
-				jugador.move(value, size);
+				jugador.move(value, size, extra);
 				jugador.setQuestion(false);
 			}
 		}
@@ -206,8 +217,14 @@ public class PoobStairs {
 	public void changePosition() {
 		int posJ1 = Jugador1.getPosition();
 		int posJ2 = Jugador2.getPosition();
-		Jugador1.move(posJ2 - posJ1, size);
-		Jugador2.move(posJ1 - posJ2, size);
+		Jugador1.move(posJ2 - posJ1, size, true);
+		Jugador2.move(posJ1 - posJ2, size, true);
+	}
+
+	public void win(Player jugador) throws PoobStairsExceptions {
+		if (jugador.getPosition() == size * size) {
+			throw new PoobStairsExceptions(PoobStairsExceptions.WIN);
+		}
 	}
 
 }

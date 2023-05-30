@@ -52,7 +52,7 @@ import javax.swing.ImageIcon;
  */
 public class TableGUI extends JFrame {
 
-    private Map<Integer, JPanel> botones;
+    private Map<Integer, NCasillaGUI> botones;
     private JPanel juego;
     private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
     private final int width = dimensions.width;
@@ -90,6 +90,31 @@ public class TableGUI extends JFrame {
                 | NoSuchMethodException | SecurityException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        prepare(nombre1, nombre2, porcentajeMaquina, porcentajeBonificador, size, modificar, colorJ1, colorJ2,
+                modoMaquina, numSE);
+    }
+
+    /**
+     * Let create the poobStairsGUI.
+     */
+    public TableGUI(String nombre1, String nombre2, int porcentajeMaquina, int porcentajeBonificador, int size,
+            boolean modificar, String colorJ1, String colorJ2, String modoMaquina, ArrayList<String[]> tablero,
+            int numSE) {
+        this.size = size;
+        try {
+            poobStairs = new PoobStairs(nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
+                    porcentajeBonificador, modificar, modoMaquina, numSE, tablero);
+
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        prepare(nombre1, nombre2, porcentajeMaquina, porcentajeBonificador, size, modificar, colorJ1, colorJ2,
+                modoMaquina, numSE);
+    }
+
+    private void prepare(String nombre1, String nombre2, int porcentajeMaquina, int porcentajeBonificador, int size,
+            boolean modificar, String colorJ1, String colorJ2, String modoMaquina, int numSE) {
         Player[] aux = poobStairs.getJugadores();
         player1 = aux[0];
         player2 = aux[1];
@@ -485,7 +510,7 @@ public class TableGUI extends JFrame {
         if (action == JFileChooser.APPROVE_OPTION) {
             File archivo = selecionarArchivos.getSelectedFile();
             try {
-                informacion = poobStairs.open(archivo.getName());
+                informacion = poobStairs.open(archivo.getName() + ".txt");
                 String[] infoJ1 = informacion.get(0);
                 String[] infoJ2 = informacion.get(1);
                 String[] infoVariables = informacion.get(3);
@@ -507,7 +532,7 @@ public class TableGUI extends JFrame {
                 }
                 TableGUI nuevo = new TableGUI(infoJ1[0], infoJ2[0], Integer.parseInt(infoVariables[0]),
                         Integer.parseInt(infoVariables[1]), Integer.parseInt(infoVariables[2]),
-                        Boolean.valueOf(infoVariables[3]), infoJ1[1], infoJ2[1], modoMaquina, numSE);
+                        Boolean.valueOf(infoVariables[3]), infoJ1[1], infoJ2[1], modoMaquina, tablero, numSE);
                 nuevo.updateTable(tablero, escaleras, serpientes, informacion.get(2), infoJ1, infoJ2);
                 nuevo.setVisible(true);
                 this.dispose();
@@ -625,32 +650,37 @@ public class TableGUI extends JFrame {
             poobStairs.mover(valor, false, null);
         } catch (PoobStairsExceptions e) {
             int save = JOptionPane.showConfirmDialog(null, e.getMessage(), "Modificador", JOptionPane.DEFAULT_OPTION);
-            if (save == JOptionPane.YES_OPTION) {
-                if (e.getMessage().equals(PoobStairsExceptions.BONIFICACION)) {
-                    poobStairs.mover(valor + 1, false, "Bonificacion");
-                } else if (e.getMessage().equals(PoobStairsExceptions.PENALIZACION)) {
-                    poobStairs.mover(valor - 1, false, "Penalizacion");
-                } else if (e.getMessage().equals(PoobStairsExceptions.CAMBIO_POSICION)) {
-                    poobStairs.changePosition();
-                    poobStairs.mover(valor, false, null);
-                }
-            } else {
-                if (e.getMessage().equals(PoobStairsExceptions.BONIFICACION)) {
-                    poobStairs.mover(valor, false, "Bonificacion");
-                } else if (e.getMessage().equals(PoobStairsExceptions.PENALIZACION)) {
-                    poobStairs.mover(valor, false, "Penalizacion");
-                } else if (e.getMessage().equals(PoobStairsExceptions.CAMBIO_POSICION)) {
-                    poobStairs.mover(valor, true, "CambioPosicion");
-                }
+            try {
+                if (save == JOptionPane.YES_OPTION) {
+                    if (e.getMessage().equals(PoobStairsExceptions.BONIFICACION)) {
+                        poobStairs.mover(valor + 1, false, "Bonificacion");
+                    } else if (e.getMessage().equals(PoobStairsExceptions.PENALIZACION)) {
+                        poobStairs.mover(valor - 1, false, "Penalizacion");
+                    } else if (e.getMessage().equals(PoobStairsExceptions.CAMBIO_POSICION)) {
+                        poobStairs.changePosition();
+                        poobStairs.mover(valor, false, null);
+                    }
+                } else {
+                    if (e.getMessage().equals(PoobStairsExceptions.BONIFICACION)) {
+                        poobStairs.mover(valor, false, "Bonificacion");
+                    } else if (e.getMessage().equals(PoobStairsExceptions.PENALIZACION)) {
+                        poobStairs.mover(valor, false, "Penalizacion");
+                    } else if (e.getMessage().equals(PoobStairsExceptions.CAMBIO_POSICION)) {
+                        poobStairs.mover(valor, true, "CambioPosicion");
+                    }
 
+                }
+            } catch (PoobStairsExceptions i) {
+                JOptionPane.showMessageDialog(null, i.getMessage());
+                PoobStairsGUI inicio = new PoobStairsGUI();
+                inicio.setVisible(true);
+                this.dispose();
             }
+
         }
         putDice(valor);
         movement(valor);
         updateInformation();
-        repintar();
-        validate();
-        repaint();
     }
 
     /**
@@ -691,18 +721,10 @@ public class TableGUI extends JFrame {
      */
     private void movement(int valor) {
         if (player1.getTurn()) {
-            updatePosition(player1);
-        } else {
             updatePosition(player2);
+        } else {
+            updatePosition(player1);
         }
-    }
-
-    private void SetImageLabel(JLabel labelName, String root) {
-        this.image = new ImageIcon(root);
-        this.icon = new ImageIcon(this.image.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(),
-                Image.SCALE_DEFAULT));
-        labelName.setIcon(icon);
-        labelName.repaint();
     }
 
     /**
@@ -752,6 +774,20 @@ public class TableGUI extends JFrame {
      * @param player
      */
     private void updatePosition(Player player) {
+        int lastPosition = player.getLastPosition();
+        int position = player.getPosition();
+        NCasillaGUI anterior, jugador;
+        if (lastPosition != 0) {
+            anterior = botones.get(lastPosition);
+            anterior.removeAll();
+            anterior.colocar(anterior.getType(), Integer.toString(lastPosition), lastPosition);
+            anterior.revalidate();
+            anterior.repaint();
+        }
+        jugador = botones.get(position);
+        jugador.removeAll();
+        jugador.colocar(player.getPiece(), Integer.toString(position), position);
+        repintar();
 
     }
 
@@ -766,19 +802,19 @@ public class TableGUI extends JFrame {
         for (int i = 0; i < 5; i++) {
             int[][] positions = finalEscaleras.get(i);
             int x = positions[0][0] + positions[0][1];
-            EscaleraGUI casilla = new EscaleraGUI("resourses\\Escalera-Ini.png", String.valueOf(i), x);
+            NCasillaGUI casilla = new EscaleraGUI("Escalera", String.valueOf(i), x);
             tablero[positions[0][0]][positions[0][1]] = casilla;
             int y = positions[1][0] + positions[1][1];
-            casilla = new EscaleraGUI("resourses\\Escalera-Fin.png", String.valueOf(i), y);
+            casilla = new EscaleraFGUI("Escalera", String.valueOf(i), y);
             tablero[positions[1][0]][positions[1][1]] = casilla;
         }
         for (int i = 0; i < 5; i++) {
             int[][] positions = finalSerpiente.get(i);
             int x = positions[0][0] + positions[0][1];
-            SerpienteGUI casilla = new SerpienteGUI("resourses\\Inicio-serpiente.png", String.valueOf(i), x);
+            NCasillaGUI casilla = new SerpienteGUI("Serpiente", String.valueOf(i), x);
             tablero[positions[0][0]][positions[0][1]] = casilla;
             int y = positions[1][0] + positions[1][1];
-            casilla = new SerpienteGUI("resourses\\Fin-serpiente.png", String.valueOf(i), y);
+            casilla = new SerpienteFGUI("Serpiente", String.valueOf(i), y);
             tablero[positions[1][0]][positions[1][1]] = casilla;
         }
         return tablero;
@@ -793,7 +829,7 @@ public class TableGUI extends JFrame {
      * @param serpientes
      * @param turno
      */
-    private void updateTable(ArrayList<String[]> tablero, ArrayList<String[]> escaleras, ArrayList<String[]> serpientes,
+    public void updateTable(ArrayList<String[]> tablero, ArrayList<String[]> escaleras, ArrayList<String[]> serpientes,
             String[] turno, String[] infoj1, String[] infoj2) {
         // poobStairs.change(tablero,escaleras,serpientes);
         // poobStairs.setTurn(turno);

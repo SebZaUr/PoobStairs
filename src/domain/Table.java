@@ -83,7 +83,15 @@ public class Table {
 		}
 	}
 
-	public void createTable(String[] table) {
+	public void createTable(ArrayList<String[]> tablero)
+			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, ClassNotFoundException {
+		for (int i = 0; i < tablero.size(); i++) {
+			for (int j = 0; j < tablero.size(); j++) {
+				String type = tablero.get(i)[j];
+				Class.forName("domain." + type).getConstructor(int.class, int.class, int.class).newInstance(i, j, size);
+			}
+		}
 
 	}
 
@@ -188,6 +196,24 @@ public class Table {
 			startSerpiente.add(posi);
 		} else {
 			startEscalera.add(posi);
+		}
+	}
+
+	public void putSE(String[] typesE, String[] typesS)
+			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, ClassNotFoundException {
+		int contador = 0;
+		for (int[][] i : posFinalEscalera) {
+			Class.forName("domain." + typesE[contador])
+					.getConstructor(int.class, int.class, int.class, int.class, int.class)
+					.newInstance(size, i[0][0], i[0][0], i[0][0], i[0][0]);
+		}
+
+		for (int[][] i : posFinalSerpiente) {
+			Class.forName("domain." + typesS[contador])
+					.getConstructor(int.class, int.class, int.class, int.class, int.class)
+					.newInstance(size, i[0][0], i[0][0], i[0][0], i[0][0]);
+
 		}
 	}
 }

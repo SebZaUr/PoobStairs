@@ -37,7 +37,7 @@ public class Avance extends Casillas {
 		for (int i = position; i < startLadder.size(); i++) {
 			if (startLadder.get(i) > position) {
 				found = true;
-				salto = startLadder.get(i);
+				salto = startLadder.get(i) - position;
 				break;
 			}
 		}

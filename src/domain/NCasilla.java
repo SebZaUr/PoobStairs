@@ -7,11 +7,13 @@ public class NCasilla extends Casillas {
 	private Serpiente snake;
 	private Escalera ladder;
 	private boolean put = false;
+	private int size;
 
 	/**
 	 *  
 	 */
 	public NCasilla(int size) {
+		this.size = size;
 		this.type = "NCasilla";
 		putCasilla(size);
 	}
@@ -29,9 +31,9 @@ public class NCasilla extends Casillas {
 	public int enCasilla(int size) {
 		int valor = 0;
 		if (ladder != null) {
-			valor = ladder.movimiento();
+			valor = ladder.movimiento(position);
 		} else if (snake != null) {
-			valor = snake.movimiento();
+			valor = snake.movimiento(position);
 		}
 		return valor;
 	}

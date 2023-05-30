@@ -20,8 +20,10 @@ public class Preguntona extends Casillas {
 	/**
 	 *  
 	 */
-	public Preguntona(int x, int y) {
-
+	public Preguntona(int x, int y, int size) {
+		this.type = "Preguntona";
+		Casillas[][] table = (Table.getInstance(size)).getGameTable();
+		table[x][y] = this;
 	}
 
 	public static Pregunta getPregunta() {
@@ -31,8 +33,7 @@ public class Preguntona extends Casillas {
 
 	@Override
 	public int enCasilla(int size) throws PoobStairsExceptions {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'enCasilla'");
+		throw new PoobStairsExceptions(PoobStairsExceptions.QUESTION);
 	}
 
 }

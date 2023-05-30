@@ -13,8 +13,8 @@ public abstract class Serpiente {
 
 	protected Random numero = new Random();
 	protected int[][] positions = new int[2][2];
-	private NCasilla fin;
-	private NCasilla inicio;
+	protected NCasilla fin;
+	protected NCasilla inicio;
 
 	/**
 	 *  
@@ -32,7 +32,6 @@ public abstract class Serpiente {
 				if (!inicio.hasBox()) {
 					confirm = true;
 					inicio.putSerpiente(this, "inicio");
-					(Table.getInstance(size)).add(inicio.getPosition(), "serpiente");
 					int[] startPosition = { x, y };
 					positions[0] = startPosition;
 					putFinal(size, x);
@@ -75,13 +74,5 @@ public abstract class Serpiente {
 
 	}
 
-	public abstract int movimiento();
-
-	protected int startPosition() {
-		return inicio.getPosition();
-	}
-
-	protected int endPosition() {
-		return fin.getPosition();
-	}
+	public abstract int movimiento(int position);
 }

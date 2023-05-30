@@ -6,6 +6,6 @@ public class AvanceGUI extends NCasillaGUI {
 	 */
 	public AvanceGUI(String valor, String num, int x) {
 		super("resourses\\avance.png", num, x);
-		type = "Avance";
+		type = "resourses\\avance.png";
 	}
 }

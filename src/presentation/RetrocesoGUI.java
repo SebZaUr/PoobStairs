@@ -6,6 +6,6 @@ public class RetrocesoGUI extends NCasillaGUI {
      */
     public RetrocesoGUI(String valor, String num, int x) {
         super("resourses\\retroceso.png", num, x);
-        type = "Retroceso";
+        type = "resourses\\retroceso.png";
     }
 }

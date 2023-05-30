@@ -6,8 +6,8 @@ public abstract class Escalera {
 
 	protected Random numero = new Random();
 	protected int[][] positions = new int[2][2];
-	private NCasilla fin;
-	private NCasilla inicio;
+	protected NCasilla fin;
+	protected NCasilla inicio;
 
 	/**
 	 *  
@@ -63,13 +63,5 @@ public abstract class Escalera {
 
 	}
 
-	public abstract int movimiento();
-
-	protected int startPosition() {
-		return inicio.getPosition();
-	}
-
-	protected int endPosition() {
-		return fin.getPosition();
-	}
+	public abstract int movimiento(int position);
 }

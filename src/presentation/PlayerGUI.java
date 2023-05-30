@@ -20,22 +20,22 @@ public class PlayerGUI {
      */
     public PlayerGUI(String color) {
         switch (color) {
-            case "blue":
+            case "Blue":
                 imagen = new ImageIcon("resourses\\Blue.png");
                 break;
-            case "black":
+            case "Black":
                 imagen = new ImageIcon("resourses\\Black.png");
                 break;
-            case "white":
+            case "White":
                 imagen = new ImageIcon("resourses\\White.png");
                 break;
-            case "green":
+            case "Green":
                 imagen = new ImageIcon("resourses\\Green.png");
                 break;
-            case "yellow":
+            case "Yellow":
                 imagen = new ImageIcon("resourses\\Yellow.png");
                 break;
-            case "red":
+            case "Red":
                 imagen = new ImageIcon("resourses\\Red.png");
                 break;
             default:

@@ -21,11 +21,11 @@ public abstract class Player {
 		this.inTurn = turn;
 	}
 
-	public int move(int value, int size) {
-		if (lastPosition + position > (size * size) || lastPosition + position < 0) {
-			value = 0;
-		} else {
-			lastPosition += position;
+	public int move(int value, int size, boolean extra) {
+		if (position + value <= (size * size) && position + value > 0) {
+			if (extra) {
+				lastPosition = position;
+			}
 			position += value;
 		}
 		return position;
@@ -94,4 +94,5 @@ public abstract class Player {
 	public String getPiece() {
 		return piece;
 	}
+
 }
