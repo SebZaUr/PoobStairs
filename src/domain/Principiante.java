@@ -1,14 +1,15 @@
-
 package domain;
 
-/**
- * @author MILLO
- *
- */
 public class Principiante extends Player {
 
-	public Principiante(String color, int size) {
-		super(color, size);
+	public Principiante(String color) {
+
+	}
+
+	@Override
+	public void tookDesicion(String desicion) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'tookDesicion'");
 	}
 
 }

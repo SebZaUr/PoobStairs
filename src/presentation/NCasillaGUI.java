@@ -29,13 +29,13 @@ public class NCasillaGUI extends JPanel {
         } else {
             fond = Color.ORANGE;
         }
-        imagePanel = new ImagePanel(valor,fond);
+        imagePanel = new ImagePanel(valor, fond);
         add(imagePanel, BorderLayout.CENTER);
         this.valor = valor;
         setLayout(new GridLayout(0, 1, 0, 0)); // Usar GridLayout en lugar de null
         texto = new JLabel();
-        texto.setForeground(new Color(255, 0, 255)); 
-        texto.setHorizontalAlignment(JLabel.CENTER); 
+        texto.setForeground(new Color(255, 0, 255));
+        texto.setHorizontalAlignment(JLabel.CENTER);
         texto.setText(num);
         imagePanel.add(texto);
         type = "casillas";

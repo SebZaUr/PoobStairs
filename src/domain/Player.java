@@ -1,73 +1,92 @@
 package domain;
 
-public class Player {
-    private Piece pieza;
-    private int positions, lastPosition;
-    private int fallSnake = 0;
-    private int fallStairs = 0;
-    private int bonificadores = 0;
-    private boolean inTurn = false;
-    private boolean question = false;
+public abstract class Player {
 
-    public Player(String color, int size) {
-        this.pieza = new Piece(color);
-    }
+	protected int position = 0;
+	protected int lastPosition = 0;
+	protected int fallSnake = 0;
+	protected int fallLadders = 0;
+	protected int modificadores = 0;
+	protected boolean inTurn = false;
+	protected boolean question = false;
+	protected boolean answer = false;
+	protected int bonificacion, penalizacion, cambio;
 
-    public boolean getTurn() {
-        return inTurn;
-    }
+	public boolean getTurn() {
+		return inTurn;
+	}
 
-    public void setTurn(boolean turn) {
-        this.inTurn = turn;
-    }
+	public void setTurn(boolean turn) {
+		this.inTurn = turn;
+	}
 
-    public int move(int value, int size) {
-        if (lastPosition + positions > (size * size)) {
-            value = 0;
-        } else {
-            lastPosition += positions;
-            positions += value;
-        }
-        return pieza.move(value);
-    }
+	public int move(int value, int size) {
+		if (lastPosition + position > (size * size)) {
+			value = 0;
+		} else {
+			lastPosition += position;
+			position += value;
+		}
+		return position;
+	}
 
-    public int getPosition() {
-        return pieza.getPosition();
-    }
+	public abstract void tookDesicion(String desicion);
 
-    public void fallsLadders() {
-        fallStairs++;
-    }
+	public int getPosition() {
+		return position;
+	}
 
-    public void fallsSnakes() {
-        fallSnake++;
-    }
+	public void fallsLadders() {
+		fallLadders++;
+	}
 
-    public String snake() {
-        return Integer.toString(fallSnake);
-    }
+	public void fallsSnakes() {
+		fallSnake++;
+	}
 
-    public String stairs() {
-        return Integer.toString(fallStairs);
-    }
+	public String snake() {
+		return Integer.toString(fallSnake);
+	}
 
-    public void setBonificadores() {
-        bonificadores++;
-    }
+	public String stairs() {
+		return Integer.toString(fallLadders);
+	}
 
-    public String getBonificadores() {
-        return Integer.toString(bonificadores);
-    }
+	public void setBonificadores() {
+		modificadores++;
+	}
 
-    public int getLastPosition() {
-        return lastPosition;
-    }
+	public String getBonificadores() {
+		return Integer.toString(fallLadders);
+	}
 
-    public void setQuestion(boolean value) {
-        this.question = value;
-    }
+	public int getLastPosition() {
+		return lastPosition;
+	}
 
-    public boolean hasQuestion() {
-        return question;
-    }
+	public void setQuestion(boolean value) {
+		this.question = value;
+	}
+
+	public boolean hasQuestion() {
+		return question;
+	}
+
+	public void setAnswer(boolean state) {
+		answer = state;
+	}
+
+	public boolean getAnswer() {
+		return answer;
+	}
+
+	public void saveModificador(String type) {
+		if (type.equals("Binificacion")) {
+			bonificacion++;
+		} else if (type.equals("Binificacion")) {
+			penalizacion++;
+		} else if (type.equals("Binificacion")) {
+			cambio++;
+		}
+	}
 }

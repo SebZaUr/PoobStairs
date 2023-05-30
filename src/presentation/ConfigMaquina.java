@@ -358,7 +358,7 @@ public class ConfigMaquina extends JDialog {
                     color2 = "black";
                 }
                 TableGUI tablero = new TableGUI(nombre, maquina, porCasillas, porBonificacion, size, cambioES, color,
-                        color2, modoMaquina);
+                        color2, modoMaquina, 5);
                 tablero.setVisible(true);
                 this.dispose();
             } catch (NumberFormatException e) {

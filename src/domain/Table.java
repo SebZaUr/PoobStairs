@@ -6,27 +6,47 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * Let me create the game table.
+ * Let me create the game table with special and normal box apart of the snake
+ * and ladders.
  * 
  * @author Sebastian Zamora
  * @author Johann Amaya
  * @version 1.3
  */
 public class Table {
-	private static int size;
-	private static Casillas[][] table;
-	private static Table instance;
-	private static HashMap<Integer, Casillas> mapTable;
-	private static ArrayList<int[][]> posFinalEscalera = new ArrayList<>();
-	private static ArrayList<int[][]> posFinalSerpiente = new ArrayList<>();
 
-	private Table(int size) {
-		Table.size = size;
+	private int size;
+	private ArrayList<int[][]> posFinalEscalera = new ArrayList<>();
+	private ArrayList<int[][]> posFinalSerpiente = new ArrayList<>();
+	private ArrayList<Integer> startEscalera;
+	private ArrayList<Integer> startSerpiente;
+	private static Table instance;
+	private static Casillas[][] table;
+	private HashMap<Integer, Casillas> mapTable = new HashMap<>();
+	private ArrayList<int[]> escalerasSerpientes = new ArrayList<>();
+
+	/**
+	 * Create a new table.
+	 * 
+	 * @param the table's size.
+	 */
+	public Table(int size) {
+		this.size = size;
 		table = new Casillas[size][size];
 		mapTable = new HashMap<>();
 	}
 
 	/**
+	 * Let pass a table's name to a table
+	 * 
+	 * @param tablero a List with all box's types in orden to build the table.
+	 */
+	public Table(String[] tablero) {
+
+	}
+
+	/**
+	 * Create all table
 	 * 
 	 * @param percentage
 	 * @throws InstantiationException
@@ -37,19 +57,13 @@ public class Table {
 	 * @throws SecurityException
 	 * @throws ClassNotFoundException
 	 */
-	public static void createTable(int percentage)
+	public void createTable(int percentage, int snakeAndLadder, boolean modificar)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException {
 		int numCasillasEspeciales = (percentage * size * size) / 100;
 		Random rand = new Random();
-		String[] typesCasillas = { "Mortal", "Saltarinas", "SaltarinaInversa", "Avance", "Retroceso", "Preguntona" };
+		String[] typesCasillas = { "Mortal", "Saltarina", "SaltarinaInversa", "Avance", "Retroceso", "Preguntona" };
 		int contador = 1;
-		for (int i = 0; i < 5; i++) {
-			new Escalera(size, i);
-		}
-		for (int i = 0; i < 5; i++) {
-			new Serpiente(size, i);
-		}
 		while (contador <= numCasillasEspeciales) {
 			String type = typesCasillas[rand.nextInt(typesCasillas.length)];
 			Class.forName("domain." + type).getConstructor(int.class).newInstance(size);
@@ -58,11 +72,19 @@ public class Table {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (table[i][j] == null) {
-					table[i][j] = new NCasilla(size, "NCasilla");
+					table[i][j] = new NCasilla(size);
 				}
 			}
 		}
 		ordenar();
+		for (int i = 0; i < snakeAndLadder; i++) {
+			new SNormal(size);
+			new ENormal(size);
+		}
+	}
+
+	public void createTable(String[] table) {
+
 	}
 
 	/**
@@ -70,29 +92,14 @@ public class Table {
 	 * 
 	 * @return A Casillas Matrix.
 	 */
-	public static Casillas[][] getGameTable() {
+	public Casillas[][] getGameTable() {
 		return table;
-	}
-
-	/**
-	 * Let me verify if exist an instance in this class, in the case, that exists it
-	 * doesn't create one.
-	 * 
-	 * @param percentage
-	 * @param size
-	 * @return
-	 */
-	public static Table getInstance(int value) {
-		if (instance == null) {
-			instance = new Table(value);
-		}
-		return instance;
 	}
 
 	/**
 	 * Let me put all table on a hashmap.
 	 */
-	private static void ordenar() {
+	private void ordenar() {
 		int valor = 0;
 		int contador = 1;
 		int ajuste = size - 1;
@@ -125,10 +132,10 @@ public class Table {
 	/**
 	 * Let´s save the final ladder or snake position.
 	 * 
-	 * @param posicion
-	 * @param type
+	 * @param posicion a matrix with the stard and end positios.
+	 * @param type     if is a ladder or snake.
 	 */
-	public static void setFinal(int[][] posicion, String type) {
+	public void setFinal(int[][] posicion, String type) {
 		if (type.equals("Serpiente")) {
 			posFinalSerpiente.add(posicion);
 		} else {
@@ -136,11 +143,48 @@ public class Table {
 		}
 	}
 
-	public static ArrayList<int[][]> getFinalLadder() {
+	/**
+	 * Return the matrix with the stard and end ladder's positions.
+	 */
+	public ArrayList<int[][]> getFinalLadder() {
 		return posFinalEscalera;
 	}
 
-	public static ArrayList<int[][]> getFinalSnake() {
+	/**
+	 * Return the matrix with the stard and end snake's positions.
+	 */
+	public ArrayList<int[][]> getFinalSnake() {
 		return posFinalSerpiente;
 	}
+
+	public static Table getInstance(int size) {
+		if (instance == null) {
+			instance = new Table(size);
+		}
+		return instance;
+	}
+
+	public static Table getInstance(String[] tablero) {
+		if (instance == null) {
+			instance = new Table(tablero);
+		}
+		return instance;
+	}
+
+	public ArrayList<Integer> getStartLadder() {
+		return startEscalera;
+	}
+
+	public ArrayList<Integer> getStartSnake() {
+		return startSerpiente;
+	}
+
+	public boolean containsBox(int[] casilla) {
+		return escalerasSerpientes.contains(casilla);
+	}
+
+	public void add(int[] casilla) {
+		escalerasSerpientes.add(casilla);
+	}
+
 }

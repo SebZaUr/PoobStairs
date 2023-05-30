@@ -2,72 +2,69 @@ package domain;
 
 import java.util.Random;
 
-/**
- * Create the ladder start's box.
- * 
- * @author Sebastian Zamora.
- * @author Johann Amaya.
- * @version 2.0
- */
-public class Escalera extends Casillas {
-    private Random numero = new Random();
-    private int[][] positions = new int[2][2];
-    private int finalX = 0;
-    private int finalY = 0;
+public abstract class Escalera {
 
-    /**
-     * Create a stair that let it up to a position more advanced.
-     * 
-     * @param size the table's size.
-     */
-    public Escalera(int size, int i) {
-        id = i;
-        type = "Escalera";
-        Table.getInstance(size);
-        table = Table.getGameTable();
-        boolean colocada = false;
-        while (!colocada) {
-            int x = numero.nextInt(size);
-            int y = numero.nextInt(size);
-            if (validate(type, x, size, y)) {
-                if (table[x][y] == null) {
-                    table[x][y] = this;
-                    colocada = true;
-                }
-                startX = x;
-                startY = y;
-            }
-        }
-        putFinal(size);
-        int[] valoresPosicion = { startX, startY };
-        positions[0] = (valoresPosicion);
-        int[] finales = { finalX, finalY };
-        positions[1] = finales;
-        Table.setFinal(positions, "Escalera");
-    }
+	protected Random numero = new Random();
+	protected int[][] positions = new int[2][2];
+	private NCasilla fin;
+	private NCasilla inicio;
 
-    private void putFinal(int size) {
-        boolean colocada = false;
-        while (!colocada) {
-            int x = numero.nextInt(startX);
-            int y = numero.nextInt(size);
-            if (table[x][y] == null) {
-                table[x][y] = this;
-                colocada = true;
-                finalX = x;
-                finalY = y;
-            }
-        }
-    }
+	/**
+	 *  
+	 */
+	public void putInicio(int size) {
+		Casillas[][] table = (Table.getInstance(size)).getGameTable();
+		boolean confirm = false;
+		int x = 0;
+		int y = 0;
+		while (!confirm) {
+			x = numero.nextInt(size);
+			y = numero.nextInt(size);
+			if (table[x][y].getType().equals("NCasilla") && x > 0) {
+				inicio = (NCasilla) table[x][y];
+				confirm = true;
+				inicio.putEscalera(this, "Inicio");
+				int[] startPosition = { x, y };
+				positions[0] = startPosition;
+				putFinal(size, x);
+				(Table.getInstance(size)).setFinal(positions, "Escalera");
+			}
+		}
+	}
 
-    @Override
-    public int enCasilla(int size) throws PoobStairsExceptions {
-        int posFinal = 0;
-        if (finalY % 2 == 0) {
-            posFinal = (size * size) - (finalX * 10) + size - finalY;
-        } else {
-            posFinal = (size * size) - (finalX * 10) + finalY;
-        }
-        return posFinal - position;
-    }
+	/**
+	 *  
+	 */
+	public void putFinal(int size, int startX) {
+		Casillas[][] table = (Table.getInstance(size)).getGameTable();
+		boolean colocada = false;
+		int x = 0;
+		int y = 0;
+		while (!colocada) {
+			if (startX == 1) {
+				x = numero.nextInt(startX);
+			} else {
+				x = numero.nextInt(startX - 1) + 1;
+			}
+			y = numero.nextInt(size);
+			if (table[x][y].getType().equals("NCasilla")) {
+				fin = (NCasilla) table[x][y];
+				colocada = true;
+				fin.putEscalera(this, "Fin");
+				int[] startPosition = { x, y };
+				positions[1] = startPosition;
+			}
+		}
+
+	}
+
+	public abstract int movimiento();
+
+	protected int startPosition() {
+		return inicio.getPosition();
+	}
+
+	protected int endPosition() {
+		return fin.getPosition();
+	}
 }

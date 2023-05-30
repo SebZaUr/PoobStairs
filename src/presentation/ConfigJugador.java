@@ -499,7 +499,7 @@ public class ConfigJugador extends JDialog {
 					size = Integer.parseInt(sizeTablero.getText());
 				}
 				TableGUI tablero = new TableGUI(nombre, maquina, porCasillas, porBonificacion, size, cambioES, color,
-						color2, null);
+						color2, null, 5);
 				tablero.setVisible(true);
 				this.dispose();
 			} catch (NumberFormatException e) {

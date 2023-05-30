@@ -1,27 +1,69 @@
 package domain;
 
+import java.util.ArrayList;
+
 public class NCasilla extends Casillas {
 
-    public NCasilla(int size, String type) {
-        Table.getInstance(size);
-        table = Table.getGameTable();
-        boolean colocada = false;
-        while (!colocada) {
-            int x = numero.nextInt(size);
-            int y = numero.nextInt(size);
-            if (validate(type, x, size, y)) {
-                if (table[x][y] == null) {
-                    table[x][y] = this;
-                    colocada = true;
-                }
-                startX = x;
-                startY = y;
-            }
-        }
-    }
+	private Serpiente snake;
+	private Escalera ladder;
 
-    @Override
-    public int enCasilla(int size) throws PoobStairsExceptions {
-        return 0;
-    }
+	/**
+	 *  
+	 */
+	public NCasilla(int size) {
+		this.type = "NCasilla";
+		putCasilla(size);
+	}
+
+	/**
+	 *  
+	 */
+	public NCasilla(int x, int y, int size) {
+		this.type = "NCasilla";
+		Casillas[][] table = (Table.getInstance(size)).getGameTable();
+		table[x][y] = this;
+	}
+
+	@Override
+	public int enCasilla(int size) {
+		int valor = 0;
+		if (ladder != null) {
+			valor = ladder.movimiento();
+		} else if (snake != null) {
+			valor = snake.movimiento();
+		}
+		return valor;
+	}
+
+	public boolean putEscalera(Escalera casilla, String type) {
+		boolean put = false;
+		if (type.equals("inicio")) {
+			ladder = casilla;
+			put = true;
+		} else if (type.equals("fin")) {
+			ladder = casilla;
+			put = true;
+		}
+		return put;
+	}
+
+	public boolean putSerpiente(Serpiente casilla, String type) {
+		boolean put = false;
+		if (type.equals("inicio")) {
+			snake = casilla;
+			put = true;
+		} else if (type.equals("fin")) {
+			snake = casilla;
+			put = true;
+		}
+		return put;
+	}
+
+	public boolean hasBox() {
+		boolean isIn = false;
+		if (snake == null && ladder == null) {
+			isIn = true;
+		}
+		return isIn;
+	}
 }

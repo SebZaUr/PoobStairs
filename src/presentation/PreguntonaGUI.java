@@ -4,7 +4,7 @@ public class PreguntonaGUI extends NCasillaGUI {
     /**
      * Constructor of the class NormalGUI
      */
-    public PreguntonaGUI(String valor,  String num,int x) {
-        super("Preguntona", num,x);
+    public PreguntonaGUI(String valor, String num, int x) {
+        super("resourses\\Pregunta.png", num, x);
     }
 }

@@ -1,6 +1,8 @@
 package presentation;
 
 import domain.PoobStairs;
+import domain.PoobStairsExceptions;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -55,7 +57,7 @@ public class TableGUI extends JFrame {
     private static final Dimension dimensions = Toolkit.getDefaultToolkit().getScreenSize();
     private final int width = dimensions.width;
     private final int height = dimensions.height;
-    private int size, porcentajeBonificador, porcentajeMaquina;
+    private int size, porcentajeBonificador, porcentajeMaquina, numSE;
     private JLabel dado, lblNewLabel_5;
     private JButton btnNewButton;
     private ImageIcon fichaJ1, fichaJ2, esca, serp, boni, band, image;
@@ -78,22 +80,21 @@ public class TableGUI extends JFrame {
      * Let create the poobStairsGUI.
      */
     public TableGUI(String nombre1, String nombre2, int porcentajeMaquina, int porcentajeBonificador, int size,
-            boolean modificar, String colorJ1, String colorJ2, String modoMaquina) {
+            boolean modificar, String colorJ1, String colorJ2, String modoMaquina, int numSE) {
         this.size = size;
         try {
             poobStairs = new PoobStairs(nombre1, nombre2, colorJ1, colorJ2, size, porcentajeMaquina,
-                    porcentajeBonificador, modificar, modoMaquina);
+                    porcentajeBonificador, modificar, modoMaquina, numSE);
 
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(rootPane, "No se pudo crear al jugador maquina", "Error Maquina",
-                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
         Player[] aux = poobStairs.getJugadores();
         player1 = aux[0];
         player2 = aux[1];
-        finalEscaleras = Table.getFinalLadder();
-        finalSerpiente = Table.getFinalSnake();
+        finalEscaleras = (Table.getInstance(size)).getFinalLadder();
+        finalSerpiente = (Table.getInstance(size)).getFinalSnake();
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
         esca = new ImageIcon("resourses\\T_esc.png");
@@ -437,7 +438,15 @@ public class TableGUI extends JFrame {
             }
         };
         this.addWindowListener(Cerrar);
-        btnNewButton.addActionListener(e -> jugar());
+        btnNewButton.addActionListener(e -> {
+            try {
+                jugar();
+            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException | NoSuchMethodException | SecurityException
+                    | ClassNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        });
         prepareActionsMenu();
     }
 
@@ -498,7 +507,7 @@ public class TableGUI extends JFrame {
                 }
                 TableGUI nuevo = new TableGUI(infoJ1[0], infoJ2[0], Integer.parseInt(infoVariables[0]),
                         Integer.parseInt(infoVariables[1]), Integer.parseInt(infoVariables[2]),
-                        Boolean.valueOf(infoVariables[3]), infoJ1[1], infoJ2[1], modoMaquina);
+                        Boolean.valueOf(infoVariables[3]), infoJ1[1], infoJ2[1], modoMaquina, numSE);
                 nuevo.updateTable(tablero, escaleras, serpientes, informacion.get(2), infoJ1, infoJ2);
                 nuevo.setVisible(true);
                 this.dispose();
@@ -564,7 +573,7 @@ public class TableGUI extends JFrame {
         int ajuste = size - 1;
         int valor = 0;
         Table.getInstance(size);
-        Casillas[][] table = Table.getGameTable();
+        Casillas[][] table = (Table.getInstance(size)).getGameTable();
         juego = new JPanel();
         juego.setLayout(new GridLayout(size, size));
         botones = new HashMap<>();
@@ -599,10 +608,43 @@ public class TableGUI extends JFrame {
 
     /**
      * The action Listener that the lanzar.
+     * 
+     * @throws ClassNotFoundException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
      */
-    private void jugar() {
+    private void jugar() throws InstantiationException, IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
         int valor = dice.getValue();
-        poobStairs.mover(valor);
+        try {
+            dice.modificador();
+            poobStairs.mover(valor, false, null);
+        } catch (PoobStairsExceptions e) {
+            int save = JOptionPane.showConfirmDialog(null, e.getMessage(), "Modificador", JOptionPane.DEFAULT_OPTION);
+            if (save == JOptionPane.YES_OPTION) {
+                if (e.getMessage().equals(PoobStairsExceptions.BONIFICACION)) {
+                    poobStairs.mover(valor + 1, false, "Bonificacion");
+                } else if (e.getMessage().equals(PoobStairsExceptions.PENALIZACION)) {
+                    poobStairs.mover(valor - 1, false, "Penalizacion");
+                } else if (e.getMessage().equals(PoobStairsExceptions.CAMBIO_POSICION)) {
+                    poobStairs.changePosition();
+                    poobStairs.mover(valor, false, null);
+                }
+            } else {
+                if (e.getMessage().equals(PoobStairsExceptions.BONIFICACION)) {
+                    poobStairs.mover(valor, false, "Bonificacion");
+                } else if (e.getMessage().equals(PoobStairsExceptions.PENALIZACION)) {
+                    poobStairs.mover(valor, false, "Penalizacion");
+                } else if (e.getMessage().equals(PoobStairsExceptions.CAMBIO_POSICION)) {
+                    poobStairs.mover(valor, true, "CambioPosicion");
+                }
+
+            }
+        }
         putDice(valor);
         movement(valor);
         updateInformation();

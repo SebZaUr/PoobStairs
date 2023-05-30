@@ -5,7 +5,7 @@ package domain;
  * 
  * @author Sebastian Zamora
  * @author Johann Amaya
- * @version 1.5
+ * @version 1.8
  */
 public class PoobStairsExceptions extends Exception {
     public static final String IS_EMPTY = "No has llenado alguna casiila, por favor llenarlas todas.";
@@ -20,6 +20,9 @@ public class PoobStairsExceptions extends Exception {
     public static final String CORRECT_ANSWER = "!RESPUESTA CORRECTA¡";
     public static final String WORNG_ANSWER = "!RESPUESTA INCORRECTA¡, pierde turno";
     public static final String NOT_QUESTION = "No hay pregunta";
+    public static final String BONIFICACION = "¡Has conseguido un modificador bonificación¡, avanza una casilla.";
+    public static final String PENALIZACION = "!Has conseguido un modificador penalización¡, retrocede una casilla.";
+    public static final String CAMBIO_POSICION = "!Has conseguido un modificador de cambio de posición¡, intercambia la posicion con el otro jugador.";
 
     /**
      * Create a PoobStairsException.
