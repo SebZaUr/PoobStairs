@@ -1,25 +1,30 @@
 package domain;
 
-import java.util.ArrayList;
-
+/**
+ * Create a normal box
+ * 
+ * @author Sebastian Zamora
+ * @author Johann Amaya
+ * @version 1.7
+ */
 public class NCasilla extends Casillas {
 
-	private Serpiente snake;
-	private Escalera ladder;
-	private boolean put = false;
-	private int size;
-
 	/**
-	 *  
+	 * create a normal box with a random table.
+	 * 
+	 * @param size the table's size.
 	 */
 	public NCasilla(int size) {
-		this.size = size;
 		this.type = "NCasilla";
 		putCasilla(size);
 	}
 
 	/**
-	 *  
+	 * create a normal box with a specific table.
+	 * 
+	 * @param x    the x's position of the box
+	 * @param y    the y's position of the box
+	 * @param size the table's size.
 	 */
 	public NCasilla(int x, int y, int size) {
 		this.type = "NCasilla";
@@ -30,36 +35,14 @@ public class NCasilla extends Casillas {
 	@Override
 	public int enCasilla(int size) {
 		int valor = 0;
-		if (ladder != null) {
-			valor = ladder.movimiento(position);
-		} else if (snake != null) {
-			valor = snake.movimiento(position);
+		Serpiente[][] serpientes = (Table.getInstance(size)).getFinalPosS();
+		Escalera[][] escaleras = (Table.getInstance(size)).getFinalPosE();
+		if (escaleras[startX][startY] != null) {
+			valor = escaleras[startX][startY].movimiento(position);
+		} else if (serpientes[startX][startY] != null) {
+			valor = serpientes[startX][startY].movimiento(position);
 		}
 		return valor;
 	}
 
-	public void putEscalera(Escalera casilla, String type) {
-		if (type.equals("inicio")) {
-			ladder = casilla;
-			put = true;
-		} else if (type.equals("fin")) {
-			ladder = casilla;
-			put = true;
-		}
-	}
-
-	public void putSerpiente(Serpiente casilla, String type) {
-		put = false;
-		if (type.equals("inicio")) {
-			snake = casilla;
-			put = true;
-		} else if (type.equals("fin")) {
-			snake = casilla;
-			put = true;
-		}
-	}
-
-	public boolean hasBox() {
-		return put;
-	}
 }

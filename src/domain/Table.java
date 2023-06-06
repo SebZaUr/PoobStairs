@@ -18,12 +18,13 @@ public class Table {
 	private int size;
 	private ArrayList<int[][]> posFinalEscalera = new ArrayList<>();
 	private ArrayList<int[][]> posFinalSerpiente = new ArrayList<>();
-	private ArrayList<Integer> startEscalera = new ArrayList<>();
-	private ArrayList<Integer> startSerpiente = new ArrayList<>();
+	private ArrayList<Integer> posStartEscalera = new ArrayList<>();
+	private ArrayList<Integer> posStartSerpiente = new ArrayList<>();
+	private Escalera[][] posicionesE;
+	private Serpiente[][] posicionesS;
 	private static Table instance;
-	private static Casillas[][] table;
+	private Casillas[][] table;
 	private HashMap<Integer, Casillas> mapTable = new HashMap<>();
-	private ArrayList<int[]> escalerasSerpientes = new ArrayList<>();
 
 	/**
 	 * Create a new table.
@@ -33,36 +34,32 @@ public class Table {
 	public Table(int size) {
 		this.size = size;
 		table = new Casillas[size][size];
+		posicionesS = new Serpiente[size][size];
+		posicionesE = new Escalera[size][size];
 		mapTable = new HashMap<>();
-	}
-
-	/**
-	 * Let pass a table's name to a table
-	 * 
-	 * @param tablero a List with all box's types in orden to build the table.
-	 */
-	public Table(String[] tablero) {
-
 	}
 
 	/**
 	 * Create all table
 	 * 
-	 * @param percentage
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 * @throws ClassNotFoundException
+	 * @param percentage the special box's percentage.
+	 * @throws InstantiationException    if the class can not be instance.
+	 * @throws IllegalAccessException    if the method cannot be
+	 * @throws IllegalArgumentException  if a method has been passed an illegal or
+	 *                                   inappropriate argument.
+	 * @throws InvocationTargetException if an exception that wraps an exception
+	 *                                   thrown by an invoked method or constructor.
+	 * @throws NoSuchMethodException     if the method can not be found.
+	 * @throws SecurityException         Thrown by the security manager to indicate
+	 *                                   a security violation.
+	 * @throws ClassNotFoundException    if the class not found.
 	 */
 	public void createTable(int percentage, int snakeAndLadder, boolean modificar)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException {
 		int numCasillasEspeciales = (percentage * size * size) / 100;
 		Random rand = new Random();
-		String[] typesCasillas = { "Mortal", "Saltarina", "SaltarinaInversa", "Avance", "Retroceso", "Preguntona" };
+		String[] typesCasillas = { "Mortal", "Saltarina", "SaltarinaInversa", "Avance", "Retroceso" };
 		int contador = 1;
 		while (contador <= numCasillasEspeciales) {
 			String type = typesCasillas[rand.nextInt(typesCasillas.length)];
@@ -76,13 +73,59 @@ public class Table {
 				}
 			}
 		}
-		ordenar();
-		for (int i = 0; i < snakeAndLadder; i++) {
-			new SNormal(size);
-			new ENormal(size);
+		for (int i = 0; i < 5; i++) {
+			Serpiente nueva = new SNormal(size);
+			colocarSerpiente(nueva, i);
+			Escalera esca = new ENormal(size);
+			colocarEscalera(esca, i);
 		}
+		ordenar();
 	}
 
+	/**
+	 * put the ladder on the table.
+	 * 
+	 * @param nueva the ladder.
+	 * @param i     the ladder's id.
+	 */
+	private void colocarEscalera(Escalera nueva, int i) {
+		int[][] posiciones = posFinalEscalera.get(i);
+		NCasilla val = (NCasilla) table[posiciones[0][0]][posiciones[0][1]];
+		NCasilla val2 = (NCasilla) table[posiciones[1][0]][posiciones[1][1]];
+		nueva.putI(val);
+		nueva.putF(val2);
+	}
+
+	/**
+	 * put the ladder on the table.
+	 * 
+	 * @param nueva the ladder.
+	 * @param i     the ladder's id.
+	 */
+	private void colocarSerpiente(Serpiente nueva, int i) {
+		int[][] posiciones = posFinalSerpiente.get(i);
+		NCasilla val = (NCasilla) table[posiciones[0][0]][posiciones[0][1]];
+		NCasilla val2 = (NCasilla) table[posiciones[1][0]][posiciones[1][1]];
+		nueva.putI(val);
+		nueva.putF(val2);
+	}
+
+	/**
+	 * put the ladder on the table.
+	 * 
+	 * @param nueva the ladder.
+	 * @param i     the ladder's id.
+	 * @throws InstantiationException    if the class can not be instance.
+	 * @throws IllegalAccessException    if the method cannot be
+	 * @throws IllegalArgumentException  if a method has been passed an illegal or
+	 *                                   inappropriate argument.
+	 * @throws InvocationTargetException if an exception that wraps an exception
+	 *                                   thrown by an invoked method or constructor.
+	 * @throws NoSuchMethodException     if the method can not be found.
+	 * @throws SecurityException         Thrown by the security manager to indicate
+	 *                                   a security violation.
+	 * @throws ClassNotFoundException    if the class not found.
+	 */
 	public void createTable(ArrayList<String[]> tablero)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException {
@@ -172,33 +215,42 @@ public class Table {
 		return instance;
 	}
 
-	public static Table getInstance(String[] tablero) {
-		if (instance == null) {
-			instance = new Table(tablero);
-		}
-		return instance;
+	/**
+	 * put the snake on the table.
+	 * 
+	 * @param casilla the list with snake's position.
+	 * @param cas     the snake.
+	 */
+	public void containsBoxS(int[] casilla, Serpiente cas) {
+		posicionesS[casilla[0]][casilla[1]] = cas;
 	}
 
-	public ArrayList<Integer> getStartLadder() {
-		return startEscalera;
+	/**
+	 * put the ladder on the table.
+	 * 
+	 * @param casilla the list with ladder's position.
+	 * @param cas     the snake.
+	 */
+	public void containsBoxE(int[] casilla, Escalera cas) {
+		posicionesE[casilla[0]][casilla[1]] = cas;
 	}
 
-	public ArrayList<Integer> getStartSnake() {
-		return startSerpiente;
-	}
-
-	public boolean containsBox(int[] casilla) {
-		return escalerasSerpientes.contains(casilla);
-	}
-
-	public void add(int posi, String type) {
-		if (type.equals("serpiente")) {
-			startSerpiente.add(posi);
-		} else {
-			startEscalera.add(posi);
-		}
-	}
-
+	/**
+	 * Create the snakes and ladder with a specific table
+	 * 
+	 * @param typesE a list with all ladders's positions.
+	 * @param typesS a list with all snake's positions.
+	 * @throws InstantiationException    if the class can not be instance.
+	 * @throws IllegalAccessException    if the method cannot be
+	 * @throws IllegalArgumentException  if a method has been passed an illegal or
+	 *                                   inappropriate argument.
+	 * @throws InvocationTargetException if an exception that wraps an exception
+	 *                                   thrown by an invoked method or constructor.
+	 * @throws NoSuchMethodException     if the method can not be found.
+	 * @throws SecurityException         Thrown by the security manager to indicate
+	 *                                   a security violation.
+	 * @throws ClassNotFoundException    if the class not found.
+	 */
 	public void putSE(String[] typesE, String[] typesS)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException {
@@ -215,5 +267,59 @@ public class Table {
 					.newInstance(size, i[0][0], i[0][0], i[0][0], i[0][0]);
 
 		}
+	}
+
+	/**
+	 * get the list of snakes.
+	 * 
+	 * @return a list.
+	 */
+	public Serpiente[][] getFinalPosS() {
+		return posicionesS;
+	}
+
+	/**
+	 * get the list of ladders.
+	 * 
+	 * @return a list.
+	 */
+	public Escalera[][] getFinalPosE() {
+		return posicionesE;
+	}
+
+	/**
+	 * get the list of ladders.
+	 * 
+	 * @param the box's position.
+	 */
+	public void setStartLadder(int valor) {
+		posStartEscalera.add(valor);
+	}
+
+	/**
+	 * get the list of ladders.
+	 * 
+	 * @param the box's position.
+	 */
+	public void setStartSnake(int valor) {
+		posStartSerpiente.add(valor);
+	}
+
+	/**
+	 * get the list of ladders.
+	 * 
+	 * @return a list.
+	 */
+	public ArrayList<Integer> getStartLadder() {
+		return posStartEscalera;
+	}
+
+	/**
+	 * get the list of ladders.
+	 * 
+	 * @return a list.
+	 */
+	public ArrayList<Integer> getStartSnake() {
+		return posStartSerpiente;
 	}
 }

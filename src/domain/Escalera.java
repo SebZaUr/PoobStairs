@@ -2,6 +2,13 @@ package domain;
 
 import java.util.Random;
 
+/**
+ * Create differents ladders's types.
+ * 
+ * @author Sebastian Zamora.
+ * @author Johann Amaya.
+ * @version 2.0
+ */
 public abstract class Escalera {
 
 	protected Random numero = new Random();
@@ -10,7 +17,9 @@ public abstract class Escalera {
 	protected NCasilla inicio;
 
 	/**
-	 *  
+	 * put the ladder's start in a random position.
+	 * 
+	 * @param size the table's size.
 	 */
 	public void putInicio(int size) {
 		Casillas[][] table = (Table.getInstance(size)).getGameTable();
@@ -21,13 +30,12 @@ public abstract class Escalera {
 			x = numero.nextInt(size);
 			y = numero.nextInt(size);
 			if (table[x][y].getType().equals("NCasilla") && x > 0) {
-				inicio = (NCasilla) table[x][y];
-				if (!inicio.hasBox()) {
+				if ((Table.getInstance(size)).getFinalPosE()[x][y] == null) {
 					confirm = true;
-					inicio.putEscalera(this, "inicio");
-					(Table.getInstance(size)).add(inicio.getPosition(), "escalera");
 					int[] startPosition = { x, y };
 					positions[0] = startPosition;
+					(Table.getInstance(size)).containsBoxE(startPosition, this);
+					(Table.getInstance(size)).setStartLadder(table[x][y].getPosition());
 					putFinal(size, x);
 					(Table.getInstance(size)).setFinal(positions, "Escalera");
 				}
@@ -36,7 +44,9 @@ public abstract class Escalera {
 	}
 
 	/**
-	 *  
+	 * put the ladder's end in a random position.
+	 * 
+	 * @param size the table's size.
 	 */
 	public void putFinal(int size, int startX) {
 		Casillas[][] table = (Table.getInstance(size)).getGameTable();
@@ -51,11 +61,10 @@ public abstract class Escalera {
 			}
 			y = numero.nextInt(size);
 			if (table[x][y].getType().equals("NCasilla")) {
-				fin = (NCasilla) table[x][y];
-				if (!fin.hasBox()) {
+				if ((Table.getInstance(size)).getFinalPosE()[x][y] == null) {
 					colocada = true;
-					fin.putEscalera(this, "fin");
 					int[] startPosition = { x, y };
+					(Table.getInstance(size)).containsBoxE(startPosition, this);
 					positions[1] = startPosition;
 				}
 			}
@@ -63,5 +72,29 @@ public abstract class Escalera {
 
 	}
 
+	/**
+	 * Let the player move in the ladder..
+	 * 
+	 * @param position the player's position.
+	 * @return
+	 */
 	public abstract int movimiento(int position);
+
+	/**
+	 * Assign the ladder's start.
+	 * 
+	 * @param casilla the box.
+	 */
+	public void putI(NCasilla casilla) {
+		inicio = casilla;
+	}
+
+	/**
+	 * Assign the ladder's end.
+	 * 
+	 * @param casilla the box.
+	 */
+	public void putF(NCasilla casilla) {
+		fin = casilla;
+	}
 }

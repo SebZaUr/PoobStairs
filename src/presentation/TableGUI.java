@@ -555,7 +555,7 @@ public class TableGUI extends JFrame {
             try {
                 poobStairs.save(archivo, informacionJ1, informacionJ2, Integer.toString(porcentajeMaquina),
                         Integer.toString(porcentajeBonificador), Integer.toString(size), finalEscaleras,
-                        finalSerpiente, modoMaquina, modificar);
+                        finalSerpiente, modoMaquina, modificar, 5);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, "No se pudo guardar el archivo", "Error Guardar",
                         JOptionPane.ERROR_MESSAGE);

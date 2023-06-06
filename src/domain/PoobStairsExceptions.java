@@ -24,6 +24,8 @@ public class PoobStairsExceptions extends Exception {
     public static final String PENALIZACION = "!Has conseguido un modificador penalización¡, retrocede una casilla.";
     public static final String CAMBIO_POSICION = "!Has conseguido un modificador de cambio de posición¡, intercambia la posicion con el otro jugador.";
     public static final String WIN = "Ya tenemos un ganador.FELICIDADES JUGADOR: ";
+    public static final String SALTARINA = "Has caido en una casilla saltarina";
+    public static final String SALTARINAI = "Has caido en una casilla saltarina inversa";
     public static final String QUESTION = "tiene una pregunta";
 
     /**

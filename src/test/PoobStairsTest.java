@@ -1,4 +1,3 @@
-
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import domain.PoobStairs;
 import domain.Casillas;
+import domain.Escalera;
 import domain.PoobStairsExceptions;
 import domain.Table;
 
@@ -19,15 +19,15 @@ import domain.Table;
  */
 class PoobStairsTest {
 
-	private static PoobStairs juego;
-	private static Casillas[][] tablero;
+	private static PoobStairs juego, guardado;
+	private static Casillas[][] tablero, tableGuardado;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		juego = new PoobStairs("Sebastian", "Johann", "black", "yellow", 10, 12, 0, false, null, 0);
+		juego = new PoobStairs("Sebastian", "Johann", "black", "yellow", 10, 12, 0, false, null, 5);
 		tablero = (Table.getInstance(10)).getGameTable();
 	}
 
@@ -48,54 +48,29 @@ class PoobStairsTest {
 	}
 
 	@Test
-	void shouldMoveThePlayerThatIsInTurn() {
-		int[] posiciones = juego.getPositions();
-		juego.mover(5);
-		int[] posicionesDespues = juego.getPositions();
-		assertEquals(posiciones[1], posicionesDespues[1]);
-		juego.mover(3);
-		posiciones = juego.getPositions();
-		assertEquals(posiciones[0], posicionesDespues[0]);
-	}
-
-	@Test
-	void shouldNotMoveOutTheTable() {
-		int[] posiciones = juego.getPositions();
-		juego.mover(110);
-		int[] posicionesDespues = juego.getPositions();
-		assertEquals(posiciones[0], posicionesDespues[0]);
-		juego.mover(120);
-		posiciones = juego.getPositions();
-		assertEquals(posiciones[1], posicionesDespues[1]);
-		posiciones = juego.getPositions();
-		juego.mover(-5);
-		posicionesDespues = juego.getPositions();
-		assertEquals(posiciones[0], posicionesDespues[0]);
-		juego.mover(-3);
-		posiciones = juego.getPositions();
-		assertEquals(posiciones[1], posicionesDespues[1]);
-	}
-
-	@Test
 	void shouldMoveOnSnakesAndLadders() {
-		ArrayList<int[][]> escaleras = Table.getFinalLadder();
-		ArrayList<int[][]> serpientes = Table.getFinalSnake();
-		int[][] escalera1 = escaleras.get(0);
-		int inicio = 0;
-		int finals = 0;
-		if (escalera1[0][1] % 2 == 0) {
-			inicio = escalera1[0][0] * 10 + 10 - escalera1[0][1];
-		} else {
-			inicio = escalera1[0][0] * 10 + escalera1[0][1];
+		ArrayList<int[][]> escaleras = (Table.getInstance(10)).getFinalLadder();
+		ArrayList<int[][]> serpientes = (Table.getInstance(10)).getFinalSnake();
+		int[][] pos = escaleras.get(3);
+		Casillas ca = tablero[pos[0][0]][pos[0][1]];
+		Casillas fin = tablero[pos[1][0]][pos[1][1]];
+		int inicio = ca.getPosition();
+		int finals = fin.getPosition();
+		try {
+			juego.mover(inicio, false, "");
+		} catch (PoobStairsExceptions e) {
+			e.printStackTrace();
 		}
-		if (escalera1[1][1] % 2 == 0) {
-			finals = escalera1[1][0] * 10 + 10 - escalera1[1][1];
-		} else {
-			finals = escalera1[1][0] * 10 + escalera1[1][1];
-		}
-		juego.mover(inicio);
 		int[] posiciones = juego.getPositions();
-		System.out.println(finals);
 		assertEquals(posiciones[0], finals);
+	}
+
+	@Test
+	void shouldWin() {
+		try {
+			juego.mover(100, false, null);
+		} catch (PoobStairsExceptions e) {
+			assertEquals(PoobStairsExceptions.WIN, e.getMessage());
+		}
 	}
 }

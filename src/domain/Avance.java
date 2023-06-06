@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 
 /**
- * Create a box that if the player falls in advance one box.
+ * Create a box that if the player falls in advance to the nearest ladder.
  * 
  * @author Sebastian Zamora.
  * @author Johann Amaya.
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Avance extends Casillas {
 
 	/**
-	 * Create an Avance's Box.
+	 * Create an Avance's Box with a random table.
 	 * 
 	 * @param size the table's size.
 	 */
@@ -22,7 +22,11 @@ public class Avance extends Casillas {
 	}
 
 	/**
-	 *  
+	 * create an avance box with a specific table.
+	 * 
+	 * @param x    the x's position of the box
+	 * @param y    the y's position of the box
+	 * @param size the table's size.
 	 */
 	public Avance(int x, int y, int size) {
 		Casillas[][] table = (Table.getInstance(size)).getGameTable();

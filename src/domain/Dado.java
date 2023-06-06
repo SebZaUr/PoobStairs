@@ -32,14 +32,16 @@ public class Dado {
 	 * Get the dice's value.
 	 * 
 	 * @return the dice's value.
-	 * @throws ClassNotFoundException
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 * @throws InvocationTargetException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws PoobStairsExceptions
+	 * @throws InstantiationException    if the class can not be instance.
+	 * @throws IllegalAccessException    if the method cannot be
+	 * @throws IllegalArgumentException  if a method has been passed an illegal or
+	 *                                   inappropriate argument.
+	 * @throws InvocationTargetException if an exception that wraps an exception
+	 *                                   thrown by an invoked method or constructor.
+	 * @throws NoSuchMethodException     if the method can not be found.
+	 * @throws SecurityException         Thrown by the security manager to indicate
+	 *                                   a security violation.
+	 * @throws ClassNotFoundException    if the class not found.
 	 */
 	public int getValue() {
 		valor = numero.nextInt(6) + 1;
@@ -60,6 +62,20 @@ public class Dado {
 		return instance;
 	}
 
+	/**
+	 * see if you could create a modifier, if you can create one.
+	 * 
+	 * @throws InstantiationException    if the class can not be instance.
+	 * @throws IllegalAccessException    if the method cannot be
+	 * @throws IllegalArgumentException  if a method has been passed an illegal or
+	 *                                   inappropriate argument.
+	 * @throws InvocationTargetException if an exception that wraps an exception
+	 *                                   thrown by an invoked method or constructor.
+	 * @throws NoSuchMethodException     if the method can not be found.
+	 * @throws SecurityException         Thrown by the security manager to indicate
+	 *                                   a security violation.
+	 * @throws ClassNotFoundException    if the class not found.
+	 */
 	public void modificador()
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException, PoobStairsExceptions {
@@ -68,7 +84,6 @@ public class Dado {
 			Modificador modificador = (Modificador) Class
 					.forName("domain." + typesModificadores[numero.nextInt(typesModificadores.length)])
 					.getConstructor().newInstance();
-			modificador.movement();
 
 		}
 	}
