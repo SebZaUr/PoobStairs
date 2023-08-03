@@ -5,7 +5,78 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92caf1c9-e941-4042-a54f-c7a047c09eb7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PoobStairs.asta" beforeDir="false" afterPath="$PROJECT_DIR$/PoobStairs.asta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PoobStairs.asta.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Aprendiz.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Aprendiz.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Avance.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Avance.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Bonificacion.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Bonificacion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/CambioPosicion.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/CambioPosicion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Casillas.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Casillas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Dado.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Dado.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/EDebil.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/EDebil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/EDual.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/EDual.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/ENormal.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/ENormal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/ESuper.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/ESuper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Escalera.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Escalera.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Modificador.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Modificador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Mortal.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Mortal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/NCasilla.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/NCasilla.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Penalizacion.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Penalizacion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Persona.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Persona.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Piece.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/PoobStairs.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/PoobStairs.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/PoobStairsExceptions.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/PoobStairsExceptions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Pregunta.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Pregunta.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Preguntona.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Preguntona.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Principiante.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Principiante.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Retroceso.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Retroceso.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/SDebil.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/SDebil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/SDual.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/SDual.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/SNormal.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/SNormal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/SSuper.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/SSuper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Saltarina.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Saltarina.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/SaltarinaInversa.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/SaltarinaInversa.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Serpiente.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Serpiente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/domain/Table.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/domain/Table.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/presentation/TableGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/presentation/TableGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/test/PoobStairsTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/test/PoobStairsTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prueba.txt" beforeDir="false" afterPath="$PROJECT_DIR$/prueba.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Aprendiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Aprendiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Avance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Avance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Bonificacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Bonificacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/CambioPosicion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/CambioPosicion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Casillas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Casillas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Dado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Dado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/EDebil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/EDebil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/EDual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/EDual.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/ENormal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/ENormal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/ESuper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/ESuper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Escalera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Escalera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Modificador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Modificador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Mortal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Mortal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/NCasilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/NCasilla.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Penalizacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Penalizacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Persona.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Persona.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Piece.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/PoobStairs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/PoobStairs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/PoobStairsExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/PoobStairsExceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Pregunta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Pregunta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Preguntona.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Preguntona.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Principiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Principiante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Retroceso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Retroceso.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/SDebil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/SDebil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/SDual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/SDual.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/SNormal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/SNormal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/SSuper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/SSuper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Saltarina.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Saltarina.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/SaltarinaInversa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/SaltarinaInversa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Serpiente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Serpiente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/presentation/TableGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation/TableGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/PoobStairsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/PoobStairsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +85,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="5a1a4c14-15ff-44f8-8741-cbc4bff464be" />
+        <option name="url" value="https://github.com/JohannBulls/PoobStairs" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
